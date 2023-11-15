@@ -7,11 +7,22 @@ import { UploadImageFunction } from '../Services/AuthService';
 import { useLocation } from 'react-router-dom';
 
 const ProfileSetup = ({ user }) => {
+<<<<<<< HEAD
 
   const location = useLocation();
   const userData = location.state.user;
   console.log("User:", userData);
 
+=======
+
+
+
+  const location = useLocation();
+  const userData = location.state.user;
+
+  console.log("User:", userData);
+
+>>>>>>> 4fa7409a7cfd482c33ceee70787a73f411defb26
   const [userEmail, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -22,6 +33,7 @@ const ProfileSetup = ({ user }) => {
 
 
   const handleUploadImage = async () => {
+<<<<<<< HEAD
 
     try {
       const image_url = await UploadImageFunction(imageUpload);
@@ -29,6 +41,10 @@ const ProfileSetup = ({ user }) => {
     } catch (error) {
       console.error("Error in UploadImageFunction:", error);
     }
+=======
+    UploadImageFunction(imageUpload);
+    setImageURL(UploadImageFunction());
+>>>>>>> 4fa7409a7cfd482c33ceee70787a73f411defb26
   };
 
   const handleSignup = async () => {
