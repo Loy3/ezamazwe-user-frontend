@@ -2,11 +2,12 @@
 
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { ProfileSetupFunction } from '../Services/AuthService';
+import { ProfileUpdateFunction } from '../Services/AuthService';
 import { UploadImageFunction } from '../Services/AuthService';
+import { GetUserDataFunction } from '../Services/AuthService';
 import { useLocation } from 'react-router-dom';
 
-const ProfileSetup = ({ user }) => {
+const EditProfile = ({ user }) => {
 
   const location = useLocation();
   const userData = location.state.user;
@@ -20,9 +21,24 @@ const ProfileSetup = ({ user }) => {
   const [imageUpload, setImageUpload] = useState(null);
   const [userId, setUserId] = useState(userData);
 
+  useEffect(()=>{
+    handleGetUserData();
+  })
+
+  const handleGetUserData = async() => {
+    try {
+        const user = await GetUserDataFunction(userId);
+        console.log("User data fetched on EditProfile component", user);
+        setFirstName(user.firstName);
+        setLastName(user.lastName);
+        setEmail(user.email);
+        setPhoneNum(user.phoneNum);
+    } catch(error) {
+        console.log("Error fetching data on EditProfile component", error);
+    }
+  }
 
   const handleUploadImage = async () => {
-
     try {
       const image_url = await UploadImageFunction(imageUpload);
       setImageURL(image_url);
@@ -31,15 +47,15 @@ const ProfileSetup = ({ user }) => {
     }
   };
 
-  const handleSignup = async () => {
-    ProfileSetupFunction(userId, firstName, lastName, userEmail, phoneNum, imageURL);
+  const handleEdit = async () => {
+    ProfileUpdateFunction(userId, firstName, lastName, userEmail, phoneNum, imageURL);
   };
 
   return (
     <div>
       <br></br>
-      <h2>Create Profile</h2>
-      <br></br>
+      <h2> Profile</h2>
+      <h5>Edit Profile</h5>
       <br></br>
       <label>Insert Image: </label>
       <input
@@ -57,13 +73,13 @@ const ProfileSetup = ({ user }) => {
       <input type="text" placeholder="Phone" onChange={(e) => setPhoneNum(e.target.value)} />
       <br></br>
       <br></br>
-      <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+      <input type="email" placeholder="Email" value={userEmail} onChange={(e) => setEmail(e.target.value)} />
       <br></br>
       <br></br>
-      <button onClick={handleSignup}>Confirm</button>
+      <button onClick={handleEdit}>Confirm</button>
     </div>
   );
 };
 
-export default ProfileSetup;
+export default EditProfile;
 
