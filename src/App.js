@@ -13,7 +13,11 @@ function App() {
           <Routes>
             {/* Client routes */}
             <Route path="/" element={<SignIn />} />
+<<<<<<< HEAD
             {/* <Route path="/signup" element={<SignUp />} /> */}
+=======
+            <Route path="/signup" element={<SignUp />} />
+>>>>>>> 2e6dc305693abdf09d9a875d1f3c2c1ec4950d38
           </Routes>
       </Router>
   );
