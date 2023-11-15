@@ -22,16 +22,24 @@ export default function button({ text, buttonFunction }) {
     )
 }
 
-export const ImageButton = ({ handleImage }) => {
+export const ImageButton = ({ handleImage, imageSrc }) => {
     return (
         <>
             <Box sx={{ position: "relative", width: "100px", height: "100px" }}>
-                <Button component="label" variant="contained" startIcon={<PersonIcon sx={{ width: "70px", height: "70px", marginLeft: "15px" }} />} sx={{ width: "100%", height: "100%", borderRadius: "100%", backgroundColor: "primary.light" }}>
-                    <VisuallyHiddenInput type="file" onChange={event => handleImage(event)} />
-                </Button>
-                <Box sx={{ width: "30px", height: "30px", backgroundColor: "primary.light", borderRadius: "100%", position: "absolute", right: "5px", bottom: "-5px" }} >
-                    <AddCircleIcon sx={{ color: "#fff", width: "94%", height: "94%", marginLeft: "4%", marginTop: "4%" }} />
-                </Box>
+                {imageSrc === null ?
+                    <>
+                        <Button component="label" variant="contained" startIcon={<PersonIcon sx={{ width: "70px", height: "70px", marginLeft: "15px" }} />} sx={{ width: "100%", height: "100%", borderRadius: "100%", backgroundColor: "primary.light" }}>
+                            <VisuallyHiddenInput type="file" onChange={event => handleImage(event)} />
+                        </Button>
+                        <Box sx={{ width: "30px", height: "30px", backgroundColor: "primary.light", borderRadius: "100%", position: "absolute", right: "5px", bottom: "-5px" }} >
+                            <AddCircleIcon sx={{ color: "#fff", width: "94%", height: "94%", marginLeft: "4%", marginTop: "4%" }} />
+                        </Box>
+                    </>
+                    :
+                    <>
+                        <img src={`${imageSrc}`} alt="imgS" id="image" style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "100%" }} />
+                    </>
+                }
             </Box>
         </>
     )
