@@ -1,15 +1,26 @@
 
 import React, { useState } from 'react';
 import { SignupFunction } from '../Services/AuthService';
+import { useNavigate } from 'react-router-dom';
 
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSignup = async () => {
-    // You might want to add some form validation here before calling SignupFunction
-    await SignupFunction(email, password);
+    try {
+      const user = await SignupFunction(email, password);
+      console.log('User data in signup component:', user);
+      const user_id = user.uid;
+      console.log('User id in signup component:', user_id);
+
+      navigate('/profilesetup', { state: { user: user_id } });
+   
+    } catch (error) {
+      console.error('Error during signup:', error.message);
+    }
   };
 
   return (
