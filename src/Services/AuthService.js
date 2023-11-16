@@ -35,6 +35,7 @@
 // Imports from the firebase config file
 import { db, auth, storage } from './firebaseConfig';
 import { addDoc, collection, doc, setDoc, getDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, getDoc } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail
@@ -42,9 +43,11 @@ import {
 import { getStorage, ref, uploadBytes, list, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";  //Import v4 from the uuid library and use it to randomise characters 
 import { updatePassword } from 'firebase/auth';
+import { updatePassword } from 'firebase/auth';
 
 
 // Upload image function
+export const UploadImageFunction = async (imageUpload) => {
 export const UploadImageFunction = async (imageUpload) => {
 
   let imageURL = '';
@@ -87,6 +90,7 @@ export const SignupFunction = async (email, password) => {
 };
 
 // Sign in function
+export const SigninFunction = async (email, password) => {
 export const SigninFunction = async (email, password) => {
 
   try {
