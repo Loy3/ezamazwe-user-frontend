@@ -13,10 +13,6 @@ const SignUp = () => {
     try {
       const user = await SignupFunction(email, password);
       console.log('User data in signup component:', user);
-<<<<<<< HEAD
-
-=======
->>>>>>> 4fa7409a7cfd482c33ceee70787a73f411defb26
       const user_id = user.uid;
       console.log('User id in signup component:', user_id);
 

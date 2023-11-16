@@ -21,20 +21,19 @@ const EditProfile = ({ user }) => {
   const [imageUpload, setImageUpload] = useState(null);
   const [userId, setUserId] = useState(userData);
 
-  useEffect(()=>{
-    handleGetUserData();
-  })
 
-  const handleGetUserData = async() => {
+  const handleGetUserData = async () => {
     try {
-        const user = await GetUserDataFunction(userId);
-        console.log("User data fetched on EditProfile component", user);
-        setFirstName(user.firstName);
-        setLastName(user.lastName);
-        setEmail(user.email);
-        setPhoneNum(user.phoneNum);
-    } catch(error) {
-        console.log("Error fetching data on EditProfile component", error);
+      const user = await GetUserDataFunction(userId);
+      console.log("User data fetched on EditProfile component", user);
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
+      setEmail(user.email);
+      setPhoneNum(user.phoneNum);
+      setImageURL(user.imageURL);
+
+    } catch (error) {
+      console.log("Error fetching data on EditProfile component", error);
     }
   }
 
@@ -48,14 +47,26 @@ const EditProfile = ({ user }) => {
   };
 
   const handleEdit = async () => {
-    ProfileUpdateFunction(userId, firstName, lastName, userEmail, phoneNum, imageURL);
+    try {
+      if (!firstName || !lastName || !userEmail || !phoneNum) {
+        return alert('Warning', 'All fields are required!');
+      }
+      ProfileUpdateFunction(userId, firstName, lastName, userEmail, phoneNum, imageURL);
+    
+    } catch (error) {
+      console.log("Unable to update profile", error);
+    }
+   
   };
 
   return (
     <div>
       <br></br>
       <h2> Profile</h2>
-      <h5>Edit Profile</h5>
+      <button onClick={handleGetUserData}>
+        <h5>View & Edit Profile</h5>
+      </button>
+      <br></br>
       <br></br>
       <label>Insert Image: </label>
       <input
@@ -64,13 +75,13 @@ const EditProfile = ({ user }) => {
       <button onClick={handleUploadImage}>Upload</button>
       <br></br>
       <br></br>
-      <input type="text" placeholder="Name" onChange={(e) => setFirstName(e.target.value)} />
+      <input type="text" placeholder="Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
       <br></br>
       <br></br>
-      <input type="text" placeholder="Surname" onChange={(e) => setLastName(e.target.value)} />
+      <input type="text" placeholder="Surname" value={lastName} onChange={(e) => setLastName(e.target.value)} />
       <br></br>
       <br></br>
-      <input type="text" placeholder="Phone" onChange={(e) => setPhoneNum(e.target.value)} />
+      <input type="text" placeholder="Phone" value={phoneNum} onChange={(e) => setPhoneNum(e.target.value)} />
       <br></br>
       <br></br>
       <input type="email" placeholder="Email" value={userEmail} onChange={(e) => setEmail(e.target.value)} />
