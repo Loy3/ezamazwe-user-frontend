@@ -1,6 +1,7 @@
 // import logo from './logo.svg';
 // import { useState } from 'react';
 import './App.css';
+import SetUpProfile from './Pages/SetUpProfile';
 import SignIn from './Pages/SignIn';
 import SignUp from './Pages/SignUp';
 // import TextFields from './Components/TextFields';
@@ -51,7 +52,7 @@ function App() {
     // </div>
 
     <>
-    <SignUp/>
+      <SetUpProfile />
     </>
   );
 }

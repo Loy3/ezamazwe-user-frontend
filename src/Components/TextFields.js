@@ -4,13 +4,13 @@ import { useState } from 'react';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 // import { makeStyles } from '@material-ui/core/styles';
 
-export default function TextFields({ label, errorStatus, errorMessage, setState }) {
+export default function TextFields({ label, errorStatus, errorMessage, setState, disabled, placeholder }) {
 
     return (
         <>
             <Box style={{ flex: "1", height: "auto" }}>
                 <InputLabel sx={{ marginBottom: "10px", color: "primary.light", fontSize: "18px", textAlign: "left" }}>{label}</InputLabel>
-                <OutlinedInput placeholder={`Enter ${label}`} variant="outlined" sx={{
+                <OutlinedInput placeholder={disabled ? ` ${placeholder}` : `Enter ${label}`} variant="outlined" sx={{
                     width: "100%",
                     height: "50px",
                     fontSize: "16px",
@@ -22,7 +22,7 @@ export default function TextFields({ label, errorStatus, errorMessage, setState 
                     "&:hover > .MuiOutlinedInput-notchedOutline": {
                         borderColor: "primary.main"
                     }
-                }} onChange={(e) => setState(e.target.value)} />
+                }} onChange={(e) => setState(e.target.value)} disabled={disabled} />
                 {errorStatus ?
                     <InputLabel sx={{ color: "warning.main", fontSize: "12px", marginTop: "10px", marginLeft: "5px" }}>{errorMessage}</InputLabel>
                     : null}
