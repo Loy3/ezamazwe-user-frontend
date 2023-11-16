@@ -28,3 +28,20 @@ export const SigninFunction = async (email, password) => {
     };
 
 }
+
+
+// Sign up function
+export const SignupFunction = async (email, password) => {
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        console.log('User signed up:', user);
+        alert('User signed up');
+        return user; // Return the user data
+
+    } catch (error) {
+        alert("Error signing up");
+        console.error('Error signing up:', error.message);
+        throw new Error(error.message); // Throw an error to be caught by the calling component
+    }
+};

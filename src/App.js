@@ -2,6 +2,7 @@
 // import { useState } from 'react';
 import './App.css';
 import SignIn from './Pages/SignIn';
+import SignUp from './Pages/SignUp';
 // import TextFields from './Components/TextFields';
 // import {TextFieldPassword} from './Components/TextFields';
 // import Button from "./Components/Buttons";
@@ -50,7 +51,7 @@ function App() {
     // </div>
 
     <>
-    <SignIn/>
+    <SignUp/>
     </>
   );
 }

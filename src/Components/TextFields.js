@@ -10,7 +10,19 @@ export default function TextFields({ label, errorStatus, errorMessage, setState 
         <>
             <Box style={{ flex: "1", height: "auto" }}>
                 <InputLabel sx={{ marginBottom: "10px", color: "primary.light", fontSize: "18px", textAlign: "left" }}>{label}</InputLabel>
-                <OutlinedInput placeholder={`Enter ${label}`} variant="outlined" sx={{ width: "100%", height: "50px", fontSize: "16px", borderRadius: "20px" }} onChange={(e) => setState(e.target.value)} />
+                <OutlinedInput placeholder={`Enter ${label}`} variant="outlined" sx={{
+                    width: "100%",
+                    height: "50px",
+                    fontSize: "16px",
+                    borderRadius: "20px",
+                    "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "primary.light",
+                        borderWidth: 2
+                    },
+                    "&:hover > .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "primary.main"
+                    }
+                }} onChange={(e) => setState(e.target.value)} />
                 {errorStatus ?
                     <InputLabel sx={{ color: "warning.main", fontSize: "12px", marginTop: "10px", marginLeft: "5px" }}>{errorMessage}</InputLabel>
                     : null}
@@ -35,7 +47,7 @@ export default function TextFields({ label, errorStatus, errorMessage, setState 
 //     },
 // }));
 
-export const TextFieldPassword = ({ label, errorStatus, errorMessage, setState }) => {
+export const TextFieldPassword = ({ label, errorStatus, errorMessage, setState, isSignin }) => {
 
 
     const [showPassword, setShowPassword] = useState(false);
@@ -64,15 +76,29 @@ export const TextFieldPassword = ({ label, errorStatus, errorMessage, setState }
                             </IconButton>
                         </InputAdornment>
                     }
-                    placeholder={`Enter ${label}`} variant="outlined" sx={{ width: "100%", height: "50px", fontSize: "16px", borderRadius: "20px", borderColor: "primary.light" }} onChange={(e) => setState(e.target.value)} />
+                    placeholder={`Enter ${label}`} variant="outlined" sx={{
+                        width: "100%",
+                        height: "50px",
+                        fontSize: "16px",
+                        borderRadius: "20px",
+                        "& .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "primary.light",
+                            borderWidth: 2
+                        },
+                        "&:hover > .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "primary.main"
+                        }
+                    }} onChange={(e) => setState(e.target.value)} />
                 {errorStatus ?
-                    <InputLabel sx={{ color: "warning.main", fontSize: 12, marginTop: "10px", marginLeft: "5px" }}>{errorMessage}</InputLabel>
+                    <InputLabel sx={{ color: "warning.main", fontSize: 11, marginTop: "10px", marginLeft: "5px" }}>{errorMessage}</InputLabel>
                     : null}
-                <Box sx={{width:"97%", textAlign:"right", marginTop:"5px"}}>
-                    <Link style={{ width: "100%", textAlign: "right", cursor: "pointer", fontSize: "16px", fontWeight: "400", }}>
-                        Forgot Your password?
-                    </Link>
-                </Box>
+                {isSignin ?
+                    <Box sx={{ width: "97%", textAlign: "right", marginTop: "5px" }}>
+                        <Link style={{ width: "100%", textAlign: "right", cursor: "pointer", fontSize: "16px", fontWeight: "400", }}>
+                            Forgot Your password?
+                        </Link>
+                    </Box>
+                    : null}
 
                 <Link >
                 </Link>

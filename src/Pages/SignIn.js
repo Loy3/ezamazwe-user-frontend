@@ -12,25 +12,11 @@ import { theme } from '../Theme/theme';
 function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+   
     const [emailErr, setEmailErr] = useState(false);
     const [passwordErr, setPasswordErr] = useState(false);
-    const [emailErrMsg, setEmailErrMsg] = useState(false);
-    const [passwordErrMsg, setPasswordErrMsg] = useState(false);
-
-    function testingFunc() {
-        if (!email) {
-            setEmailErr(true)
-        } else {
-            setEmailErr(false)
-        }
-
-        if (!password) {
-            setPasswordErr(true)
-        } else {
-            setPasswordErr(false)
-        }
-    }
+    const [emailErrMsg, setEmailErrMsg] = useState("");
+    const [passwordErrMsg, setPasswordErrMsg] = useState("");
 
     const handleSignIn = async () => {
         try {
@@ -59,7 +45,6 @@ function SignIn() {
             console.log("Unable to log in:", error);
         }
 
-        // SigninFunction(email, password);
     };
 
     return (
@@ -78,11 +63,9 @@ function SignIn() {
                         <TextFields label={"Email Address:"} errorStatus={emailErr} errorMessage={emailErrMsg} setState={setEmail} />
                     </Box>
                     <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
-                        <TextFieldPassword label={"Password:"} errorStatus={passwordErr} errorMessage={passwordErrMsg} setState={setPassword} />
+                        <TextFieldPassword label={"Password:"} errorStatus={passwordErr} errorMessage={passwordErrMsg} setState={setPassword} isSignin={true}/>
                     </Box>
 
-
-                    {/* <Box style={{  textAlign: 'center', paddingTop:theme.spacing(5),paddingBottom:theme.spacing(5)}}> */}
                     <Box style={{ paddingTop: theme.spacing(4), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 15 }}>
                         <Button text={"Sign In"} buttonFunction={handleSignIn} />
 
