@@ -1,6 +1,7 @@
 // import logo from './logo.svg';
 // import { useState } from 'react';
 import './App.css';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import SetUpProfile from './Pages/SetUpProfile';
 import SignIn from './Pages/SignIn';
 import SignUp from './Pages/SignUp';
@@ -52,7 +53,13 @@ function App() {
     // </div>
 
     <>
-      <SetUpProfile />
+      <BrowserRouter>
+        <Routes>
+          <Route path='' element={<SignIn />} />
+          <Route path='/signup' element={<SignUp />} />
+          <Route path='/profilesetup' element={<SetUpProfile />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

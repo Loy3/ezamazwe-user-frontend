@@ -8,8 +8,10 @@ import SectionHeading from '../Components/SectionHeading';
 import SectionSubHeading from '../Components/SectionSubHeading';
 import { theme } from '../Theme/theme';
 import { SignupFunction } from '../Services/AuthService';
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -70,7 +72,7 @@ function SignUp() {
                 setEmailErrMsg("");
                 setEmailErr(false)
             }
-        }else {
+        } else {
             setEmailErrMsg("");
             setEmailErr(false)
         }
@@ -78,6 +80,7 @@ function SignUp() {
     //Validation
 
     const handleSignup = async () => {
+        // navigate('/profilesetup', { state: { user: "scxIk6bUWMSngdL5CyzsUNYzZAS2", email: email } });
         try {
             const user = await SignupFunction(email, password);
             console.log('User data in signup component:', user);
@@ -85,7 +88,8 @@ function SignUp() {
             const user_id = user.uid;
             console.log('User id in signup component:', user_id);
 
-            // navigate('/profilesetup', { state: { user: user_id } });
+            navigate('/profilesetup', { state: { user: user_id, email: email } });
+
 
         } catch (error) {
             console.error('Error during signup:', error.message);
@@ -108,14 +112,14 @@ function SignUp() {
                         <TextFields label={"Email Address:"} errorStatus={emailErr} errorMessage={emailErrMsg} setState={setEmail} />
                     </Box>
                     <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
-                        <TextFieldPassword label={"Password:"} errorStatus={passwordErr} errorMessage={passwordErrMsg} setState={setPassword} isSignin={false}/>
+                        <TextFieldPassword label={"Password:"} errorStatus={passwordErr} errorMessage={passwordErrMsg} setState={setPassword} isSignin={false} />
                     </Box>
 
 
                     <Box style={{ paddingTop: theme.spacing(4), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 15 }}>
                         <Button text={"Sign Up"} buttonFunction={handleSignup} />
 
-                        <Link href="#">Don't have an account? Sign Up</Link></Box>
+                        <Link href="/">Don't have an account? Sign Up</Link></Box>
 
                 </Paper>
             </div>

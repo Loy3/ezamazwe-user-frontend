@@ -8,13 +8,18 @@ import SectionHeading from '../Components/SectionHeading';
 import SectionSubHeading from '../Components/SectionSubHeading';
 import { theme } from '../Theme/theme';
 import { ProfileSetupFunction } from '../Services/AuthService';
+import { useLocation } from 'react-router-dom';
 
-function SetUpProfile() {
-    // scxIk6bUWMSngdL5CyzsUNYzZAS2
-    const [email, setEmail] = useState("loy@yahoo.com");
+function SetUpProfile({ user }) {
+    const location = useLocation();
+    const userData = location.state.user;
+    const userEmail = location.state.email;
+
+    const [email, setEmail] = useState(userEmail);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [pNumber, setPnumber] = useState("");
+    const [userId, setUserId] = useState(userData);
 
     const [emailErr, setEmailErr] = useState(false);
     const [firstNameErr, setFirstNameErr] = useState(false);
@@ -38,9 +43,8 @@ function SetUpProfile() {
         console.log(file.name);
     }
 
-   async function setUpUser() {
-    const userId = "scxIk6bUWMSngdL5CyzsUNYzZAS2";
-        console.log(firstName, lastName, email, pNumber);
+    async function setUpUser() {
+        const userId = userData;
         ProfileSetupFunction(userId, firstName, lastName, email, pNumber, userImage);
     }
 
