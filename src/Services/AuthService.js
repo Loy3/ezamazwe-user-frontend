@@ -7,7 +7,7 @@ import {
 } from 'firebase/auth';
 import { getStorage, ref, uploadBytes, list, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
-
+import { getAuth, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
 
 
 // Sign in function
@@ -52,7 +52,7 @@ export const ProfileSetupFunction = async (userId, firstName, lastName, userEmai
     console.log("User id:", userId);
 
     try {
-       await UploadImageFunction(image).then(async (result) => {
+        await UploadImageFunction(image).then(async (result) => {
             const docRef = await setDoc(doc(db, 'users', userId), {
                 user_id: userId,
                 firstName: firstName,
@@ -91,4 +91,79 @@ export const UploadImageFunction = async (imageUpload) => {
         console.error("Error uploading image:", error);
         alert('Error uploading image!');
     }
+}
+
+
+export const ResetPasswordFunction = async (user, currentPassword, newPassword) => {
+    console.log("User currently logged in:", user);
+
+    try {
+        // Re-authenticate the user with their current password
+        const credential = EmailAuthProvider.credential(user.email, currentPassword);
+        await reauthenticateWithCredential(user, credential);
+
+        // If re-authentication is successful, update the password
+        await updatePassword(user, newPassword);
+
+        console.log('Password reset successful:', user);
+        alert('Password reset successful.');
+
+    } catch (error) {
+        console.error('Error resetting password:', error.message);
+
+        // Handle specific error cases, such as incorrect current password
+        if (error.code === 'auth/wrong-password') {
+            alert('Incorrect current password. Please try again.');
+        } else {
+            alert('Error resetting password. Please make sure you are logged in.');
+        }
+
+        throw error; // Re-throw the error to propagate it if needed
+    }
+};
+
+// Password complexity validation function
+export const isPasswordValid = (newPassword) => {
+
+    // Define password complexity rules
+    // const minLength = 8;
+    // const hasUppercase = /[A-Z]/.test(newPassword);
+    // const hasLowercase = /[a-z]/.test(newPassword);
+    // const hasNumber = /\d/.test(newPassword);
+    // const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(newPassword);
+
+    // return (
+    //     newPassword.length >= minLength &&
+    //     hasUppercase &&
+    //     hasLowercase &&
+    //     hasNumber &&
+    //     hasSpecialCharacter
+    // );
+    var message = "";
+    var lowerCase = /[a-z]/g;
+    var upperCase = /[A-Z]/g;
+    var numbers = /[0-9]/g;
+    var specialChar = /[!@#$%^&*]/g;
+
+    if (!newPassword.match(lowerCase)) {
+        message = "Password should contains at least 1 or more lowercase letter(s)!";
+    } else if (!newPassword.match(upperCase)) {
+        message = "Password should contain at least 1 or more uppercase letter(s)!";
+    } else if (!newPassword.match(numbers)) {
+        message = "Password should contains numbers also!";
+    } else if (newPassword.length < 8) {
+        message = "Password length should be more than 8.";
+    } else if (!newPassword.match(specialChar)) {
+        message = "Password should contain at least 1 special character";
+    } else {
+        message = "Password is strong!";
+    }
+
+    return message
+
+};
+
+// Forgot password function
+export const ForgotPasswordFunction = () => {
+    console.log("Forgot password");
 }
