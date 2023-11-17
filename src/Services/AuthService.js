@@ -41,8 +41,7 @@ import {
 } from 'firebase/auth';
 import { getStorage, ref, uploadBytes, list, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";  //Import v4 from the uuid library and use it to randomise characters 
-import { updatePassword } from 'firebase/auth';
-
+import { getAuth, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
 
 
 // Upload image function
@@ -211,21 +210,49 @@ export const ProfileUpdateFunction = async (userId, firstName, lastName, userEma
 };
 
 // Reset password function
-export const ResetPasswordFunction = async (user, newPassword) => {
+// export const ResetPasswordFunction = async (user, newPassword) => {
+//     console.log("User currently logged in:", user);
+//     try {
+//         // Update the user's password using Firebase Authentication
+//         await updatePassword(user, newPassword);
+//         console.log('Password reset successful:', user);
+//         alert('Password reset successful.');
+
+//     } catch (error) {
+
+//         console.error('Error resetting password:', error.message);
+//         alert('Error resetting password. Please make sure you logged or signed in.');
+//         throw error; // Re-throw the error to propagate it if needed
+//     }
+// };
+
+export const ResetPasswordFunction = async (user, currentPassword, newPassword) => {
     console.log("User currently logged in:", user);
+  
     try {
-        // Update the user's password using Firebase Authentication
-        await updatePassword(user, newPassword);
-        console.log('Password reset successful:', user);
-        alert('Password reset successful.');
-
+      // Re-authenticate the user with their current password
+      const credential = EmailAuthProvider.credential(user.email, currentPassword);
+      await reauthenticateWithCredential(user, credential);
+  
+      // If re-authentication is successful, update the password
+      await updatePassword(user, newPassword);
+  
+      console.log('Password reset successful:', user);
+      alert('Password reset successful.');
+  
     } catch (error) {
-
-        console.error('Error resetting password:', error.message);
-        alert('Error resetting password. Please make sure you logged or signed in.');
-        throw error; // Re-throw the error to propagate it if needed
+      console.error('Error resetting password:', error.message);
+  
+      // Handle specific error cases, such as incorrect current password
+      if (error.code === 'auth/wrong-password') {
+        alert('Incorrect current password. Please try again.');
+      } else {
+        alert('Error resetting password. Please make sure you are logged in.');
+      }
+  
+      throw error; // Re-throw the error to propagate it if needed
     }
-};
+  };
 
 // Password complexity validation function
 export const isPasswordValid = (newPassword) => {

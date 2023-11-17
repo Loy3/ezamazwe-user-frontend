@@ -26,7 +26,7 @@ const ResetPassword = () => {
     }
 
     try {
-      await ResetPasswordFunction(user, newPassword);
+      await ResetPasswordFunction(user, currentPassword, newPassword);
       navigate('/signin');
 
     } catch (error) {
