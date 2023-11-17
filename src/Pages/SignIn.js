@@ -45,7 +45,7 @@ const SignIn = () => {
       <button onClick={handleSignIn}>Sign In</button>
       <br></br>
       <br></br>
-      <Link to='/resetpassword'>Reset Password</Link>
+      <Link to='/forgotpassword'>Forgot Password</Link>
       <br></br>
       <br></br>
       <Link to='/signup'>Sign Up Now</Link>

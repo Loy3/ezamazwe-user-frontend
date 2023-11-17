@@ -210,49 +210,33 @@ export const ProfileUpdateFunction = async (userId, firstName, lastName, userEma
 };
 
 // Reset password function
-// export const ResetPasswordFunction = async (user, newPassword) => {
-//     console.log("User currently logged in:", user);
-//     try {
-//         // Update the user's password using Firebase Authentication
-//         await updatePassword(user, newPassword);
-//         console.log('Password reset successful:', user);
-//         alert('Password reset successful.');
-
-//     } catch (error) {
-
-//         console.error('Error resetting password:', error.message);
-//         alert('Error resetting password. Please make sure you logged or signed in.');
-//         throw error; // Re-throw the error to propagate it if needed
-//     }
-// };
-
 export const ResetPasswordFunction = async (user, currentPassword, newPassword) => {
     console.log("User currently logged in:", user);
-  
+
     try {
-      // Re-authenticate the user with their current password
-      const credential = EmailAuthProvider.credential(user.email, currentPassword);
-      await reauthenticateWithCredential(user, credential);
-  
-      // If re-authentication is successful, update the password
-      await updatePassword(user, newPassword);
-  
-      console.log('Password reset successful:', user);
-      alert('Password reset successful.');
-  
+        // Re-authenticate the user with their current password
+        const credential = EmailAuthProvider.credential(user.email, currentPassword);
+        await reauthenticateWithCredential(user, credential);
+
+        // If re-authentication is successful, update the password
+        await updatePassword(user, newPassword);
+
+        console.log('Password reset successful:', user);
+        alert('Password reset successful.');
+
     } catch (error) {
-      console.error('Error resetting password:', error.message);
-  
-      // Handle specific error cases, such as incorrect current password
-      if (error.code === 'auth/wrong-password') {
-        alert('Incorrect current password. Please try again.');
-      } else {
-        alert('Error resetting password. Please make sure you are logged in.');
-      }
-  
-      throw error; // Re-throw the error to propagate it if needed
+        console.error('Error resetting password:', error.message);
+
+        // Handle specific error cases, such as incorrect current password
+        if (error.code === 'auth/wrong-password') {
+            alert('Incorrect current password. Please try again.');
+        } else {
+            alert('Error resetting password. Please make sure you are logged in.');
+        }
+
+        throw error; // Re-throw the error to propagate it if needed
     }
-  };
+};
 
 // Password complexity validation function
 export const isPasswordValid = (newPassword) => {
@@ -275,28 +259,24 @@ export const isPasswordValid = (newPassword) => {
 };
 
 // Forgot password function
-export const ForgotPasswordFunction = () => {
-    console.log("Forgot password");
+export const ForgotPasswordFunction = async (email) => {
+    console.log("Forgot password", email);
+    try {
+        const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/reset-password`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email }),
+            });
+        const response = await apiUrl.json();
+
+        alert("Email for password reset has been sent")
+        // Handle the response here
+        console.log('Server Response:', response);
+    } catch (error) {
+        console.log("Error resetting password", error);
+    }
+
 }
-
-
-
-// export const EmailVerification = () => {
-//     useEffect(() => {
-//       if (auth.currentUser) {
-//         const actionCodeSettings = {
-//           // Replace 'https://your-app-url/verify-email' with the actual URL of your verification page
-//           url: 'https://edutech-app-eecfd-default-rtdb.firebaseio.com/verify-email?uid=' + auth.currentUser.uid,
-//           handleCodeInApp: true,
-//         };
-//         sendEmailVerification(auth.currentUser, actionCodeSettings)
-//           .then(() => {
-//             console.log('Email verification sent');
-//           })
-//           .catch((error) => {
-//             console.error('Error sending email verification', error);
-//           });
-//       }
-//     }, [auth.currentUser]);
-//   };
-

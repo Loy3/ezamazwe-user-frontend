@@ -7,6 +7,7 @@ import SignIn from './Pages/SignIn';
 import ProfileSetup from './Pages/ProfileSetup';
 import EditProfile from './Pages/EditProfile';
 import ResetPassword from './Pages/ResetPassword';
+import ForgotPassword from './Pages/ForgotPassword';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Route path="/profilesetup" element={<ProfileSetup />} />
             <Route path="/editprofile" element={<EditProfile />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
           </Routes>
       </Router>
   );
