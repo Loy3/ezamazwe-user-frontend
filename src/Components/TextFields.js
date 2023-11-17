@@ -1,5 +1,5 @@
 import InputLabel from '@mui/material/InputLabel';
-import { Box, IconButton, InputAdornment, Link, OutlinedInput } from '@mui/material';
+import { Box, IconButton, InputAdornment, Link, OutlinedInput, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 // import { makeStyles } from '@material-ui/core/styles';
@@ -24,7 +24,11 @@ export default function TextFields({ label, errorStatus, errorMessage, setState,
                     }
                 }} onChange={(e) => setState(e.target.value)} disabled={disabled} />
                 {errorStatus ?
-                    <InputLabel sx={{ color: "warning.main", fontSize: "12px", marginTop: "10px", marginLeft: "5px" }}>{errorMessage}</InputLabel>
+                    <>
+                        <Typography sx={{ color: "warning.main", fontSize: "12px", marginTop: "10px", marginLeft: "5px" }} variant="subtitle2" component="h2">
+                        {errorMessage}
+                        </Typography>
+                    </>
                     : null}
             </Box>
         </>
@@ -90,7 +94,10 @@ export const TextFieldPassword = ({ label, errorStatus, errorMessage, setState, 
                         }
                     }} onChange={(e) => setState(e.target.value)} />
                 {errorStatus ?
-                    <InputLabel sx={{ color: "warning.main", fontSize: 11, marginTop: "10px", marginLeft: "5px" }}>{errorMessage}</InputLabel>
+                <Typography sx={{ color: "warning.main", fontSize: "12px", marginTop: "10px", marginLeft: "5px" }} variant="subtitle2" component="h2">
+                {errorMessage}
+                </Typography>
+                    // <InputLabel sx={{ color: "warning.main", fontSize: 11, marginTop: "10px", marginLeft: "5px" }}>{errorMessage}</InputLabel>
                     : null}
                 {isSignin ?
                     <Box sx={{ width: "97%", textAlign: "right", marginTop: "5px" }}>
