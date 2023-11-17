@@ -56,7 +56,8 @@ function Profile() {
                 <Box style={{  padding: theme.spacing(3),paddingTop:theme.spacing(3)}}>
                 <TextFields label={"Email Address:"} errorStatus={emailErr} errorMessage={"Field Required!"} setState={setEmail} />
                 </Box>
-      
+                <Box style={{textAlign: 'end', marginTop:'10px'}}><Link href="#">Reset password?</Link></Box>
+                
                 <Box style={{ paddingTop: theme.spacing(4), display:'flex',flexDirection:'column',alignItems:'center',gap:15}}>
                 <Button text={"Submit"} buttonFunction={testingFunc} /></Box>
                
