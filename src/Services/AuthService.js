@@ -164,6 +164,24 @@ export const isPasswordValid = (newPassword) => {
 };
 
 // Forgot password function
-export const ForgotPasswordFunction = () => {
-    console.log("Forgot password");
+export const ForgotPasswordFunction = async (email) => {
+    // console.log("Forgot password", email);
+    try {
+        const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/reset-password`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email }),
+            });
+        const response = await apiUrl.json();
+
+        // alert("Email for password reset has been sent")
+        // Handle the response here
+        // console.log('Server Response:', response);
+    } catch (error) {
+        console.log("Error resetting password", error);
+    }
+
 }

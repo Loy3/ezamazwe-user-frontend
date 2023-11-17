@@ -6,6 +6,7 @@ import SetUpProfile from './Pages/SetUpProfile';
 import SignIn from './Pages/SignIn';
 import SignUp from './Pages/SignUp';
 import ResetPassword from './Pages/ResetPassword';
+import ForgotPassowrd from './Pages/ForgotPassowrd';
 // import TextFields from './Components/TextFields';
 // import {TextFieldPassword} from './Components/TextFields';
 // import Button from "./Components/Buttons";
@@ -60,6 +61,8 @@ function App() {
           <Route path='/signup' element={<SignUp />} />
           <Route path='/profilesetup' element={<SetUpProfile />} />
           <Route path='/reset' element={<ResetPassword/>} />
+          <Route path='/forgot' element={<ForgotPassowrd/>} />
+          ForgotPassowrd
         </Routes>
       </BrowserRouter>
     </>
