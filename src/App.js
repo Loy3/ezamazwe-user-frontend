@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 // import {  Routes, Route,  BrowserRouter } from 'react-router-dom';
-// import Login from './Pages/Login';
+//import Login from './Pages/Login';
 // import SignUp from './Pages/SignUp'
-// import Profile from './Pages/Profile';
-import Reset from './Pages/ResetPassword'
+ import Profile from './Pages/Profile';
+//import Reset from './Pages/ResetPassword'
 
 function App() {
 
@@ -18,7 +18,7 @@ function App() {
     //   </Routes>
     // </BrowserRouter>
     <>
-    <Reset/>
+    <Profile/>
     </>
   );
 }

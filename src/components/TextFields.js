@@ -48,7 +48,6 @@ export const TextFieldPassword = ({ label, errorStatus, errorMessage, setState }
                 {errorStatus ?
                     <InputLabel sx={{ color: "warning.main", fontSize: 12, marginTop: "10px", marginLeft: "5px" }}>{errorMessage}</InputLabel>
                     : null}
-                    <Box style={{textAlign: 'end', marginTop:'10px'}}><Link href="#">Forgot password?</Link></Box>
             </Box>
         </>
     )

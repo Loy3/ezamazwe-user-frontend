@@ -46,9 +46,8 @@ function Login() {
                 <Box style={{  padding: theme.spacing(3),paddingTop:theme.spacing(3)}}>
                 <TextFieldPassword label={"Password:"} errorStatus={passwordErr} errorMessage={"Field Required!"} setState={setPassword}  />
                 </Box>
+                <Box style={{textAlign: 'end', marginTop:'10px'}}><Link href="#">Forgot password?</Link></Box>
                 
-                
-                {/* <Box style={{  textAlign: 'center', paddingTop:theme.spacing(5),paddingBottom:theme.spacing(5)}}> */}
                 <Box style={{ paddingTop: theme.spacing(4), display:'flex',flexDirection:'column',alignItems:'center',gap:15}}>
                 <Button text={"Sign In"} buttonFunction={testingFunc} />
             

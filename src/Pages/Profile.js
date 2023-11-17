@@ -13,12 +13,9 @@ function Profile() {
 
   const [email, setEmail]= useState("");
   const [fname, setFname]= useState("");
-  const [lname, setLname]= useState("");
-  const [Pnumber, setPnumber]= useState("");
-
   const [emailErr, setEmailErr]= useState(false);
   const [passwordErr, setPasswordErr]= useState(false);
-  
+
   function testingFunc() {
       if (!email ) {
           setEmailErr(true)

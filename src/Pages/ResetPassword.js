@@ -1,23 +1,31 @@
 import React, { useState } from 'react'
 import Paper from '@mui/material/Paper';
 import { Box,} from '@mui/material';
-import TextFields from '../Components/TextFields'
 import Button from '../Components/Buttons'
 import SectionHeading from '../Components/SectionHeading';
 import SectionSubHeading from '../Components/SectionSubHeading';
 import { theme } from '../Theme/theme';
+import { TextFieldPassword } from '../Components/TextFields';
 
 function Reset() {
 
     const [email, setEmail]= useState("");
+    const [password, setPassword]= useState("");
     const [emailErr, setEmailErr]= useState(false);
-  
+    const [passwordErr, setPasswordErr]= useState(false);
+    
     
     function testingFunc() {
         if (!email ) {
             setEmailErr(true)
         }else{
             setEmailErr(false)
+        }
+    
+        if (!password ) {
+            setPasswordErr(true)
+        }else{
+            setPasswordErr(false)
         }
       }
 
@@ -32,13 +40,13 @@ function Reset() {
                 <SectionSubHeading children={"Reset Password"}   />
                 </div>
                 <Box style={{  padding: theme.spacing(3),paddingTop:theme.spacing(3)}}>
-                <TextFields label={"Current Password:"} errorStatus={emailErr} errorMessage={"Field Required!"} setState={setEmail} />
+                <TextFieldPassword label={" Current Password:"} errorStatus={passwordErr} errorMessage={"Field Required!"} setState={setPassword}  />
                 </Box>
                 <Box style={{  padding: theme.spacing(3),paddingTop:theme.spacing(3)}}>
-                <TextFields label={"New Password:"} errorStatus={emailErr} errorMessage={"Field Required!"} setState={setEmail} />
+                <TextFieldPassword label={" New Password:"} errorStatus={passwordErr} errorMessage={"Field Required!"} setState={setPassword}  />
                 </Box>
                 <Box style={{  padding: theme.spacing(3),paddingTop:theme.spacing(3)}}>
-                <TextFields label={"Confirm Password:"} errorStatus={emailErr} errorMessage={"Field Required!"} setState={setEmail} />
+                <TextFieldPassword label={"Confirm Password:"} errorStatus={passwordErr} errorMessage={"Field Required!"} setState={setPassword}  />
                 </Box>
                 <Box style={{ paddingTop: theme.spacing(4), display:'flex',flexDirection:'column',alignItems:'center',gap:15}}>
                 <Button text={"Reset"} buttonFunction={testingFunc} />
