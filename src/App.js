@@ -4,6 +4,7 @@ import './App.css';
 //import Login from './Pages/Login';
 // import SignUp from './Pages/SignUp'
  import Profile from './Pages/Profile';
+import ForgotPassword from './Pages/ForgotPassword';
 //import Reset from './Pages/ResetPassword'
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
     //   </Routes>
     // </BrowserRouter>
     <>
-    <Profile/>
+    <ForgotPassword/>
     </>
   );
 }
