@@ -35,10 +35,10 @@ function Reset() {
                 <TextFields label={"Current Password:"} errorStatus={emailErr} errorMessage={"Field Required!"} setState={setEmail} />
                 </Box>
                 <Box style={{  padding: theme.spacing(3),paddingTop:theme.spacing(3)}}>
-                <TextFields label={"Comfirm Password:"} errorStatus={emailErr} errorMessage={"Field Required!"} setState={setEmail} />
+                <TextFields label={"New Password:"} errorStatus={emailErr} errorMessage={"Field Required!"} setState={setEmail} />
                 </Box>
                 <Box style={{  padding: theme.spacing(3),paddingTop:theme.spacing(3)}}>
-                <TextFields label={"Email Address:"} errorStatus={emailErr} errorMessage={"Field Required!"} setState={setEmail} />
+                <TextFields label={"Confirm Password:"} errorStatus={emailErr} errorMessage={"Field Required!"} setState={setEmail} />
                 </Box>
                 <Box style={{ paddingTop: theme.spacing(4), display:'flex',flexDirection:'column',alignItems:'center',gap:15}}>
                 <Button text={"Reset"} buttonFunction={testingFunc} />
