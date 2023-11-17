@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ResetPasswordFunction } from '../Services/AuthService';
 import { isPasswordValid } from '../Services/AuthService';
 import { auth } from '../Services/firebaseConfig';
@@ -10,6 +10,11 @@ const ResetPassword = () => {
   const [password1, setPassword1] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const user = auth.currentUser;
+
+  useEffect(()=>{
+    console.log("User:", user);
+  })
+  
   const navigate = useNavigate();
 
   const handleResetPassword = async () => {
@@ -32,11 +37,9 @@ const ResetPassword = () => {
     } catch (error) {
         console.log("Error occured at reset password function:", error);
     } 
-    
   };
 
   
-
   return (
     <div>
       <h2>Password Reset</h2>
