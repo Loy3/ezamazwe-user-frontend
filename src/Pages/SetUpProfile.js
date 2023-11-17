@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import Paper from '@mui/material/Paper';
-import { Box, Link } from '@mui/material';
+// import { Box, Link } from '@mui/material';
+import { Box } from '@mui/material';
 import TextFields from '../Components/TextFields'
 import Button, { ImageButton } from '../Components/Buttons'
-import { TextFieldPassword } from '../Components/TextFields';
-import SectionHeading from '../Components/SectionHeading';
+// import { TextFieldPassword } from '../Components/TextFields';
+// import SectionHeading from '../Components/SectionHeading';
 import SectionSubHeading from '../Components/SectionSubHeading';
 import { theme } from '../Theme/theme';
 import { ProfileSetupFunction } from '../Services/AuthService';
@@ -49,7 +50,7 @@ function SetUpProfile({ user }) {
         // console.log(userId, firstName, lastName, email, pNumber, userImage);
 
         if (userId && firstName && lastName && email && pNumber && userImage) {
-            // ProfileSetupFunction(userId, firstName, lastName, email, pNumber, userImage);
+            ProfileSetupFunction(userId, firstName, lastName, email, pNumber, userImage);
         } else {
             // alert("Something went wrong.")
 

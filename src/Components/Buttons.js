@@ -37,7 +37,15 @@ export const ImageButton = ({ handleImage, imageSrc }) => {
                     </>
                     :
                     <>
-                        <img src={`${imageSrc}`} alt="imgS" id="image" style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "100%" }} />
+                        
+                     
+                        <Button component="label" sx={{ width: "100%", height: "100%", borderRadius: "100%", backgroundColor: "primary.light" }}>
+                        <VisuallyHiddenInput sx={{zIndex:"50"}} type="file" onChange={event => handleImage(event)} />
+                        <img src={`${imageSrc}`} alt="imgS" id="image" style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "100%", borderColor: "#fff", borderWidth: "2px" }} />
+                        </Button>
+                        <Box sx={{ width: "30px", height: "30px", backgroundColor: "primary.light", borderRadius: "100%", position: "absolute", right: "5px", bottom: "-5px" }} >
+                            <AddCircleIcon sx={{ color: "#fff", width: "94%", height: "94%", marginLeft: "4%", marginTop: "4%" }} />
+                        </Box>
                     </>
                 }
             </Box>

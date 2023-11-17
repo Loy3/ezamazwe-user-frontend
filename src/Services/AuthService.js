@@ -1,13 +1,19 @@
 
 // Imports from the firebase config file
 import { db, auth, storage } from './firebaseConfig';
-import { addDoc, collection, doc, updateDoc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
+// import { addDoc, collection, doc, updateDoc, setDoc, getDoc } from "firebase/firestore";
+// import {
+//     createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification
+// } from 'firebase/auth';
 import {
-    createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification
+    createUserWithEmailAndPassword, signInWithEmailAndPassword
 } from 'firebase/auth';
-import { getStorage, ref, uploadBytes, list, getDownloadURL } from "firebase/storage";
+// import { getStorage, ref, uploadBytes, list, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
-import { getAuth, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
+// import { getAuth, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
+import { reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
 
 
 // Sign in function
@@ -177,11 +183,10 @@ export const ForgotPasswordFunction = async (email) => {
             });
         const response = await apiUrl.json();
 
-        // alert("Email for password reset has been sent")
+        alert("Email for password reset has been sent");
         // Handle the response here
-        // console.log('Server Response:', response);
+        console.log('Server Response:', response);
     } catch (error) {
         console.log("Error resetting password", error);
     }
-
 }
