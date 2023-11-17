@@ -45,7 +45,43 @@ function SetUpProfile({ user }) {
 
     async function setUpUser() {
         const userId = userData;
-        ProfileSetupFunction(userId, firstName, lastName, email, pNumber, userImage);
+
+        // console.log(userId, firstName, lastName, email, pNumber, userImage);
+
+        if (userId && firstName && lastName && email && pNumber && userImage) {
+            // ProfileSetupFunction(userId, firstName, lastName, email, pNumber, userImage);
+        } else {
+            // alert("Something went wrong.")
+
+            if (!firstName) {
+                setFirstNameErr(true);
+                setFirstNameErrMsg("*input is required.")
+            } else {
+                setFirstNameErr(false);
+                setFirstNameErrMsg("")
+            }
+
+            if (!lastName) {
+                setLastNameErr(true);
+                setLastNameErrMsg("*input is required.")
+            } else {
+                setLastNameErr(false);
+                setLastNameErrMsg("")
+            }
+
+            if (!pNumber) {
+                setPnumberErr(true);
+                setPnumberErrMsg("*input is required.")
+            } else {
+                setPnumberErr(false);
+                setPnumberErrMsg("")
+            }
+
+            if (!userImage) {
+                alert("Click on the icon to add a image")
+            }
+        }
+
     }
 
 

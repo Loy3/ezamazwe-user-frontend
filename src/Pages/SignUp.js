@@ -80,7 +80,7 @@ function SignUp() {
     //Validation
 
     const handleSignup = async () => {
-        // navigate('/profilesetup', { state: { user: "scxIk6bUWMSngdL5CyzsUNYzZAS2", email: email } });
+        // navigate('/profilesetup', { state: { user: "scxIk6bUWMSngdL5CyzsUNYzZAS2", email: "loy@yahoo.com" } });
         try {
             const user = await SignupFunction(email, password);
             console.log('User data in signup component:', user);
