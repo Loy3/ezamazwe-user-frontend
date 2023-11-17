@@ -48,7 +48,7 @@ function ForgotPassword() {
                     </Box>
                     <Box style={{ paddingTop: theme.spacing(4), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 15 }}>
                         <Button text={"Submit"} buttonFunction={handleForgotPassword} />
-                        <p style={{ color: primaryMainColor, paddingLeft: theme.spacing(3), width: '60%' }}> You will recieve a reset password link in your email if provided email is recognized.</p>
+                        <p style={{ color: primaryMainColor, paddingLeft: theme.spacing(3), width: '70%', textAlign:"center" }}> You will recieve a reset password link in your email if provided email is recognized.</p>
                     </Box>
 
                 </Paper>

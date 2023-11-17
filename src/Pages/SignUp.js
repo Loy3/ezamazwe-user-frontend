@@ -119,7 +119,7 @@ function SignUp() {
                     <Box style={{ paddingTop: theme.spacing(4), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 15 }}>
                         <Button text={"Sign Up"} buttonFunction={handleSignup} />
 
-                        <Link href="/">Don't have an account? Sign Up</Link></Box>
+                        <Link href="/">Already have an account? Sign In</Link></Box>
 
                 </Paper>
             </div>

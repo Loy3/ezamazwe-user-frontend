@@ -26,7 +26,7 @@ export default function TextFields({ label, errorStatus, errorMessage, setState,
                 {errorStatus ?
                     <>
                         <Typography sx={{ color: "warning.main", fontSize: "12px", marginTop: "10px", marginLeft: "5px" }} variant="subtitle2" component="h2">
-                        {errorMessage}
+                            {errorMessage}
                         </Typography>
                     </>
                     : null}
@@ -94,21 +94,18 @@ export const TextFieldPassword = ({ label, errorStatus, errorMessage, setState, 
                         }
                     }} onChange={(e) => setState(e.target.value)} />
                 {errorStatus ?
-                <Typography sx={{ color: "warning.main", fontSize: "12px", marginTop: "10px", marginLeft: "5px" }} variant="subtitle2" component="h2">
-                {errorMessage}
-                </Typography>
+                    <Typography sx={{ color: "warning.main", fontSize: "12px", marginTop: "10px", marginLeft: "5px" }} variant="subtitle2" component="h2">
+                        {errorMessage}
+                    </Typography>
                     // <InputLabel sx={{ color: "warning.main", fontSize: 11, marginTop: "10px", marginLeft: "5px" }}>{errorMessage}</InputLabel>
                     : null}
                 {isSignin ?
                     <Box sx={{ width: "97%", textAlign: "right", marginTop: "5px" }}>
-                        <Link style={{ width: "100%", textAlign: "right", cursor: "pointer", fontSize: "16px", fontWeight: "400", }}>
+                        <Link  href="/forgot" style={{ width: "100%", textAlign: "right", cursor: "pointer", fontSize: "16px", fontWeight: "400", }}>
                             Forgot Your password?
                         </Link>
                     </Box>
                     : null}
-
-                <Link >
-                </Link>
             </Box>
         </>
     )

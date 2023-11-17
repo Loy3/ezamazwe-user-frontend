@@ -8,8 +8,10 @@ import SectionHeading from '../Components/SectionHeading';
 import SectionSubHeading from '../Components/SectionSubHeading';
 import { SigninFunction } from '../Services/AuthService';
 import { theme } from '../Theme/theme';
+import { useNavigate } from "react-router-dom";
 
 function SignIn() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
    
@@ -37,8 +39,9 @@ function SignIn() {
             }
 
             if (email && password) {
-                const user = await SigninFunction(email, password);
+                const user = await SigninFunction(email, password)
                 console.log('User signed in:', user);
+                // navigate("/land")
             }
 
         } catch (error) {
@@ -57,7 +60,7 @@ function SignIn() {
                     }}>
                         <Box style={{ paddingBottom: theme.spacing(4) }}>
                             <SectionHeading children={"EZAMAZWE EDUTECH"} /></Box>
-                        <SectionSubHeading children={"Login to your account"} />
+                        <SectionSubHeading children={"Sign in to your account"} />
                     </div>
                     <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
                         <TextFields label={"Email Address:"} errorStatus={emailErr} errorMessage={emailErrMsg} setState={setEmail} />
@@ -69,7 +72,8 @@ function SignIn() {
                     <Box style={{ paddingTop: theme.spacing(4), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 15 }}>
                         <Button text={"Sign In"} buttonFunction={handleSignIn} />
 
-                        <Link href="SignUp">Don't have an account? Sign Up</Link></Box>
+                        <Link href="SignUp">Don't have an account? Sign Up</Link>
+                        </Box>
 
                 </Paper>
             </div>
