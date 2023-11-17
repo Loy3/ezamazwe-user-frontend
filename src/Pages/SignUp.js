@@ -51,7 +51,7 @@ function SignUp() {
                 setPasswordErrMsg("Password length should be more than 8.");
             } else if (!new_pass.match(specialChar)) {
                 setPasswordErr(true)
-                setPasswordErrMsg("Password should contain at least 1 special character");
+                setPasswordErrMsg("Password should contain at least 1 special character (e.g. !@#$%^&*).");
             } else {
                 setPasswordErrMsg("Password is strong!");
                 setPasswordErr(false)

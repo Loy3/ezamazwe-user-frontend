@@ -41,7 +41,9 @@ function SignIn() {
             if (email && password) {
                 const user = await SigninFunction(email, password)
                 console.log('User signed in:', user);
-                // navigate("/land")
+               if(user !== undefined){
+                 navigate("/land")
+               }
             }
 
         } catch (error) {

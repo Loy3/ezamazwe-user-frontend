@@ -10,8 +10,10 @@ import SectionSubHeading from '../Components/SectionSubHeading';
 import { theme } from '../Theme/theme';
 import { ProfileSetupFunction } from '../Services/AuthService';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function SetUpProfile({ user }) {
+    const navigate = useNavigate();
     const location = useLocation();
     const userData = location.state.user;
     const userEmail = location.state.email;
@@ -50,7 +52,9 @@ function SetUpProfile({ user }) {
         // console.log(userId, firstName, lastName, email, pNumber, userImage);
 
         if (userId && firstName && lastName && email && pNumber && userImage) {
-            ProfileSetupFunction(userId, firstName, lastName, email, pNumber, userImage);
+            await ProfileSetupFunction(userId, firstName, lastName, email, pNumber, userImage).then(()=>{
+                 navigate("/land")
+            })           
         } else {
             // alert("Something went wrong.")
 

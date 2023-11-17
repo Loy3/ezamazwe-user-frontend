@@ -160,7 +160,7 @@ export const isPasswordValid = (newPassword) => {
     } else if (newPassword.length < 8) {
         message = "Password length should be more than 8.";
     } else if (!newPassword.match(specialChar)) {
-        message = "Password should contain at least 1 special character";
+        message = "Password should contain at least 1 special character (e.g. !@#$%^&*).";
     } else {
         message = "Password is strong!";
     }
