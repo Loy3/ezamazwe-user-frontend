@@ -6,6 +6,7 @@ import { auth } from '../Services/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
+  const [currentPassword, setCurrentPassword] = useState('');
   const [password1, setPassword1] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const user = auth.currentUser;
@@ -39,12 +40,17 @@ const ResetPassword = () => {
   return (
     <div>
       <h2>Password Reset</h2>
-      <label>Enter password: <br></br>
+      <label>Current password: <br></br>
+        <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
+      </label>
+      <br />
+      <br></br>
+      <label>New password: <br></br>
         <input type="password" value={password1} onChange={(e) => setPassword1(e.target.value)} />
       </label>
       <br />
       <br></br>
-      <label>Re-enter password: <br></br>
+      <label>Confirm password: <br></br>
         <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
       </label>
       <br></br>

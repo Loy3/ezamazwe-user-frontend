@@ -25,7 +25,7 @@ const SignIn = () => {
       navigate('/editprofile', { state: { user: user_id } });
     } catch(error) {
       console.log("Unable to log in:", error);
-    }
+    } 
     
   };
 
