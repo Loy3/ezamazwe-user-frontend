@@ -8,8 +8,6 @@ import { useLocation } from 'react-router-dom';
 
 const ProfileSetup = ({ user }) => {
 
-
-
   const location = useLocation();
   const userData = location.state.user;
 

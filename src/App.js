@@ -8,6 +8,7 @@ import ProfileSetup from './Pages/ProfileSetup';
 import EditProfile from './Pages/EditProfile';
 import ResetPassword from './Pages/ResetPassword';
 import ForgotPassword from './Pages/ForgotPassword';
+import VerificationPage from './Pages/VerificationPage';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path="/editprofile" element={<EditProfile />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/verification" element={<VerificationPage />} />
           </Routes>
       </Router>
   );

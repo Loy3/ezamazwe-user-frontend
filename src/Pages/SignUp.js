@@ -16,7 +16,9 @@ const SignUp = () => {
       const user_id = user.uid;
       console.log('User id in signup component:', user_id);
 
-      navigate('/profilesetup', { state: { user: user_id } });
+      alert('User signed up');
+
+      navigate('/verification', { state: { user: user.email } });
    
     } catch (error) {
       console.error('Error during signup:', error.message);

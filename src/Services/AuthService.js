@@ -93,20 +93,11 @@ export const SignupFunction = async (email, password) => {
                 // Handle the response here
                 console.log('Server Response:', response);
 
-                // Example: Show a success message or perform additional actions based on the response
-                if (response.success) {
-                    console.log('Email verification initiated successfully.');
-                    alert("Email verification initiated successfully.")
-                } else {
-                    console.error('Email verification failed:', response.error);
-                    alert('Email verification failed:');
-                }
             } catch (error) {
                 console.error('Error during email verification:', error);
             }
         }
 
-        alert('User signed up');
         return user; // Return the user data
 
     } catch (error) {
@@ -116,8 +107,38 @@ export const SignupFunction = async (email, password) => {
     }
 };
 
+export const CheckVerificationFunction = async (email) => {
+
+    try {
+        const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/check-email-verification`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email }),
+            });
+        const response = await apiUrl.json();
+
+        // Handle the response here
+        console.log('Server Verification Response:', response);
+
+        // Show a success message or perform additional actions based on the response
+        if (response.success) {
+            console.log('Email verification initiated successfully.');
+            alert("Email verification initiated successfully.")
+        } else {
+            console.error('Email verification failed:', response.error);
+            alert('Email verification failed.');
+        }
+
+    } catch (error) {
+        console.log("Error checking verification:", error);
+    }
+
+}
+
 // Sign in function
-// export const SigninFunction = async (email, password) => {
 export const SigninFunction = async (email, password) => {
 
     try {
