@@ -13,12 +13,14 @@ const SignUp = () => {
     try {
       const user = await SignupFunction(email, password);
       console.log('User data in signup component:', user);
+      const user_email = user.email;
       const user_id = user.uid;
       console.log('User id in signup component:', user_id);
+      console.log('User email in signup component:', user_email);
 
       alert('User signed up');
 
-      navigate('/verification', { state: { user: user.email } });
+      navigate('/verification', { state: { userId: user_id,  userEmail: user_email } });
    
     } catch (error) {
       console.error('Error during signup:', error.message);

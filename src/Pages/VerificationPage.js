@@ -4,11 +4,13 @@ import { CheckVerificationFunction } from '../Services/AuthService';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-const VerificationPage = (user) => {
+const VerificationPage = ({userId, userEmail}) => {
 
   const location = useLocation();
-  const email = location.state.user;
+  const id = location.state.userId;
+  const email = location.state.userEmail;
 
+  console.log("User id:", id);
   console.log("User email:", email);
 
   const [verificationStatus, setVerificationStatus] = useState('');
@@ -33,8 +35,7 @@ const VerificationPage = (user) => {
       setStatus(true);
 
       // Navigate to profile setup
-      // navigate('/profilesetup', { state: { user: user_id } });
-
+      navigate('/profilesetup', { state: { user: id } });
 
     } catch (error) {
       console.error('Error verifying account:', error.message);
