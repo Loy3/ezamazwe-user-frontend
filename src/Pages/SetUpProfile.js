@@ -16,8 +16,8 @@ function SetUpProfile({ setToProfileStatus }) {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
     const navigate = useNavigate();
     const location = useLocation();
-    const userData = location.state.user;
-    const userEmail = location.state.email;
+    const userData = location.state.userId;
+    const userEmail = location.state.userEmail;
 
     const [email, setEmail] = useState(userEmail);
     const [firstName, setFirstName] = useState("");

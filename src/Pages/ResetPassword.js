@@ -68,7 +68,7 @@ function ResetPassword() {
                 setNewPasswordErrMsg("")
             }
 
-            if (newPassword != confirmPassword) {
+            if (newPassword !== confirmPassword) {
                 setNewPasswordErr(true);
                 setNewPasswordErrMsg("Passwords do not match")
                 setConfrimPasswordErr(true);
@@ -82,8 +82,9 @@ function ResetPassword() {
                 setConfrimPasswordErr(false);
                 setConfrimPasswordErrMsg("");
                 try {
-                    await ResetPasswordFunction(user, currentPassword, newPassword);
-                    navigate('');
+                    await ResetPasswordFunction(user, currentPassword, newPassword).then(()=>{
+                        navigate('');
+                    })                   
 
                 } catch (error) {
                     console.log("Error occured at reset password function:", error);

@@ -101,7 +101,7 @@ export const TextFieldPassword = ({ label, errorStatus, errorMessage, setState, 
                     : null}
                 {isSignin ?
                     <Box sx={{ width: "97%", textAlign: "right", marginTop: "5px" }}>
-                        <Link href="/forgot" style={{ width: "100%", textAlign: "right", cursor: "pointer", fontSize: isSmallScreen ? "14px" : "16px", fontWeight: "400", }}>
+                        <Link href="forgot" style={{ width: "100%", textAlign: "right", cursor: "pointer", fontSize: isSmallScreen ? "14px" : "16px", fontWeight: "400", }}>
                             Forgot Your password?
                         </Link>
                     </Box>

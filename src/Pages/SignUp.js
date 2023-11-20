@@ -89,7 +89,9 @@ function SignUp({setToProfileStatus}) {
             const user_id = user.uid;
             // console.log('User id in signup component:', user_id);
             setToProfileStatus(true)
-            navigate('profilesetup', { state: { user: user_id, email: email } });
+            navigate('verification', { state: { userId: user_id,  userEmail: email } });
+            
+            // navigate('profilesetup', { state: { user: user_id, email: email } });
 
 
         } catch (error) {

@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom';
 const VerificationPage = ({userId, userEmail}) => {
 
   const location = useLocation();
+
   const id = location.state.userId;
   const email = location.state.userEmail;
 
@@ -33,9 +34,9 @@ const VerificationPage = ({userId, userEmail}) => {
       // Update the verification status
       setVerificationStatus('Account verified successfully!');
       setStatus(true);
-
+// console.log(id, email);
       // Navigate to profile setup
-      navigate('/profilesetup', { state: { user: id } });
+    //   navigate('/profilesetup', { state: { userId: id },  userEmail: email });
 
     } catch (error) {
       console.error('Error verifying account:', error.message);

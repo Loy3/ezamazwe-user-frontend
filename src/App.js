@@ -8,6 +8,7 @@ import SignUp from './Pages/SignUp';
 import ResetPassword from './Pages/ResetPassword';
 import ForgotPassowrd from './Pages/ForgotPassowrd';
 import LandingPage from './Pages/LandingPage';
+import VerificationPage from './Pages/VerificationPage';
 // import TextFields from './Components/TextFields';
 // import {TextFieldPassword} from './Components/TextFields';
 // import Button from "./Components/Buttons";
@@ -64,6 +65,7 @@ function App() {
           <Route path='reset' element={<ResetPassword/>} />
           <Route path='forgot' element={<ForgotPassowrd/>} />
           <Route path='home' element={<LandingPage/>} />
+          <Route path='verification' element={<VerificationPage/>} />
         </Routes>
       </BrowserRouter>
     </>

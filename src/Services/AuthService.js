@@ -53,9 +53,9 @@ export const SignupFunction = async (email, password) => {
     }
 };
 export const CheckVerificationFunction = async (email) => {
-
+console.log(email);
     try {
-        const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/check-email-verification`,
+        const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/check-email-verification`,   
             {
                 method: 'POST',
                 headers: {

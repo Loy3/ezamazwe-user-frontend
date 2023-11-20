@@ -78,7 +78,7 @@ function SignIn() {
 
                         <Box sx={{ display: "flex", flexDirection: "row" }}>
                             <Typography sx={{ fontSize: isSmallScreen ? "14px" : "16px" }}>Don't have an account?</Typography>
-                            <Link href="./signup" sx={{ marginLeft: "5px", fontSize: isSmallScreen ? "14px" : "16px" }}> Sign Up</Link>
+                            <Link href="signup" sx={{ marginLeft: "5px", fontSize: isSmallScreen ? "14px" : "16px" }}> Sign Up</Link>
                         </Box>
 
                     </Box>
