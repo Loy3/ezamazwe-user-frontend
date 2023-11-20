@@ -28,7 +28,7 @@ const VerificationPage = ({ userId, userEmail }) => {
         try {
 
             // Verify and activate the user
-            await CheckVerificationFunction(email);
+            await CheckVerificationFunction(email);  
 
             // Update the verification status
             setVerificationStatus('Account verified successfully!');

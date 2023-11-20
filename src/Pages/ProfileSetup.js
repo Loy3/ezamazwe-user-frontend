@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { ProfileSetupFunction } from '../Services/AuthService';
 import { UploadImageFunction } from '../Services/AuthService';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileSetup = ({ user }) => {
 
@@ -21,6 +22,8 @@ const ProfileSetup = ({ user }) => {
   const [imageUpload, setImageUpload] = useState(null);
   const [userId, setUserId] = useState(userData);
 
+  const nav = useNavigate();
+
 
   const handleUploadImage = async () => {
     try {
@@ -35,6 +38,8 @@ const ProfileSetup = ({ user }) => {
     try {
       // Assuming other parameters are set or received
       await ProfileSetupFunction(userId, firstName, lastName, userEmail, phoneNum, imageURL);
+      alert("Successfully created your profile");
+      nav('/homepage')
 
     } catch (error) {
       console.error('Error during profile setup:', error.message);

@@ -9,6 +9,7 @@ import EditProfile from './Pages/EditProfile';
 import ResetPassword from './Pages/ResetPassword';
 import ForgotPassword from './Pages/ForgotPassword';
 import VerificationPage from './Pages/VerificationPage';
+import HomePage from './Pages/HomePage';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/resetpassword" element={<ResetPassword />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/verification" element={<VerificationPage />} />
+            <Route path="/homepage" element={<HomePage />} />
           </Routes>
       </Router>
   );
