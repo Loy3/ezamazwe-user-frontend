@@ -81,20 +81,20 @@ function SignUp() {
     //Validation
 
     const handleSignup = async () => {
-        navigate('/profilesetup', { state: { user: "scxIk6bUWMSngdL5CyzsUNYzZAS2", email: "loy@yahoo.com" } });
-        // try {
-        //     const user = await SignupFunction(email, password);
-        //     console.log('User data in signup component:', user);
+        // navigate('/profilesetup', { state: { user: "scxIk6bUWMSngdL5CyzsUNYzZAS2", email: "loy@yahoo.com" } });
+        try {
+            const user = await SignupFunction(email, password);
+            console.log('User data in signup component:', user);
 
-        //     const user_id = user.uid;
-        //     console.log('User id in signup component:', user_id);
+            const user_id = user.uid;
+            console.log('User id in signup component:', user_id);
 
-        //     navigate('/profilesetup', { state: { user: user_id, email: email } });
+            navigate('/profilesetup', { state: { user: user_id, email: email } });
 
 
-        // } catch (error) {
-        //     console.error('Error during signup:', error.message);
-        // }
+        } catch (error) {
+            console.error('Error during signup:', error.message);
+        }
     };
 
     return (
