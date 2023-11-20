@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Paper from '@mui/material/Paper';
-import { Box, Link } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import TextFields from '../Components/TextFields'
 import Button from '../Components/Buttons'
 import { TextFieldPassword } from '../Components/TextFields';
@@ -14,7 +14,7 @@ function SignIn() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-   
+
     const [emailErr, setEmailErr] = useState(false);
     const [passwordErr, setPasswordErr] = useState(false);
     const [emailErrMsg, setEmailErrMsg] = useState("");
@@ -41,9 +41,9 @@ function SignIn() {
             if (email && password) {
                 const user = await SigninFunction(email, password)
                 console.log('User signed in:', user);
-               if(user !== undefined){
-                 navigate("/land")
-               }
+                if (user !== undefined) {
+                    navigate("/land")
+                }
             }
 
         } catch (error) {
@@ -68,14 +68,18 @@ function SignIn() {
                         <TextFields label={"Email Address:"} errorStatus={emailErr} errorMessage={emailErrMsg} setState={setEmail} />
                     </Box>
                     <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
-                        <TextFieldPassword label={"Password:"} errorStatus={passwordErr} errorMessage={passwordErrMsg} setState={setPassword} isSignin={true}/>
+                        <TextFieldPassword label={"Password:"} errorStatus={passwordErr} errorMessage={passwordErrMsg} setState={setPassword} isSignin={true} />
                     </Box>
 
                     <Box style={{ paddingTop: theme.spacing(4), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 15 }}>
                         <Button text={"Sign In"} buttonFunction={handleSignIn} />
 
-                        <Link href="SignUp">Don't have an account? Sign Up</Link>
+                        <Box sx={{ display: "flex", flexDirection: "row" }}>
+                            <Typography>Don't have an account?</Typography>
+                            <Link href="/signup" sx={{marginLeft:"5px"}}> Sign Up</Link>
                         </Box>
+
+                    </Box>
 
                 </Paper>
             </div>
