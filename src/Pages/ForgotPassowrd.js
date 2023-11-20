@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react'
 import Paper from '@mui/material/Paper';
-import { Box, Link } from '@mui/material';
+import { Box, Link, useMediaQuery } from '@mui/material';
 import TextFields from '../Components/TextFields'
 import Button from '../Components/Buttons'
 import { TextFieldPassword } from '../Components/TextFields';
@@ -13,6 +13,7 @@ import env from 'react-dotenv';
 import { ForgotPasswordFunction } from '../Services/AuthService';
 
 function ForgotPassword() {
+    const isSmallScreen = useMediaQuery("(max-width:600px)");
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [emailErr, setEmailErr] = useState(false);
@@ -35,20 +36,20 @@ function ForgotPassword() {
     return (
         <div style={{ backgroundColor: '#B3B3B3', height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', }} >
             <div style={{ maxWidth: '1440px', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                <Paper elevation={3} style={{ padding: '50px', width: '35%', height: 'auto', borderRadius: '10px' }}>
+                <Paper elevation={3} style={{ padding: isSmallScreen ? "30px 20px" : '50px', width: isSmallScreen ? "85%" : '35%', height: 'auto', borderRadius: '10px' }}>
                     <div style={{
                         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 'fit-content',
                     }}>
-                        <Box style={{ paddingBottom: theme.spacing(4) }}>
+                        <Box style={{ paddingBottom: theme.spacing(isSmallScreen ? 3 : 4) }}>
                             <SectionHeading children={"EZAMAZWE EDUTECH"} /></Box>
-                        <SectionSubHeading children={"Forgot Password"} />
+                            <SectionSubHeading children={"Forgot Password"} />
                     </div>
-                    <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
+                    <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(isSmallScreen ? 4 : 3) }}>
                         <TextFields label={"Email Address:"} errorStatus={emailErr} errorMessage={"Field Required!"} setState={setEmail} />
                     </Box>
                     <Box style={{ paddingTop: theme.spacing(4), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 15 }}>
                         <Button text={"Submit"} buttonFunction={handleForgotPassword} />
-                        <p style={{ color: primaryMainColor, paddingLeft: theme.spacing(3), width: '70%', textAlign:"center" }}> You will recieve a reset password link in your email if provided email is recognized.</p>
+                        <p style={{ color: primaryMainColor, paddingLeft: theme.spacing(3), width: isSmallScreen ? '90%' : '70%', textAlign: "center", fontSize: isSmallScreen ? "14px" : "16px" }}> You will recieve a reset password link in your email if provided email is recognized.</p>
                     </Box>
 
                 </Paper>

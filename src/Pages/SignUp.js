@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Paper from '@mui/material/Paper';
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Link, Typography, useMediaQuery } from '@mui/material';
 import TextFields from '../Components/TextFields'
 import Button from '../Components/Buttons'
 import { TextFieldPassword } from '../Components/TextFields';
@@ -11,6 +11,7 @@ import { SignupFunction } from '../Services/AuthService';
 import { useNavigate } from "react-router-dom";
 
 function SignUp() {
+    const isSmallScreen = useMediaQuery("(max-width:600px)");
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -80,35 +81,35 @@ function SignUp() {
     //Validation
 
     const handleSignup = async () => {
-        // navigate('/profilesetup', { state: { user: "scxIk6bUWMSngdL5CyzsUNYzZAS2", email: "loy@yahoo.com" } });
-        try {
-            const user = await SignupFunction(email, password);
-            console.log('User data in signup component:', user);
+        navigate('/profilesetup', { state: { user: "scxIk6bUWMSngdL5CyzsUNYzZAS2", email: "loy@yahoo.com" } });
+        // try {
+        //     const user = await SignupFunction(email, password);
+        //     console.log('User data in signup component:', user);
 
-            const user_id = user.uid;
-            console.log('User id in signup component:', user_id);
+        //     const user_id = user.uid;
+        //     console.log('User id in signup component:', user_id);
 
-            navigate('/profilesetup', { state: { user: user_id, email: email } });
+        //     navigate('/profilesetup', { state: { user: user_id, email: email } });
 
 
-        } catch (error) {
-            console.error('Error during signup:', error.message);
-        }
+        // } catch (error) {
+        //     console.error('Error during signup:', error.message);
+        // }
     };
 
     return (
 
         <div style={{ backgroundColor: '#B3B3B3', height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', }} >
             <div style={{ maxWidth: '1440px', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                <Paper elevation={3} style={{ padding: '50px', width: '35%', height: 'auto', borderRadius: '10px' }}>
+            <Paper elevation={3} style={{ padding: isSmallScreen ? "30px 20px" : '50px', width: isSmallScreen ? "85%" : '35%', height: 'auto', borderRadius: '10px' }}>
                     <div style={{
                         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 'fit-content',
                     }}>
-                        <Box style={{ paddingBottom: theme.spacing(4) }}>
+                        <Box style={{ paddingBottom: theme.spacing(isSmallScreen ? 3 : 4) }}>
                             <SectionHeading children={"EZAMAZWE EDUTECH"} /></Box>
-                        <SectionSubHeading children={"Create you account"} />
+                            <SectionSubHeading children={"Create you account"} />
                     </div>
-                    <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
+                    <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(isSmallScreen ? 4 : 3) }}>
                         <TextFields label={"Email Address:"} errorStatus={emailErr} errorMessage={emailErrMsg} setState={setEmail} />
                     </Box>
                     <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
@@ -118,10 +119,9 @@ function SignUp() {
 
                     <Box style={{ paddingTop: theme.spacing(4), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 15 }}>
                         <Button text={"Sign Up"} buttonFunction={handleSignup} />
-
                         <Box sx={{ display: "flex", flexDirection: "row" }}>
-                            <Typography>Already have an account?</Typography>
-                            <Link href="/" sx={{ marginLeft: "5px" }}> Sign In</Link>
+                            <Typography sx={{ fontSize: isSmallScreen ? "14px" : "16px" }}>Already have an account?</Typography>
+                            <Link href="/" sx={{ marginLeft: "5px", fontSize: isSmallScreen ? "14px" : "16px" }}> Sign In</Link>
                         </Box>
                     </Box>
 

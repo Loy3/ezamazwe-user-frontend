@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Paper from '@mui/material/Paper';
 // import { Box, Link } from '@mui/material';
-import { Box } from '@mui/material';
+import { Box,useMediaQuery } from '@mui/material';
 import TextFields from '../Components/TextFields'
 import Button, { ImageButton } from '../Components/Buttons'
 // import { TextFieldPassword } from '../Components/TextFields';
@@ -13,6 +13,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
 function SetUpProfile({ user }) {
+    const isSmallScreen = useMediaQuery("(max-width:600px)");
     const navigate = useNavigate();
     const location = useLocation();
     const userData = location.state.user;
@@ -40,10 +41,17 @@ function SetUpProfile({ user }) {
     function handleImage(event) {
         const file = event.target.files[0];
         // var image = document.getElementById('image');
-        setImageSrc(URL.createObjectURL(event.target.files[0]));
+        const imageUrl = URL.createObjectURL(event.target.files[0]);
+        const image = new Image();
+        image.src = imageUrl;
+        image.onload = () => {
+            console.log("Hello");
+            setImageSrc(URL.createObjectURL(event.target.files[0]));
+        };
+        
         setImageStatus(true);
         setUserImage(file);
-        console.log(file.name);
+        console.log(file.size/ 1024 / 1024 );
     }
 
     async function setUpUser() {
@@ -93,12 +101,13 @@ function SetUpProfile({ user }) {
     return (
         <div style={{ backgroundColor: '#B3B3B3', height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', }} >
             <div style={{ maxWidth: '1440px', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                <Paper elevation={3} style={{ padding: '50px', width: '35%', height: 'auto', borderRadius: '10px', position: "relative" }}>
-                    <Box sx={{ position: "absolute", right: "50px", top: "50px" }}>
+            <Paper elevation={3} style={{ padding: isSmallScreen ? "30px 20px" : '50px', width: isSmallScreen ? "85%" : '35%', height: 'auto', borderRadius: '10px', position:"relative" }}>
+                    
+                    <Box sx={{ position: "absolute", right: isSmallScreen?"20px" : "50px", top: isSmallScreen?"20px" :  "50px" }}>
                         <ImageButton handleImage={handleImage} imageSrc={imageSrc} />
                     </Box>
                     <div style={{
-                        height: 'fit-content', paddingBottom: theme.spacing(4)
+                        height: 'fit-content', paddingBottom: theme.spacing(4), paddingLeft:"10px"
                     }}>
                         <SectionSubHeading children={"Profile"} /> <Box >
                         </Box>
@@ -128,3 +137,10 @@ function SetUpProfile({ user }) {
 }
 
 export default SetUpProfile
+
+{/* <Button component="label" variant="contained" sx={{ width: "100%", height: "100%", borderRadius: "100%", backgroundColor: "primary.light", backgroundImage: `url(${imageSrc})`, backgroundSize:"cover", backgroundPosition:"center" }}>
+                            <VisuallyHiddenInput sx={{ zIndex: "50", width:"100%", height:"100%" }} type="file" onChange={event => handleImage(event)} />
+                        </Button>
+                        <Box sx={{ width: "30px", height: "30px", backgroundColor: "primary.light", borderRadius: "100%", position: "absolute", right: "5px", bottom: "-5px" }} >
+                            <AddCircleIcon sx={{ color: "#fff", width: "94%", height: "94%", marginLeft: "4%", marginTop: "4%" }} />
+                        </Box> */}

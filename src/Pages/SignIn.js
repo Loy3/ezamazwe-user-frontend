@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Paper from '@mui/material/Paper';
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Link, Typography, useMediaQuery } from '@mui/material';
 import TextFields from '../Components/TextFields'
 import Button from '../Components/Buttons'
 import { TextFieldPassword } from '../Components/TextFields';
@@ -11,6 +11,8 @@ import { theme } from '../Theme/theme';
 import { useNavigate } from "react-router-dom";
 
 function SignIn() {
+    const isSmallScreen = useMediaQuery("(max-width:600px)");
+
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -56,15 +58,15 @@ function SignIn() {
 
         <div style={{ backgroundColor: '#B3B3B3', height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', }} >
             <div style={{ maxWidth: '1440px', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                <Paper elevation={3} style={{ padding: '50px', width: '35%', height: 'auto', borderRadius: '10px' }}>
+                <Paper elevation={3} style={{ padding: isSmallScreen ? "30px 20px" : '50px', width: isSmallScreen ? "85%" : '35%', height: 'auto', borderRadius: '10px' }}>
                     <div style={{
                         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 'fit-content',
                     }}>
-                        <Box style={{ paddingBottom: theme.spacing(4) }}>
+                        <Box style={{ paddingBottom: theme.spacing(isSmallScreen ? 3 : 4) }}>
                             <SectionHeading children={"EZAMAZWE EDUTECH"} /></Box>
                         <SectionSubHeading children={"Sign in to your account"} />
                     </div>
-                    <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
+                    <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(isSmallScreen ? 4 : 3) }}>
                         <TextFields label={"Email Address:"} errorStatus={emailErr} errorMessage={emailErrMsg} setState={setEmail} />
                     </Box>
                     <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
@@ -75,8 +77,8 @@ function SignIn() {
                         <Button text={"Sign In"} buttonFunction={handleSignIn} />
 
                         <Box sx={{ display: "flex", flexDirection: "row" }}>
-                            <Typography>Don't have an account?</Typography>
-                            <Link href="/signup" sx={{marginLeft:"5px"}}> Sign Up</Link>
+                            <Typography sx={{ fontSize: isSmallScreen ? "14px" : "16px" }}>Don't have an account?</Typography>
+                            <Link href="/signup" sx={{ marginLeft: "5px", fontSize: isSmallScreen ? "14px" : "16px" }}> Sign Up</Link>
                         </Box>
 
                     </Box>
