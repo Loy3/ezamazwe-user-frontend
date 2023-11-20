@@ -1,5 +1,5 @@
 // import logo from './logo.svg';
-// import { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import SetUpProfile from './Pages/SetUpProfile';
@@ -14,7 +14,7 @@ import LandingPage from './Pages/LandingPage';
 // import { ImageButton } from "./Components/Buttons";
 
 function App() {
-  // const [testingF, settesting] = useState("");
+  const [toProfileStatus, setToProfileStatus] = useState(false);
   // const [testingP, settestingP] = useState("");
   // const [er, seter] = useState(false);
   // const [er2, seter2] = useState(false);
@@ -59,12 +59,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='' element={<SignIn />} />
-          <Route path='/signup' element={<SignUp />} />
-          <Route path='/profilesetup' element={<SetUpProfile />} />
-          <Route path='/reset' element={<ResetPassword/>} />
-          <Route path='/forgot' element={<ForgotPassowrd/>} />
-          <Route path='/land' element={<LandingPage/>} />
-          
+          <Route path='signup' element={<SignUp setToProfileStatus={setToProfileStatus}/>} />
+          <Route path='profilesetup' element={toProfileStatus ? <SetUpProfile setToProfileStatus={setToProfileStatus}/> : <Navigate to="/signup"/> } />
+          <Route path='reset' element={<ResetPassword/>} />
+          <Route path='forgot' element={<ForgotPassowrd/>} />
+          <Route path='home' element={<LandingPage/>} />
         </Routes>
       </BrowserRouter>
     </>

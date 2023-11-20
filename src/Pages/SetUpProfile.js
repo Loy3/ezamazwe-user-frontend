@@ -12,7 +12,7 @@ import { ProfileSetupFunction } from '../Services/AuthService';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
-function SetUpProfile({ user }) {
+function SetUpProfile({ setToProfileStatus }) {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
     const navigate = useNavigate();
     const location = useLocation();
@@ -61,7 +61,8 @@ function SetUpProfile({ user }) {
 
         if (userId && firstName && lastName && email && pNumber && userImage) {
             await ProfileSetupFunction(userId, firstName, lastName, email, pNumber, userImage).then(()=>{
-                 navigate("/land")
+                setToProfileStatus(false);
+                 navigate("home")
             })           
         } else {
             // alert("Something went wrong.")

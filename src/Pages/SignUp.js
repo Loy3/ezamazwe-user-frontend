@@ -10,7 +10,7 @@ import { theme } from '../Theme/theme';
 import { SignupFunction } from '../Services/AuthService';
 import { useNavigate } from "react-router-dom";
 
-function SignUp() {
+function SignUp({setToProfileStatus}) {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
@@ -81,15 +81,15 @@ function SignUp() {
     //Validation
 
     const handleSignup = async () => {
-        // navigate('/profilesetup', { state: { user: "scxIk6bUWMSngdL5CyzsUNYzZAS2", email: "loy@yahoo.com" } });
+        // navigate('profilesetup', { state: { user: "scxIk6bUWMSngdL5CyzsUNYzZAS2", email: "loy@yahoo.com" } });
         try {
             const user = await SignupFunction(email, password);
-            console.log('User data in signup component:', user);
+            // console.log('User data in signup component:', user);
 
             const user_id = user.uid;
-            console.log('User id in signup component:', user_id);
-
-            navigate('/profilesetup', { state: { user: user_id, email: email } });
+            // console.log('User id in signup component:', user_id);
+            setToProfileStatus(true)
+            navigate('profilesetup', { state: { user: user_id, email: email } });
 
 
         } catch (error) {

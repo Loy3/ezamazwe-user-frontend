@@ -52,6 +52,36 @@ export const SignupFunction = async (email, password) => {
         throw new Error(error.message); // Throw an error to be caught by the calling component
     }
 };
+export const CheckVerificationFunction = async (email) => {
+
+    try {
+        const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/check-email-verification`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email }),
+            });
+        const response = await apiUrl.json();
+
+        // Handle the response here
+        console.log('Server Verification Response:', response);
+
+        // Show a success message or perform additional actions based on the response
+        if (response.success) {
+            console.log('Email verification initiated successfully.');
+            alert("Email verification initiated successfully.")
+        } else {
+            console.error('Email verification failed:', response.error);
+            alert('Email verification failed.');
+        }
+
+    } catch (error) {
+        console.log("Error checking verification:", error);
+    }
+
+}
 
 // Profile setup function
 export const ProfileSetupFunction = async (userId, firstName, lastName, userEmail, phoneNum, image) => {

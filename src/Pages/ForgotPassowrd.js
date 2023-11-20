@@ -26,7 +26,7 @@ function ForgotPassword() {
         try {
             await ForgotPasswordFunction(email);
             alert("You will recieve a reset password link in your email if provided email is recognized.")
-            navigate('/'); // Navigate to sign in page
+            navigate(''); // Navigate to sign in page
         } catch (error) {
             console.log("Unable to update password:", error);
         }

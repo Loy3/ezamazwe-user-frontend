@@ -83,7 +83,7 @@ function ResetPassword() {
                 setConfrimPasswordErrMsg("");
                 try {
                     await ResetPasswordFunction(user, currentPassword, newPassword);
-                    navigate('/');
+                    navigate('');
 
                 } catch (error) {
                     console.log("Error occured at reset password function:", error);
