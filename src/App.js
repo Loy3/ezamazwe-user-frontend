@@ -9,6 +9,7 @@ import EditProfile from './Pages/EditProfile';
 import ResetPassword from './Pages/ResetPassword';
 import ForgotPassword from './Pages/ForgotPassword';
 import VerificationPage from './Pages/VerificationPage';
+import VerifyEmail from './Pages/VerifyEmail';
 import HomePage from './Pages/HomePage';
 
 
@@ -25,10 +26,12 @@ function App() {
             <Route path="/resetpassword" element={<ResetPassword />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/verification" element={<VerificationPage />} />
+            <Route path="/verifyemail" element={<VerifyEmail />} />
             <Route path="/homepage" element={<HomePage />} />
           </Routes>
       </Router>
   );
 }
 
-export default App;
+
+export default App; 

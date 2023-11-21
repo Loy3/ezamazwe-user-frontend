@@ -15,8 +15,9 @@ const VerificationPage = ({ userId, userEmail }) => {
 
     const [verificationStatus, setVerificationStatus] = useState('');
     const [status, setStatus] = useState(false);
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
+    
 
     useEffect(() => {
 
@@ -28,7 +29,7 @@ const VerificationPage = ({ userId, userEmail }) => {
         try {
 
             // Verify and activate the user
-            await CheckVerificationFunction(email);  
+            await CheckVerificationFunction(email);
 
             // Update the verification status
             setVerificationStatus('Account verified successfully!');

@@ -1,37 +1,4 @@
 
-
-// import { getAuth, createUserWithEmailAndPassword,
-//      signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-// import firebase from 'firebase/compat/app';
-// import 'firebase/functions';
-// import 'firebase/compat/auth';
-// import 'firebase/compat/firestore';
-// import { initializeApp } from 'firebase/app';
-// import { getAnalytics } from "firebase/analytics";
-// import { getFirestore } from 'firebase/firestore';
-// import { addDoc, collection } from "firebase/firestore";
-// import { useNavigate } from 'react-router-dom';
-// import env from "react-dotenv";
-
-// require('dotenv').config();
-// // Initialize Firebase
-// const firebaseConfig = {
-//     apiKey: env.REACT_APP_API_KEY,
-//     authDomain: env.REACT_APP_AUTH_DOMAIN,
-//     projectId: env.REACT_APP_PROJECT_ID,
-//     storageBucket: env.REACT_APP_STORAGE_BUCKET,
-//     messagingSenderId: env.REACT_APP_MESSAGING_SENDER_ID,
-//     appId: env.REACT_APP_APP_ID,
-// };
-
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-// firebase.initializeApp(firebaseConfig);
-// const auth = getAuth();
-// const db = getFirestore(app);
-
-
-
 // Imports from the firebase config file
 import { db, auth, storage } from './firebaseConfig';
 import { addDoc, collection, doc, setDoc, getDoc } from "firebase/firestore";
@@ -45,7 +12,6 @@ import { getAuth, reauthenticateWithCredential, EmailAuthProvider, updatePasswor
 
 
 // Upload image function
-// export const UploadImageFunction = async (imageUpload) => {
 export const UploadImageFunction = async (imageUpload) => {
 
     let imageURL = '';
@@ -107,6 +73,7 @@ export const SignupFunction = async (email, password) => {
     }
 };
 
+// Check verification function
 export const CheckVerificationFunction = async (email) => {
 
     try {
@@ -116,7 +83,7 @@ export const CheckVerificationFunction = async (email) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: email }),
+                body: JSON.stringify({ email: email  }),
             });
         const response = await apiUrl.json();
 
@@ -135,8 +102,8 @@ export const CheckVerificationFunction = async (email) => {
     } catch (error) {
         console.log("Error checking verification:", error);
     }
-
 }
+
 
 // Sign in function
 export const SigninFunction = async (email, password) => {
@@ -154,6 +121,7 @@ export const SigninFunction = async (email, password) => {
         alert('Wrong username/password entered. Re-enter username and password.');
     };
 }
+
 
 // Profile setup function
 export const ProfileSetupFunction = async (userId, firstName, lastName, userEmail, phoneNum, imageURL) => {
@@ -178,6 +146,7 @@ export const ProfileSetupFunction = async (userId, firstName, lastName, userEmai
         alert("Error creating profile");
     }
 }
+
 
 // Profile view function
 export const GetUserDataFunction = async (userId) => {
