@@ -55,7 +55,7 @@ export const SignupFunction = async (email, password) => {
 export const CheckVerificationFunction = async (email) => {
 console.log(email);
     try {
-        const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/check-email-verification`,   
+        const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/email-verification`,   
             {
                 method: 'POST',
                 headers: {
@@ -69,7 +69,8 @@ console.log(email);
         console.log('Server Verification Response:', response);
 
         // Show a success message or perform additional actions based on the response
-        if (response.success) {
+        console.log(response.message);
+        if (response.message) {
             console.log('Email verification initiated successfully.');
             alert("Email verification initiated successfully.")
         } else {

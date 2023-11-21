@@ -62,7 +62,7 @@ function SetUpProfile({ setToProfileStatus }) {
         if (userId && firstName && lastName && email && pNumber && userImage) {
             await ProfileSetupFunction(userId, firstName, lastName, email, pNumber, userImage).then(()=>{
                 setToProfileStatus(false);
-                 navigate("home")
+                 navigate("/home")
             })           
         } else {
             // alert("Something went wrong.")

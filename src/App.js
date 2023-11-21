@@ -9,6 +9,7 @@ import ResetPassword from './Pages/ResetPassword';
 import ForgotPassowrd from './Pages/ForgotPassowrd';
 import LandingPage from './Pages/LandingPage';
 import VerificationPage from './Pages/VerificationPage';
+import VerifyEmail from './Pages/VerifyEmail';
 // import TextFields from './Components/TextFields';
 // import {TextFieldPassword} from './Components/TextFields';
 // import Button from "./Components/Buttons";
@@ -60,12 +61,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='' element={<SignIn />} />
-          <Route path='signup' element={<SignUp setToProfileStatus={setToProfileStatus}/>} />
-          <Route path='profilesetup' element={toProfileStatus ? <SetUpProfile setToProfileStatus={setToProfileStatus}/> : <Navigate to="/signup"/> } />
-          <Route path='reset' element={<ResetPassword/>} />
-          <Route path='forgot' element={<ForgotPassowrd/>} />
-          <Route path='home' element={<LandingPage/>} />
-          <Route path='verification' element={<VerificationPage/>} />
+          <Route path='/signup' element={<SignUp setToProfileStatus={setToProfileStatus}/>} />
+          <Route path='/profilesetup' element={toProfileStatus ? <SetUpProfile setToProfileStatus={setToProfileStatus}/> : <Navigate to="/signup"/> } />
+          <Route path='/reset' element={<ResetPassword/>} />
+          <Route path='/forgot' element={<ForgotPassowrd/>} />
+          <Route path='/home' element={<LandingPage/>} />
+          <Route path='/verification' element={<VerificationPage/>} />
+          <Route path='/verify-email' element={<VerifyEmail/>} />
         </Routes>
       </BrowserRouter>
     </>
