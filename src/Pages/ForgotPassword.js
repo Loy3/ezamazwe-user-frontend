@@ -24,10 +24,11 @@ function ForgotPassword() {
             setEmailErr(false)
         }
       }
+
   return (
     <div style={{ backgroundColor: '#B3B3B3', height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', }} >
             <div style={{maxWidth:'1440px', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
-            <Paper elevation={3} style={{ padding: '50px', width: '35%', height: 'auto', borderRadius: '10px' }}>
+            <Paper elevation={3} style={{ padding: '50px', width: '35%', height: 'auto', borderRadius: '10px',fontFamily:'poppins'  }}>
                 <div  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 'fit-content',
                 }}>
                     <Box style={{  paddingBottom: theme.spacing(4) }}>
@@ -38,7 +39,7 @@ function ForgotPassword() {
                 <TextFields label={"Email Address:"} errorStatus={emailErr} errorMessage={"Field Required!"} setState={setEmail} />
                 </Box>
                 <Box style={{ paddingTop: theme.spacing(4), display:'flex',flexDirection:'column',alignItems:'center',gap:15}}>
-                <Button text={"Sign In"} buttonFunction={testingFunc} />
+                <Button text={"Submit"} buttonFunction={testingFunc} />
                 <p style={{color: primaryMainColor,paddingLeft:theme.spacing(3),width:'60%' }}> You will recieve a reset password link in your email if provided email is recognized</p>
                 </Box>
                

@@ -33,7 +33,7 @@ function SignUp() {
 
         <div style={{ backgroundColor: '#B3B3B3', height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', }} >
             <div style={{maxWidth:'1440px', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
-            <Paper elevation={3} style={{ padding: '50px', width: '35%', height: 'auto', borderRadius: '10px' }}>
+            <Paper elevation={3} style={{ padding: '50px', width: '35%', height: 'auto', borderRadius: '10px',fontFamily:'poppins' }}>
                 <div  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 'fit-content',
                 }}>
                     <Box style={{  paddingBottom: theme.spacing(4) }}>

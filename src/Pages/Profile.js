@@ -34,7 +34,7 @@ function Profile() {
   return (
     <div style={{ backgroundColor: '#B3B3B3', height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', }} >
             <div style={{maxWidth:'1440px', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
-            <Paper elevation={3} style={{ padding: '50px', width: '35%', height: 'auto', borderRadius: '10px' }}>
+            <Paper elevation={3} style={{ padding: '50px', width: '35%', height: 'auto', borderRadius: '10px',fontFamily:'poppins' }}>
                 <div  style={{height: 'fit-content',   paddingBottom: theme.spacing(4) 
                 }}>
                  <SectionSubHeading children={"Profile"}/> <Box >
