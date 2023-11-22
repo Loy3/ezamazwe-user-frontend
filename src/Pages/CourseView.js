@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { GetUserDataFunction } from "../Services/AuthService";
 
 
-const CourseView =({course_data})=>{
+const CourseView = ({ course_data }) => {
     const location = useLocation();
     const courseData = location.state.course_data;
 
@@ -16,32 +16,50 @@ const CourseView =({course_data})=>{
     const [courseTitle, setCourseTitle] = useState(courseData.courseName);
     const [courseDescription, setCourseDescription] = useState(courseData.courseShortDescription);
     const [courseFullDescription, setCourseFullDescription] = useState(courseData.courseDescription);
-    const [subscription, setSubscription] = useState(courseData.coursePrice);
+    const [costPrice, setCostPrice] = useState(courseData.coursePrice);
     const [video, setVideo] = useState('');
     const [userInfo, setUserInfo] = useState(null);
+    const [userSubscription, setUserSubscription] = useState('');
 
     const user = auth.currentUser;
     const userId = user.uid;
     const navigate = useNavigate();
 
-    const userData =async()=>{
+    useEffect(() => {
+        if (userId) {
+            // Fetch user data if user is authenticated
+            userData();
+        }
+    }, [userId]);
+
+    useEffect(() => {
+        // Check userSubscription once userInfo is available
+        if (userInfo) {
+            setUserSubscription(userInfo.subscription);
+        }
+    }, [userInfo]);
+
+    const userData = async () => {
         try {
             const data = await GetUserDataFunction(userId);
             setUserInfo(data);
-
-        } catch(error) {
+            console.log("userData:", data);
+        } catch (error) {
             console.log("Error fetching user data:", error);
         }
     }
 
 
-    const handleStartCourse =()=>{
+    const handleStartCourse = () => {
+
         if (user) {
-            if (subscription === "Free") {
+            if (costPrice === "Free") {
+                navigate('/coursefullview', { state: { courseData: courseData } });
+            } else if (costPrice === "Subscription" && userSubscription === "Subscribed") {
                 navigate('/coursefullview', { state: { courseData: courseData } });
             } else {
                 alert("Only subscribed users can access this course");
-                navigate('/courses');
+                navigate('/courses');   // Navigate back to courses page
             }
         } else {
             // Navigate to signin page
@@ -52,9 +70,10 @@ const CourseView =({course_data})=>{
 
     return (
         <div>
+            <h2>Course View</h2>
             <h3>{courseTitle}</h3>
             <p>{courseDescription}</p>
-            <h3>{subscription}</h3>
+            <h3>{costPrice}</h3>
 
             <button onClick={handleStartCourse}>START</button>
 

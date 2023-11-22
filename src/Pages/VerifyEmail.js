@@ -51,8 +51,8 @@ const VerifyEmail = () => {
                 setStatus(true);
             }
 
-            // Navigate to profile setup
-            // navigate('/profilesetup', { state: { user: email } });
+            // Navigate to home page
+            navigate('/homepage');
 
         } catch (error) {
 

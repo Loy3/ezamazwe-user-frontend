@@ -92,15 +92,15 @@ export const CheckVerificationFunction = async (email) => {
 
         // Show a success message or perform additional actions based on the response
         if (response.message) {
-            console.log('Email verification initiated successfully.');
-            alert("Email verification initiated successfully.");
+            console.log('Email for verification sent.');
+            alert("Email for verification sent.");
         } else {
-            console.error('Email verification failed:', response.error);
-            alert('Email verification failed.');
+            console.error('Failed to send email for verification:', response.error);
+            alert('Unable to send verification email.');
         }
 
     } catch (error) {
-        console.log("Error checking verification:", error);
+        console.log("Error sending verification email:", error);
     }
 }
 

@@ -32,15 +32,15 @@ const VerificationPage = ({ userId, userEmail }) => {
             await CheckVerificationFunction(email);
 
             // Update the verification status
-            setVerificationStatus('Account verified successfully!');
+            setVerificationStatus('Account verification email sent!');
             setStatus(true);
 
             // Navigate to profile setup
             navigate('/profilesetup', { state: { user: id } });
 
         } catch (error) {
-            console.error('Error verifying account:', error.message);
-            setVerificationStatus('Error verifying account. Please try again.');
+            console.error('Error sending account verification email:', error.message);
+            setVerificationStatus('Error sending account verification email. Please try again.');
         }
     };
 
