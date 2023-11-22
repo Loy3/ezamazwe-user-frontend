@@ -11,6 +11,7 @@ import ForgotPassword from './Pages/ForgotPassword';
 import VerificationPage from './Pages/VerificationPage';
 import VerifyEmail from './Pages/VerifyEmail';
 import HomePage from './Pages/HomePage';
+import Courses from './Pages/Courses';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Route path="/verification" element={<VerificationPage />} />
             <Route path="/verifyemail" element={<VerifyEmail />} />
             <Route path="/homepage" element={<HomePage />} />
+            <Route path="/courses" element={<Courses />} />
           </Routes>
       </Router>
   );

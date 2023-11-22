@@ -91,9 +91,9 @@ export const CheckVerificationFunction = async (email) => {
         console.log('Server Verification Response:', response);
 
         // Show a success message or perform additional actions based on the response
-        if (response.success) {
+        if (response.message) {
             console.log('Email verification initiated successfully.');
-            alert("Email verification initiated successfully.")
+            alert("Email verification initiated successfully.");
         } else {
             console.error('Email verification failed:', response.error);
             alert('Email verification failed.');
@@ -252,7 +252,7 @@ export const isPasswordValid = (newPassword) => {
 export const ForgotPasswordFunction = async (email) => {
     console.log("Forgot password", email);
     try {
-        const url = 'https://ezamazwe-edutech-client.netlify.app/';
+        const url = 'https://edutech-app-eecfd.web.app/';
         const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/reset-password`,
             {
                 method: 'POST',

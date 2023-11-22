@@ -6,17 +6,22 @@ import { Link } from 'react-router-dom';
 
 const HomePage = () => {
 
-   
+
     const navigate = useNavigate();
 
-    const handleVerify =()=>{
+    const handleVerify = () => {
         navigate('/verification');
     }
-    
+
     return (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ alignItems: 'center', justifyContent: 'center', marginTop:'50px' }}>
+
             <h5>You need verify your account on your email! </h5>
-           <Link onClick={handleVerify}>Verify account</Link>
+            <Link onClick={handleVerify}>Verify account</Link>
+            <br></br>
+            <br></br>
+            <button onClick={()=>{navigate('/courses')}}>View Courses</button>
+
         </div>
     );
 };
