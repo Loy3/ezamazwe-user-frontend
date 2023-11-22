@@ -1,5 +1,5 @@
 // import logo from './logo.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import SetUpProfile from './Pages/SetUpProfile';
@@ -13,6 +13,7 @@ import VerifyEmail from './Pages/VerifyEmail';
 import { NavBar } from './Components/NavBar';
 import { FooterComp } from './Components/Footer';
 import { FilterButton } from './Components/Buttons';
+import { Accordians } from './Components/Accordians';
 // import TextFields from './Components/TextFields';
 // import {TextFieldPassword} from './Components/TextFields';
 // import Button from "./Components/Buttons";
@@ -48,7 +49,11 @@ function App() {
   //   setImageStatus(true);
   //   console.log(file.name);
   // }
-
+  const category = ["CAPS", "IEB", "Entrepreneur"];
+  const [returnType, setReturnType]=useState("");
+  useEffect(()=>{
+    console.log(returnType);
+  },[returnType])
   return (
     // <div style={{ width: "100%", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
 
@@ -73,8 +78,8 @@ function App() {
           <Route path='/verify-email' element={<VerifyEmail/>} />
         </Routes>
       </BrowserRouter> */}
-
-      <FilterButton text={"Filter"}/>
+ 
+      <Accordians label={"Category"} types={category} setReturnType={setReturnType} returnType={returnType}/>
     </>
   );
 }
