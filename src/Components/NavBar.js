@@ -37,9 +37,11 @@ export const NavBar = () => {
         <>
             {/* <div style={{ width: "100%", height: "100vh", backgroundColor: "gray" }}> */}
                 {isSmallScreen && !navStatus ?
-                    <Button sx={{ textDecoration: "none", padding: "0 5px", color: "black", cursor: "pointer" }} onClick={() => handleNav("open")}> <MenuIcon sx={{ color: "#fff", width: "40px", height: "40px", marginLeft: "4%", marginTop: "4%" }} /></Button>
+                   <Box sx={{position:"absolute", zIndex:"60"}}> 
+                     <Button sx={{ textDecoration: "none", padding: "0 5px", color: "black", cursor: "pointer" }} onClick={() => handleNav("open")}> <MenuIcon sx={{ color: "#fff", width: "40px", height: "40px", marginLeft: "4%", marginTop: "4%" }} /></Button>
+                   </Box>
                     :             
-                    <Box sx={{ width: isSmallScreen ? "90%" : "100%", height: isSmallScreen ? "100vh" : "120px", backgroundColor: "white", position: "relative" }}>
+                    <Box sx={{ width: isSmallScreen ? "100%" : "100%", height: isSmallScreen ? "100vh" : "120px", backgroundColor: "white", position: isSmallScreen?"fixed": "relative", zIndex: isSmallScreen?"80": "0"  }}>
                         {isSmallScreen ?
                             <Button sx={{ textDecoration: "none", padding: "0 5px", color: "black", cursor: "pointer", position: "absolute", right: "5px", top: "20px", zIndex:"50" }} onClick={() => handleNav("close")}> <CancelIcon sx={{ color: "primary.light", width: "30px", height: "30px" }} /></Button>
                             : null}
