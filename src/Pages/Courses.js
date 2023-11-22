@@ -9,6 +9,7 @@ const Courses = () => {
 
     const [courses, setCourses] = useState([]);
     const [category, setCategory] = useState('');
+    const [topic, setTopic] = useState('');
 
     // View all courses
     const handleViewCourses = async () => {
@@ -37,7 +38,7 @@ const Courses = () => {
     // Filter courses with topics
     const handleTopicsFilter = async () => {
         try {
-            const data = await FilterTopicsFunction();
+            const data = await FilterTopicsFunction(topic);
             console.log("Courses data:", data);
             setCourses(data);
 
@@ -64,6 +65,12 @@ const Courses = () => {
                 </div>
                 <div>
                     <button onClick={handleTopicsFilter}>Filter</button>
+                    <br></br>
+                    <input type="text"
+                        placeholder=""
+                        value={category}
+                        onChange={(e) => setTopic(e.target.value)}
+                    />
                 </div>
             </div>
 
@@ -73,6 +80,13 @@ const Courses = () => {
                         <h4>Course Name: {course.courseName}</h4>
                         <h5>{course.coursePrice}</h5>
                         <p>{course.courseShortDescription}</p>
+                        <div>
+                            {course.courseCategory.map((category) => (
+                                <div>
+
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 ))}
             </div>

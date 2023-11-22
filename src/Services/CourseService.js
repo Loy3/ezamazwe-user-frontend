@@ -26,12 +26,11 @@ export const ViewCoursesFunction = async () => {
 // Filter category function
 export const FilterCategoryFunction = async (category) => {
     try {
-        // const queryData = query(collectionGroup(db, "courseCategory"), where("categoryType", "==", category));
 
         // Reference to the collection
-        const myCollection = collection(db, 'collectionName');
+        const coursesCollection = collection(db, 'coursesCollection');
         // Create a query where 'mapField.nestedField' is equal to 'value2'
-        const queryData = query(myCollection, where('mapField.nestedField', '==', 'value2'));
+        const queryData = query(coursesCollection, where('courseCategory.categoryType', '==', category));
         const querySnapshot = await getDocs(queryData);
         let items = [];
 
@@ -52,7 +51,11 @@ export const FilterCategoryFunction = async (category) => {
 // Filter topics function
 export const FilterTopicsFunction = async (topic) => {
     try {
-        const queryData = query(collectionGroup(db, "courseCategory"), where("subjectOrTopic", "==", topic));
+        // const queryData = query(collectionGroup(db, "courseCategory"), where("subjectOrTopic", "==", topic));
+         // Reference to the collection
+         const coursesCollection = collection(db, 'coursesCollection');
+         // Create a query where 'mapField.nestedField' is equal to 'value2'
+         const queryData = query(coursesCollection, where('courseCategory.subjectOrTopic', '==', topic));
         const querySnapshot = await getDocs(queryData);
         let items = [];
 
