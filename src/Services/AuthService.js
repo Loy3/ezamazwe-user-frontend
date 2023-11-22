@@ -203,18 +203,20 @@ export const isPasswordValid = (newPassword) => {
 // Forgot password function
 export const ForgotPasswordFunction = async (email) => {
     // console.log("Forgot password", email);
+    console.log("Forgot password", email);
     try {
+        const url = 'https://edutech-app-eecfd.web.app/';
         const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/reset-password`,
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: email }),
+                body: JSON.stringify({ email: email, url: url }),
             });
         const response = await apiUrl.json();
 
-        alert("Email for password reset has been sent");
+        alert("Email for password reset has been sent")
         // Handle the response here
         console.log('Server Response:', response);
     } catch (error) {

@@ -59,7 +59,7 @@ function App() {
     // </div>
 
     <>
-      {/* <BrowserRouter>
+      <BrowserRouter>
         <Routes>
           <Route path='' element={<SignIn />} />
           <Route path='/signup' element={<SignUp setToProfileStatus={setToProfileStatus}/>} />
@@ -70,9 +70,9 @@ function App() {
           <Route path='/verification' element={<VerificationPage/>} />
           <Route path='/verify-email' element={<VerifyEmail/>} />
         </Routes>
-      </BrowserRouter> */}
+      </BrowserRouter>
 
-      <NavBar/>
+      {/* <NavBar/> */}
     </>
   );
 }

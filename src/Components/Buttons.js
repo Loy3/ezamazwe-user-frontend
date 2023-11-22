@@ -41,8 +41,8 @@ export const ImageButton = ({ handleImage, imageSrc }) => {
 
 
                         <Button component="label" sx={{ width: "100%", height: "100%", borderRadius: "100%", backgroundColor: "primary.light" }}>
-                            <VisuallyHiddenInput sx={{ zIndex: "50", width:"100%", height:"100%" }} type="file" onChange={event => handleImage(event)} />
-                            <img src={`${imageSrc}`} alt="imgS" id="image" style={{ width: isSmallScreen ? "85px" : "100px", height: isSmallScreen ? "85px" : "100px", objectFit: "cover", borderRadius: "100%", borderColor: "#fff", borderWidth: "2px", position:"absolute" }} />
+                            <VisuallyHiddenInput sx={{ zIndex: "50", width: "100%", height: "100%" }} type="file" onChange={event => handleImage(event)} />
+                            <img src={`${imageSrc}`} alt="imgS" id="image" style={{ width: isSmallScreen ? "85px" : "100px", height: isSmallScreen ? "85px" : "100px", objectFit: "cover", borderRadius: "100%", borderColor: "#fff", borderWidth: "2px", position: "absolute" }} />
                         </Button>
                         <Box sx={{ width: "30px", height: "30px", backgroundColor: "primary.light", borderRadius: "100%", position: "absolute", right: "5px", bottom: "-5px" }} >
                             <AddCircleIcon sx={{ color: "#fff", width: "94%", height: "94%", marginLeft: "4%", marginTop: "4%" }} />
@@ -50,6 +50,25 @@ export const ImageButton = ({ handleImage, imageSrc }) => {
                     </>
                 }
             </Box>
+        </>
+    )
+}
+
+export const SmallButton = ({ text, buttonFunction }) => {
+    return (
+        <>
+            <Button variant="contained" sx={{marginTop:"5px", backgroundColor: "primary.light", width: "150px", height:"50px", borderRadius: 50 }} onClick={() => buttonFunction()}>{text}</Button>
+        </>
+    )
+}
+
+export const ToUserButton = ({  buttonFunction }) => {
+    const isSmallScreen = useMediaQuery("(max-width:600px)");
+    return (
+        <>
+            <Button component="label" variant="contained" startIcon={<PersonIcon sx={{ width:  "40px", height: "40px", marginLeft:"12px" }} />} sx={{ marginLeft:"10px",width: "50px", height: "60px", borderRadius: "100%", backgroundColor: "primary.light", display: "flex", justifyContent: "center", alignItems: "center"}} />
+                            {/* <VisuallyHiddenInput type="file" onChange={event => handleImage(event)} /> */}
+                             {/*  */}
         </>
     )
 }
