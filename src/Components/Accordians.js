@@ -37,7 +37,7 @@ export const Accordians = ({ label, types, setReturnType, returnType }) => {
                 </Box>
 
                 {categoryStatus ?
-                    <Box sx={{ width: "90%", margin: "5%" }}>
+                    <Box sx={{ width: "84%", margin: "8%" }}>
                         <FormControl>
                             <RadioGroup
                                 aria-labelledby="demo-controlled-radio-buttons-group"
