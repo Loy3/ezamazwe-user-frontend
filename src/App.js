@@ -12,6 +12,8 @@ import VerificationPage from './Pages/VerificationPage';
 import VerifyEmail from './Pages/VerifyEmail';
 import HomePage from './Pages/HomePage';
 import Courses from './Pages/Courses';
+import CourseFullView from './Pages/CourseFullView';
+import CourseView from './Pages/CourseView';
 
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
             <Route path="/verifyemail" element={<VerifyEmail />} />
             <Route path="/homepage" element={<HomePage />} />
             <Route path="/courses" element={<Courses />} />
+            <Route path="/coursefullview" element={<CourseFullView />} />
+            <Route path="/courseview" element={<CourseView />} />
           </Routes>
       </Router>
   );
