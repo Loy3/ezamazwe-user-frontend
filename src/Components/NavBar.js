@@ -35,7 +35,7 @@ export const NavBar = () => {
     }
     return (
         <>
-            <div style={{ width: "100%", height: "100vh", backgroundColor: "gray" }}>
+            {/* <div style={{ width: "100%", height: "100vh", backgroundColor: "gray" }}> */}
                 {isSmallScreen && !navStatus ?
                     <Button sx={{ textDecoration: "none", padding: "0 5px", color: "black", cursor: "pointer" }} onClick={() => handleNav("open")}> <MenuIcon sx={{ color: "#fff", width: "40px", height: "40px", marginLeft: "4%", marginTop: "4%" }} /></Button>
                     :             
@@ -80,7 +80,7 @@ export const NavBar = () => {
                         </Box>
                     </Box>
                     }
-            </div>
+            {/* </div> */}
         </>
     );
 }

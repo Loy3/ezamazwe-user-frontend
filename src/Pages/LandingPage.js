@@ -1,7 +1,11 @@
+import { FooterComp } from "../Components/Footer"
+import { NavBar } from "../Components/NavBar"
+
 function LandingPage(){
 return(
     <>
-    Landing Page
+    <NavBar/>
+    <FooterComp/>
     </>
 )
 }
