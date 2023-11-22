@@ -2,6 +2,7 @@ import { Box, Button, useMediaQuery } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import PersonIcon from '@mui/icons-material/Person';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import TuneIcon from '@mui/icons-material/Tune';
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
@@ -57,18 +58,31 @@ export const ImageButton = ({ handleImage, imageSrc }) => {
 export const SmallButton = ({ text, buttonFunction }) => {
     return (
         <>
-            <Button variant="contained" sx={{marginTop:"5px", backgroundColor: "primary.light", width: "150px", height:"50px", borderRadius: 50 }} onClick={() => buttonFunction()}>{text}</Button>
+            <Button variant="contained" sx={{ marginTop: "5px", backgroundColor: "primary.light", width: "150px", height: "50px", borderRadius: 50 }} onClick={() => buttonFunction()}>{text}</Button>
         </>
     )
 }
 
-export const ToUserButton = ({  buttonFunction }) => {
+export const ToUserButton = ({ buttonFunction }) => {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
     return (
         <>
-            <Button component="label" variant="contained" startIcon={<PersonIcon sx={{ width:  "40px", height: "40px", marginLeft:"12px" }} />} sx={{ marginLeft:"10px",width: "50px", height: "60px", borderRadius: "100%", backgroundColor: "primary.light", display: "flex", justifyContent: "center", alignItems: "center"}} />
-                            {/* <VisuallyHiddenInput type="file" onChange={event => handleImage(event)} /> */}
-                             {/*  */}
+            <Button component="label" variant="contained" startIcon={<PersonIcon sx={{ width: "40px", height: "40px", marginLeft: "12px" }} />} sx={{ marginLeft: "10px", width: "50px", height: "60px", borderRadius: "100%", backgroundColor: "primary.light", display: "flex", justifyContent: "center", alignItems: "center" }} />
+            {/* <VisuallyHiddenInput type="file" onChange={event => handleImage(event)} /> */}
+            {/*  */}
+        </>
+    )
+}
+
+
+export const FilterButton = ({ text, buttonFunction }) => {
+    return (
+        <>
+            {/* <Button variant="contained" style={{ backgroundColor: "#1C3F53", width: "50%", borderRadius: 20 }} onClick={() => buttonFunction()}>{text}</Button> */}
+            {/* <Button variant="outlined" startIcon={<DeleteIcon />} style={{ backgroundColor: "#1C3F53", width: "50%", borderRadius: 20, color:"white" }} onClick={() => buttonFunction()}>{text}</Button> */}
+            <Button variant="outlined" startIcon={<TuneIcon />} sx={{ width: "200px", border: "2px solid", fontWeight:"bold", borderRadius:"12px"}}>
+                Filter
+            </Button>
         </>
     )
 }
