@@ -80,9 +80,18 @@ export const FilterButton = ({ text, buttonFunction }) => {
         <>
             {/* <Button variant="contained" style={{ backgroundColor: "#1C3F53", width: "50%", borderRadius: 20 }} onClick={() => buttonFunction()}>{text}</Button> */}
             {/* <Button variant="outlined" startIcon={<DeleteIcon />} style={{ backgroundColor: "#1C3F53", width: "50%", borderRadius: 20, color:"white" }} onClick={() => buttonFunction()}>{text}</Button> */}
-            <Button variant="outlined" startIcon={<TuneIcon />} sx={{ width: "200px", border: "2px solid", fontWeight:"bold", borderRadius:"12px"}}>
-             {text}
+            <Button variant="outlined" startIcon={<TuneIcon />} sx={{ width: "200px", border: "2px solid", fontWeight: "bold", borderRadius: "12px" }}>
+                {text}
             </Button>
+        </>
+    )
+}
+
+
+export const HomeButtons = ({ text, buttonFunction }) => {
+    return (
+        <>
+            <Button variant="contained" style={{ backgroundColor: "primary.light", width: "30%", height:"50px", borderRadius: 15 }} onClick={() => buttonFunction()}>{text}</Button>
         </>
     )
 }

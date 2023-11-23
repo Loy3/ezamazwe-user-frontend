@@ -20,6 +20,7 @@ import { CourseCard } from './Components/Cards';
 // import Button from "./Components/Buttons";
 // import { ImageButton } from "./Components/Buttons";
 import video1 from "./Assets/Videos/video.mp4";
+import { SearchBar } from './Components/SearchBar';
 function App() {
   const [toProfileStatus, setToProfileStatus] = useState(false);
   // const [testingP, settestingP] = useState("");
@@ -83,8 +84,9 @@ function App() {
         </Routes>
       </BrowserRouter> */}
 
-    <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing}/>
+    {/* <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing}/> */}
       
+      <SearchBar/>
     </>
   );
 }
