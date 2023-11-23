@@ -127,6 +127,7 @@ const UserPage = () => {
                     {userCourses.map((course) => (
                         <li key={course.courseId}>
                             <strong>Course ID: </strong> {course.courseId} <br></br>
+                            <strong>Course Name: </strong> {course.courseName} <br></br>
                             <strong># Complete lessons: </strong> {course.completeLessons.lessonId} <br></br>
                             <strong># Incomplete lessons: </strong> {course.uncompleteLessons.lessonId} <br></br>
                             <h3>__________________________________________</h3>
