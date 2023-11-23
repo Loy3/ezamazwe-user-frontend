@@ -16,6 +16,9 @@ const HomePage = () => {
             <br></br>
             <br></br>
             <button onClick={()=>{navigate('/courses')}}>View Courses</button>
+            <br></br>
+            <br></br>
+            <Link to='/userpage'>User Page</Link>
 
         </div>
     );

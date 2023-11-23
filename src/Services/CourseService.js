@@ -26,9 +26,9 @@ export const ViewCoursesFunction = async () => {
 // Filter category function
 export const FilterCategoryFunction = async (category) => {
     try {
-
         // Reference to the collection
         const coursesCollection = collection(db, 'coursesCollection');
+
         // Create a query where 'mapField.nestedField' is equal to 'value2'
         const queryData = query(coursesCollection, where('courseCategory.categoryType', '==', category));
         const querySnapshot = await getDocs(queryData);
@@ -122,3 +122,22 @@ export const FilterSubscriptionFunction = async (subscription) => {
         console.log("Failed to fetch filtered subscription data: ", error);
     }
 }
+
+export const FetchUserCoursesFunction = async (userId) => {
+    try {
+        const coursesRef = collection(db, `users/${userId}/userCourses`);
+        const snapshot = await getDocs(coursesRef);
+
+        const coursesData = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+        
+       return coursesData;
+
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+    }
+}
+
+

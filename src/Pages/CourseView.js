@@ -19,23 +19,25 @@ const CourseView = ({ course_data }) => {
     const [costPrice, setCostPrice] = useState(courseData.coursePrice);
     const [video, setVideo] = useState('');
     const [userInfo, setUserInfo] = useState(null);
-    const [userSubscription, setUserSubscription] = useState('');
+    const [userSubscription, setUserSubscription] = useState(false);
 
     const user = auth.currentUser;
-    const userId = user.uid;
+    let userId = '';
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (userId) {
+        if (user) {
+            // Assign user id to userId
+            userId = user.uid;
             // Fetch user data if user is authenticated
             userData();
         }
-    }, [userId]);
+    }, [user]);
 
     useEffect(() => {
         // Check userSubscription once userInfo is available
         if (userInfo) {
-            setUserSubscription(userInfo.subscription);
+            setUserSubscription(userInfo.subscribed); 
         }
     }, [userInfo]);
 
@@ -55,8 +57,8 @@ const CourseView = ({ course_data }) => {
         if (user) {
             if (costPrice === "Free") {
                 navigate('/coursefullview', { state: { courseData: courseData } });
-            } else if (costPrice === "Subscription" && userSubscription === "Subscribed") {
-                navigate('/coursefullview', { state: { courseData: courseData } });
+            } else if (costPrice === "Subscription" && userSubscription === true) {
+                navigate('/coursefullview', { state: { courseData: courseData } }); 
             } else {
                 alert("Only subscribed users can access this course");
                 navigate('/courses');   // Navigate back to courses page

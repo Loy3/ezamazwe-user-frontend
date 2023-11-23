@@ -22,7 +22,8 @@ const SignIn = () => {
       const user_id = user.uid;
       console.log('User id signed in:', user_id);
 
-      navigate('/editprofile', { state: { user: user_id } });
+      // navigate('/editprofile', { state: { user: user_id } });
+      navigate('/userpage');
     } catch(error) {
       console.log("Unable to log in:", error);
     } 

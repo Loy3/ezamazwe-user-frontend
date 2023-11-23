@@ -131,7 +131,7 @@ const Courses = () => {
             <div>
                 {courses.map((course) => (
                     <div>
-                        <h4>All {course.courseName} Courses</h4>
+                        <h4>{course.courseName} Course</h4>
                         <h5>{course.coursePrice}</h5>
                         <p>{course.courseShortDescription}</p>
                         <button onClick={() => handleViewCourse(course.id)}>View Course</button>
@@ -142,6 +142,7 @@ const Courses = () => {
                                 </div>
                             ))}
                         </div> */}
+                        <h3>____________________________________________________________________________________________</h3>
                     </div>
                 ))}
             </div>
