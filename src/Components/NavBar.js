@@ -9,7 +9,7 @@ import insIcon from "../Assets/Icons/ins.png";
 import twIcon from "../Assets/Icons/tw.png";
 import { useEffect, useState } from "react";
 
-export const NavBar = () => {
+export const NavBar = ({icon}) => {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
     const [navStatus, setNavStatus] = useState(false);
 
@@ -70,7 +70,7 @@ export const NavBar = () => {
                                     <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0" }}>About Us</Link>
                                     <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0" }}>Courses</Link>
                                     <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0" }}>Tutors</Link>
-                                    <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0" }}>Contact Us</Link>
+                                    <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0" }}>Contact Us{icon}</Link>
                                 </Box>
                             </Box>
                             <Box sx={{ width: isSmallScreen ? "100%" : "20%", height: isSmallScreen ? "auto" : "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: isSmallScreen ? "50px" : "0", position: isSmallScreen ? "absolute" : "relative", bottom: isSmallScreen ? "50px" : "unset" }}>

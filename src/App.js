@@ -21,6 +21,7 @@ import { CourseCard } from './Components/Cards';
 // import { ImageButton } from "./Components/Buttons";
 import video1 from "./Assets/Videos/video.mp4";
 import { SearchBar } from './Components/SearchBar';
+import ContactUs from './Pages/ContactUs';
 function App() {
   const [toProfileStatus, setToProfileStatus] = useState(false);
   // const [testingP, settestingP] = useState("");
@@ -71,7 +72,7 @@ function App() {
     // </div>
 
     <>
-    {/* <BrowserRouter>
+    <BrowserRouter>
         <Routes>
           <Route path='' element={<SignIn />} />
           <Route path='/signup' element={<SignUp setToProfileStatus={setToProfileStatus}/>} />
@@ -81,12 +82,13 @@ function App() {
           <Route path='/home' element={<LandingPage/>} />
           <Route path='/verification' element={<VerificationPage/>} />
           <Route path='/verify-email' element={<VerifyEmail/>} />
+          <Route path='/contactus' element={<ContactUs/>} />
         </Routes>
-      </BrowserRouter> */}
+      </BrowserRouter>
 
     {/* <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing}/> */}
       
-      <SearchBar/>
+      {/* <SearchBar/> */}
     </>
   );
 }
