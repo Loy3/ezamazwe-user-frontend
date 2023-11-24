@@ -3,6 +3,57 @@
 import { db, auth } from './firebaseConfig';
 import { collection, collectionGroup, getDocs, query, where } from "firebase/firestore";
 
+// Filter courses with subject, category, 
+export const fetchCoursesFunction = async (subject, category, grade) => {
+    
+    try {
+      // Step 1: Query to get the course document based on subject, category and grade
+      const coursesQuery = query(collection(db, 'coursesCollection'), 
+      where('courseCategory.subjectOrTopic', '==', subject),
+      where('courseCategory.categoryType', '==', category),
+      where('courseCategory.categoryGrade', '==', grade)
+      );
+      const coursesSnapshot = await getDocs(coursesQuery);
+
+      if (coursesSnapshot.empty) {
+        alert('No courses found for the subject:', subject);
+        return;
+      }
+
+      coursesSnapshot.forEach(item=>console.log("Course:", item.data()))
+
+      // Use the first document
+      const courseDoc = coursesSnapshot.docs[0];
+      const courseId = courseDoc.id;
+
+      console.log("courseId:", courseId); 
+
+
+      // Step 2: Query the courseContent subcollection for the selected course
+      let items = [];
+      const courseContentQuery = collectionGroup(db, 'courseContent');
+      const courseContentSnapshot = await getDocs(courseContentQuery);
+
+      courseContentSnapshot.forEach(item=>console.log("Course content:", item.data()))
+
+      // Filter course content documents based on courseId
+      const filteredCourseContent = courseContentSnapshot.docs
+        // .filter((contentDoc) => contentDoc.data().courseId === courseId)
+        .map((contentDoc) => ({
+          contentId: contentDoc.id,
+          ...contentDoc.data()
+        }));
+
+        console.log("Filtered courses:", filteredCourseContent);
+
+      return filteredCourseContent;
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+
 
 // Fetch Courses function
 export const ViewCoursesFunction = async () => {
@@ -123,6 +174,7 @@ export const FilterSubscriptionFunction = async (subscription) => {
     }
 }
 
+// User courses function
 export const FetchUserCoursesFunction = async (userId) => {
     try {
         const coursesRef = collection(db, `users/${userId}/userCourses`);
@@ -140,4 +192,24 @@ export const FetchUserCoursesFunction = async (userId) => {
     }
 }
 
+// contact us function
+export const ContactUsFunction = async (firstName, lastName, email, subject, message) => {
+    try {
 
+        const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/send-contactus-email`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ firstName:firstName, lastName:lastName, email:email, subject:subject, message:message  }),
+            });
+        const response = await apiUrl.json();
+
+        // Handle the response here
+        console.log('Server message transmission response:', response);
+
+    } catch (error) {
+        console.log("Error sending message:", error);
+    }
+}

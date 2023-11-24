@@ -15,6 +15,7 @@ import Courses from './Pages/Courses';
 import CourseFullView from './Pages/CourseFullView';
 import CourseView from './Pages/CourseView';
 import UserPage from './Pages/UserPage';
+import ContactUs from './Pages/ContactUs';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
             <Route path="/coursefullview" element={<CourseFullView />} />
             <Route path="/courseview" element={<CourseView />} />
             <Route path="/userpage" element={<UserPage />} />
+            <Route path="/contactus" element={<ContactUs />} />
           </Routes>
       </Router>
   );

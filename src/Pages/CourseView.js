@@ -1,7 +1,7 @@
 
 
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { auth } from "../Services/firebaseConfig";
 import { useNavigate } from "react-router-dom";
@@ -11,15 +11,18 @@ import { GetUserDataFunction } from "../Services/AuthService";
 const CourseView = ({ course_data }) => {
     const location = useLocation();
     const courseData = location.state.course_data;
+    console.log("courseData", courseData);
 
     const [courseId, setCourseId] = useState(courseData.id);
     const [courseTitle, setCourseTitle] = useState(courseData.courseName);
     const [courseDescription, setCourseDescription] = useState(courseData.courseShortDescription);
     const [courseFullDescription, setCourseFullDescription] = useState(courseData.courseDescription);
     const [costPrice, setCostPrice] = useState(courseData.coursePrice);
-    const [video, setVideo] = useState('');
+    const [video, setVideo] = useState(courseData.lessonUrl);
     const [userInfo, setUserInfo] = useState(null);
     const [userSubscription, setUserSubscription] = useState(false);
+    const [lessonName, setLessonName] = useState(courseData.lessonName);
+    const videoRef = useRef(null);
 
     const user = auth.currentUser;
     let userId = '';
@@ -29,6 +32,7 @@ const CourseView = ({ course_data }) => {
         if (user) {
             // Assign user id to userId
             userId = user.uid;
+
             // Fetch user data if user is authenticated
             userData();
         }
@@ -37,7 +41,7 @@ const CourseView = ({ course_data }) => {
     useEffect(() => {
         // Check userSubscription once userInfo is available
         if (userInfo) {
-            setUserSubscription(userInfo.subscribed); 
+            setUserSubscription(userInfo.subscribed);
         }
     }, [userInfo]);
 
@@ -58,7 +62,7 @@ const CourseView = ({ course_data }) => {
             if (costPrice === "Free") {
                 navigate('/coursefullview', { state: { courseData: courseData } });
             } else if (costPrice === "Subscription" && userSubscription === true) {
-                navigate('/coursefullview', { state: { courseData: courseData } }); 
+                navigate('/coursefullview', { state: { courseData: courseData } });
             } else {
                 alert("Only subscribed users can access this course");
                 navigate('/courses');   // Navigate back to courses page
@@ -73,8 +77,12 @@ const CourseView = ({ course_data }) => {
     return (
         <div>
             <h2>Course View</h2>
-            <h3>{courseTitle}</h3>
-            <p>{courseDescription}</p>
+            <video ref={videoRef} width="400" height="300">
+                <source src={video} type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+            <h3>{lessonName}</h3>
+            <p>Description: {courseDescription}</p>
             <h3>{costPrice}</h3>
 
             <button onClick={handleStartCourse}>START</button>

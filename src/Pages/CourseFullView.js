@@ -16,7 +16,8 @@ const CourseFullView = ({ courseData }) => {
     const [courseDescription, setCourseDescription] = useState(course.courseShortDescription);
     const [courseFullDescription, setCourseFullDescription] = useState(course.courseDescription);
     const [subscription, setSubscription] = useState(course.coursePrice);
-    const [video, setVideo] = useState('');
+    const [video, setVideo] = useState(course.lessonUrl);
+    const [lesson, setLesson] = useState(course.lessonName);
 
     const user = auth.currentUser;
     const navigate = useNavigate();
@@ -45,7 +46,7 @@ const CourseFullView = ({ courseData }) => {
             {/* Course Video */}
             <div>
                 <video ref={videoRef} controls width="400" height="300">
-                    <source src={videoSource} type="video/mp4" />
+                    <source src={video} type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
                 <br></br>
@@ -53,7 +54,7 @@ const CourseFullView = ({ courseData }) => {
                     {isPlaying ? 'Pause' : 'Play'}
                 </button>
             </div>
-
+            <h3>{lesson}</h3>
             <p>{courseDescription}</p>
             <h3>{subscription}</h3>
 
