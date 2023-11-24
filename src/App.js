@@ -56,7 +56,7 @@ function App() {
   // }
   const category = ["CAPS", "IEB", "Entrepreneur"];
   const [returnType, setReturnType] = useState("");
-  const short ="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis.";
+  const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis.";
   useEffect(() => {
     console.log(returnType);
   }, [returnType])
@@ -66,29 +66,29 @@ function App() {
     //   {/* <TextFields label={"Email Address:"} errorStatus={er} errorMessage={"Field Required!"} setState={settesting} /> */}
     //   {/* <TextFieldPassword label={"Password:"} errorStatus={er2} errorMessage={"Field Required!"} setState={settestingP} /> */}
     //   {/* <Button text={"Sign In"} buttonFunction={testing} /> */}
-    /* <Accordians label={"Category"} types={category} setReturnType={setReturnType} returnType={returnType}/> */ 
+    /* <Accordians label={"Category"} types={category} setReturnType={setReturnType} returnType={returnType}/> */
     //   {/* <ImageButton handleImage={handleImage} imageSrc={imageSrc} /> */}
 
     // </div>
 
     <>
-    {/* <BrowserRouter>
+      <BrowserRouter>
         <Routes>
           <Route path='' element={<SignIn />} />
-          <Route path='/signup' element={<SignUp setToProfileStatus={setToProfileStatus}/>} />
-          <Route path='/profilesetup' element={toProfileStatus ? <SetUpProfile setToProfileStatus={setToProfileStatus}/> : <Navigate to="/signup"/> } />
-          <Route path='/reset' element={<ResetPassword/>} />
-          <Route path='/forgot' element={<ForgotPassowrd/>} />
-          <Route path='/home' element={<LandingPage/>} />
-          <Route path='/verification' element={<VerificationPage/>} />
-          <Route path='/verify-email' element={<VerifyEmail/>} />
+          <Route path='/signup' element={<SignUp setToProfileStatus={setToProfileStatus} />} />
+          <Route path='/profilesetup' element={toProfileStatus ? <SetUpProfile setToProfileStatus={setToProfileStatus} /> : <Navigate to="/signup" />} />
+          <Route path='/reset' element={<ResetPassword />} />
+          <Route path='/forgot' element={<ForgotPassowrd />} />
+          <Route path='/home' element={<LandingPage />} />
+          <Route path='/verification' element={<VerificationPage />} />
+          <Route path='/verify-email' element={<VerifyEmail />} />
         </Routes>
-      </BrowserRouter> */}
+      </BrowserRouter>
 
-    {/* <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing}/> */}
+      {/* <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing}/> */}
 
-    <CourseContCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} image={image1} cardFunction={testing}/>
-      
+      {/* <CourseContCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} image={image1} cardFunction={testing}/> */}
+
       {/* <SearchBar/> */}
     </>
   );

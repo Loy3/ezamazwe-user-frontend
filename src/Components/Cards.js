@@ -44,8 +44,8 @@ export const CourseContCard = ({ courseName, courseType, shortDescrip, image, ca
     return (
         <>
             <Box sx={{
-                width: "400px",
-                height: "470px",
+                width: "100%",
+                height: "400px",
                 borderRadius: "20px",
                 backgroundColor: "secondary.main",
             }}>

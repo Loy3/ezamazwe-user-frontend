@@ -12,7 +12,19 @@ import tutorsIcon from "../Assets/Icons/tu.png";
 import SectionHeading from "../Components/SectionHeading"
 import SectionSubHeading from "../Components/SectionSubHeading"
 
+import capsImg1 from "../Assets/Images/cardsImages/caps1.jpg";
+import capsImg2 from "../Assets/Images/cardsImages/caps2.jpg";
+import capsImg3 from "../Assets/Images/cardsImages/caps3.jpg";
 
+import iebImg1 from "../Assets/Images/cardsImages/ieb1.jpg";
+import iebImg2 from "../Assets/Images/cardsImages/ieb2.jpg";
+import iebImg3 from "../Assets/Images/cardsImages/ieb3.jpg";
+
+import entImg1 from "../Assets/Images/cardsImages/ent1.jpg";
+import entImg2 from "../Assets/Images/cardsImages/ent2.jpg";
+import entImg3 from "../Assets/Images/cardsImages/ent3.jpg";
+import { useEffect, useState } from "react"
+const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis.";
 function LandingPage() {
 
     const headCards = [
@@ -32,6 +44,78 @@ function LandingPage() {
             numberC: "10000"
         }
     ]
+
+    const newCoursesCards = [
+        {
+            courseName: "Intro to Geometry",
+            courseType: "Free",
+            shortDescrip: short,
+            cardImage: capsImg1
+        },
+        {
+            courseName: "Intro to Calculus",
+            courseType: "Free",
+            shortDescrip: short,
+            cardImage: capsImg2
+        },
+        {
+            courseName: "Intro to probability",
+            courseType: "Free",
+            shortDescrip: short,
+            cardImage: capsImg3
+        },
+
+        {
+            courseName: "Intro to Geometry",
+            courseType: "Free",
+            shortDescrip: short,
+            cardImage: iebImg1
+        },
+        {
+            courseName: "Intro to Calculus",
+            courseType: "Free",
+            shortDescrip: short,
+            cardImage: iebImg2
+        },
+        {
+            courseName: "Intro to probability",
+            courseType: "Free",
+            shortDescrip: short,
+            cardImage: iebImg3
+        },
+
+        {
+            courseName: "Intro to business",
+            courseType: "Free",
+            shortDescrip: short,
+            cardImage: entImg1
+        },
+        {
+            courseName: "Intro to accounting",
+            courseType: "Free",
+            shortDescrip: short,
+            cardImage: entImg2
+        },
+        {
+            courseName: "Intro to finance",
+            courseType: "Free",
+            shortDescrip: short,
+            cardImage: entImg3
+        },
+
+    ]
+
+    const [viewCourses, setViewCourses] = useState([]);
+
+    useEffect(() => {
+        let viewArr = [];
+
+        for (let x = 0; x < 3; x++) {
+            viewArr.push(newCoursesCards[x]);
+        }
+        // console.log(viewArr);
+        setViewCourses(viewArr)
+    }, [])
 
 
     function addSpace(num) {
@@ -112,12 +196,24 @@ function LandingPage() {
                 }}>
 
                     <Box sx={{ width: "100%", marginTop: "100px" }}>
-                        <Box sx={{ width:"100%",display: "flex", justifyContent: "center", alignItems: "center"}}>
+                        <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                             <SectionHeading children={"Newly Added Courses"} />
                         </Box>
-                        <Box sx={{ width:"100%",display: "flex", justifyContent: "center", alignItems: "center"}}>
+                        <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                             <SectionSubHeading children={"Something new in our categories."} />
                         </Box>
+                    </Box>
+
+                    <Box sx={{ width: "100%", marginTop: "50px", display: "flex", justifyContent: "center" }}>
+                        <Box sx={{ display: "flex", flexDirection: "row" }}>
+                            <Typography variant="h6" sx={{ padding: "0 15px", textAlign: "center" }}>CAPS</Typography>
+                            <Typography variant="h6" sx={{ padding: "0 15px", textAlign: "center" }}>IEB</Typography>
+                            <Typography variant="h6" sx={{ padding: "0 15px", textAlign: "center" }}>Entrepreneur </Typography>
+                        </Box>
+                    </Box>
+
+                    <Box sx={{ width: "100%", display: "flex", flexDirection: "row" }}>
+                        {/* {viewCourses.map((course))} */}
                     </Box>
 
                 </Box>
