@@ -7,7 +7,7 @@ export const CourseCard = ({ courseName, courseType, shortDescrip, video, cardFu
 
     return (
         <>
-            <Box sx={{ width: "100%", height: isSmallScreen ? "400px" : "200px", display: "flex", flexDirection: isSmallScreen ? "column" : "row", margin:"10px 0" }}>
+            <Box sx={{ width: "100%", height: isSmallScreen ? "400px" : "200px", display: "flex", flexDirection: isSmallScreen ? "column" : "row", margin: "10px 0" }}>
                 <Box sx={{ width: isSmallScreen ? "100%" : "30%", height: isSmallScreen ? "80%" : "100%", backgroundColor: "primary.light", position: "relative", cursor: "pointer" }} onClick={cardFunction}>
                     <video
                         muted
@@ -36,6 +36,28 @@ export const CourseCard = ({ courseName, courseType, shortDescrip, video, cardFu
                     </Box>
                 </Box>
             </Box>
+        </>
+    )
+}
+
+export const CourseContCard = ({ courseName, courseType, shortDescrip, image, cardFunction }) => {
+    return (
+        <>
+            <Box sx={{
+                width: "400px",
+                height: "470px",
+                borderRadius: "20px",
+                backgroundColor: "secondary.main",
+            }}>
+                <img src={image} alt="my photo" style={{ width: "100%", height: "60%", objectFit: "cover", borderTopLeftRadius: "20px", borderTopRightRadius: "20px" }} />
+
+                <Box sx={{ width: "94%", height: "36%", margin: "0.5% 3%" }}>
+                    <Typography variant="h5" sx={{ color: "primary.light", fontWeight: "bold", marginBottom: "10px" }}>{courseName}</Typography>
+                    <Typography variant="body2" sx={{ marginBottom: "10px" }}>{shortDescrip}</Typography>
+                    <Typography variant="body2" sx={{ color: "primary.light", marginBottom: "10px" }}>By: Company Name</Typography>
+                    <Typography variant="h5" sx={{ color: "primary.light", fontWeight: "bold", marginBottom: "10px" }}>{courseType}</Typography>
+                </Box>
+            </Box >
         </>
     )
 }

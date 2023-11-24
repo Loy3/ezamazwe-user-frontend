@@ -14,12 +14,13 @@ import { NavBar } from './Components/NavBar';
 import { FooterComp } from './Components/Footer';
 import { FilterButton } from './Components/Buttons';
 import { Accordians } from './Components/Accordians';
-import { CourseCard } from './Components/Cards';
+import { CourseCard, CourseContCard } from './Components/Cards';
 // import TextFields from './Components/TextFields';
 // import {TextFieldPassword} from './Components/TextFields';
 // import Button from "./Components/Buttons";
 // import { ImageButton } from "./Components/Buttons";
 import video1 from "./Assets/Videos/video.mp4";
+import image1 from "./Assets/Images/cardsImages/caps1.jpg"
 import { SearchBar } from './Components/SearchBar';
 function App() {
   const [toProfileStatus, setToProfileStatus] = useState(false);
@@ -85,6 +86,8 @@ function App() {
       </BrowserRouter> */}
 
     {/* <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing}/> */}
+
+    <CourseContCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} image={image1} cardFunction={testing}/>
       
       {/* <SearchBar/> */}
     </>
