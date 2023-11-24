@@ -86,7 +86,7 @@ function App() {
 
     {/* <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing}/> */}
       
-      <SearchBar/>
+      {/* <SearchBar/> */}
     </>
   );
 }

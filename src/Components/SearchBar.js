@@ -7,22 +7,30 @@ const Label = styled('label')({
 });
 
 const Input = styled('input')(({ theme }) => ({
-    width: 200,
-    backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#000',
-    color: theme.palette.mode === 'light' ? '#000' : '#fff',
+    width: "100%",
+    backgroundColor: "#C6D0D6",
+    color: "black",
+    height:"60px",
+    outline:"none", 
+    border:"none",
+    borderTopLeftRadius:"20px",
+    borderBottomLeftRadius:"20px",
+    padding:"0 20px"
 }));
 
 const Listbox = styled('ul')(({ theme }) => ({
-    width: 200,
-    margin: 0,
-    padding: 0,
+    width: "50%",
+    margin: "0",
+    padding: "10px",
     zIndex: 1,
     position: 'absolute',
     listStyle: 'none',
-    backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#000',
+    backgroundColor: "#C6D0D6",
     overflow: 'auto',
     maxHeight: 200,
-    border: '1px solid rgba(0,0,0,.25)',
+    border: '1px solid #B3B3B3',
+    borderBottomLeftRadius:"20px",
+    borderBottomRightRadius:"20px",
     '& li.Mui-focused': {
         backgroundColor: '#4a8df6',
         color: 'white',
@@ -49,10 +57,10 @@ export const SearchBar = () => {
     });
 
     return (
-        <div>
+        <div style={{position:"relative"}}>
             <div {...getRootProps()}>
-                <Label {...getInputLabelProps()}>useAutocomplete</Label>
-                <Input {...getInputProps()} />
+                {/* <Label {...getInputLabelProps()}>useAutocomplete</Label> */}
+                <Input {...getInputProps()}/>
             </div>
             {groupedOptions.length > 0 ? (
                 <Listbox {...getListboxProps()}>

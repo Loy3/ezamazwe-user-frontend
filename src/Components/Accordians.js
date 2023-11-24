@@ -28,7 +28,7 @@ export const Accordians = ({ label, types, setReturnType, returnType }) => {
 
     return (
         <>
-            <Box sx={{ width: "20%", backgroundColor: "white", borderTop: "2px solid #396781" }}>
+            <Box sx={{ width: "100%", backgroundColor: "white", borderTop: "2px solid #396781" }}>
                 <Box sx={{ display: "flex", flexDirection: "row" }}>
                     <Typography sx={{ width: "40%", margin: "0 5%", height: "inherit", display: "flex", alignItems: "center", fontWeight: "bold", color: "primary.light" }}>{label}</Typography>
                     <Box sx={{ width: "40%", margin: "0 5%", display: "flex", justifyContent: "end" }}>
