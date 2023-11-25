@@ -20,7 +20,7 @@ const Input = styled('input')(({ theme }) => ({
 
 const Listbox = styled('ul')(({ theme }) => ({
     width: "50%",
-    margin: "0",
+    margin: "0 0 0 20px",
     padding: "10px",
     zIndex: 1,
     position: 'absolute',

@@ -89,9 +89,10 @@ export const FilterButton = ({ text, buttonFunction }) => {
 
 
 export const HomeButtons = ({ text, buttonFunction }) => {
+    const isSmallScreen = useMediaQuery("(max-width:600px)");
     return (
         <>
-            <Button variant="contained" style={{ backgroundColor: "primary.light", width: "30%", height:"50px", borderRadius: 15 }} onClick={() => buttonFunction()}>{text}</Button>
+            <Button variant="contained" style={{ backgroundColor: "primary.light", width: isSmallScreen ? "70%" : "35%", height: "50px", borderRadius: 15, marginLeft: isSmallScreen ? "15%" : "0" }} onClick={() => buttonFunction()}>{text}</Button>
         </>
     )
 }

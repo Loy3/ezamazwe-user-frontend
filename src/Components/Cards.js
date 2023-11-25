@@ -45,11 +45,11 @@ export const CourseContCard = ({ courseName, courseType, shortDescrip, image, ca
         <>
             <Box sx={{
                 width: "100%",
-                height: "400px",
+                height: "450px",
                 borderRadius: "20px",
                 backgroundColor: "secondary.main",
             }}>
-                <img src={image} alt="my photo" style={{ width: "100%", height: "60%", objectFit: "cover", borderTopLeftRadius: "20px", borderTopRightRadius: "20px" }} />
+                <img src={image} alt="my photo" style={{ width: "100%", height: "55%", objectFit: "cover", borderTopLeftRadius: "20px", borderTopRightRadius: "20px" }} />
 
                 <Box sx={{ width: "94%", height: "36%", margin: "0.5% 3%" }}>
                     <Typography variant="h5" sx={{ color: "primary.light", fontWeight: "bold", marginBottom: "10px" }}>{courseName}</Typography>
