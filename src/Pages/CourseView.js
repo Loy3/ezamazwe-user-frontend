@@ -8,16 +8,18 @@ import { useNavigate } from "react-router-dom";
 import { GetUserDataFunction } from "../Services/AuthService";
 
 
-const CourseView = ({ course_data }) => {
+const CourseView = ({ course_data, docData }) => {
     const location = useLocation();
     const courseData = location.state.course_data;
+    const doc_data = location.state.docData;
     console.log("courseData", courseData);
+    console.log("doc_data:", doc_data);
 
     const [courseId, setCourseId] = useState(courseData.id);
-    const [courseTitle, setCourseTitle] = useState(courseData.courseName);
-    const [courseDescription, setCourseDescription] = useState(courseData.courseShortDescription);
-    const [courseFullDescription, setCourseFullDescription] = useState(courseData.courseDescription);
-    const [costPrice, setCostPrice] = useState(courseData.coursePrice);
+    const [courseTitle, setCourseTitle] = useState(doc_data.courseName);
+    const [courseDescription, setCourseDescription] = useState(doc_data.courseShortDescription);
+    const [courseFullDescription, setCourseFullDescription] = useState(doc_data.courseDescription);
+    const [costPrice, setCostPrice] = useState(doc_data.coursePrice);
     const [video, setVideo] = useState(courseData.lessonUrl);
     const [userInfo, setUserInfo] = useState(null);
     const [userSubscription, setUserSubscription] = useState(false);
@@ -60,7 +62,7 @@ const CourseView = ({ course_data }) => {
 
         if (user) {
             if (costPrice === "Free") {
-                navigate('/coursefullview', { state: { courseData: courseData } });
+                navigate('/coursefullview', { state: { courseData: courseData, doc_data: doc_data } });
             } else if (costPrice === "Subscription" && userSubscription === true) {
                 navigate('/coursefullview', { state: { courseData: courseData } });
             } else {

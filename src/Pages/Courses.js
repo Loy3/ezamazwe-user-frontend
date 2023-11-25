@@ -7,11 +7,13 @@ import { FilterGradeFunction } from "../Services/CourseService";
 import { FilterSubscriptionFunction } from "../Services/CourseService";
 import { useNavigate } from "react-router-dom";
 import { fetchCoursesFunction } from "../Services/CourseService";
+import { FilteredDocFunction } from "../Services/CourseService";
 
 
 const Courses = () => {
 
     const [courses, setCourses] = useState([]);
+    const [docData, setDocData] = useState([]);
     const [category, setCategory] = useState('');
     const [subject, setSubject] = useState('');
     const [grade, setGrade] = useState('');
@@ -27,8 +29,23 @@ const Courses = () => {
             console.log("Courses filtered data:", data);
             setCourses(data);
 
+            handleFilteredDoc();
+
         } catch (error) {
-            console.log("Error fetching data",);
+            console.log("Error fetching data", error);
+        }
+    }
+
+
+    // View filtered doc
+    const handleFilteredDoc = async () => {
+        try {
+            const data = await FilteredDocFunction(subject, category, grade);
+            console.log("Filtered doc data:", data);
+            setDocData(data);
+
+        } catch (error) {
+            console.log("Error pulling filtered doc", error);
         }
     }
 
@@ -94,7 +111,7 @@ const Courses = () => {
     const handleViewCourse = (id) => {
         const [course_data] = courses.filter((course) => course.id === id);
 
-        navigate('/courseview', { state: { course_data: course_data } });
+        navigate('/courseview', { state: { course_data: course_data, docData: docData } });
     }
 
 

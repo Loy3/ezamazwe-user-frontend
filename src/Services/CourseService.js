@@ -3,7 +3,8 @@
 import { db, auth } from './firebaseConfig';
 import { collection, collectionGroup, getDocs, query, where } from "firebase/firestore";
 
-// Filter courses with subject, category, 
+
+// Filter courses with subject, category, grade
 export const fetchCoursesFunction = async (subject, category, grade) => {
     
     try {
@@ -53,6 +54,31 @@ export const fetchCoursesFunction = async (subject, category, grade) => {
     }
   };
 
+  // Filtered document function
+  export const FilteredDocFunction = async (subject, category, grade) => {
+    try {
+        // Step 1: Query to get the course document based on subject, category and grade
+      const coursesQuery = query(collection(db, 'coursesCollection'), 
+      where('courseCategory.subjectOrTopic', '==', subject),
+      where('courseCategory.categoryType', '==', category),
+      where('courseCategory.categoryGrade', '==', grade)
+      );
+      const coursesSnapshot = await getDocs(coursesQuery);
+
+      coursesSnapshot.forEach(item=>console.log("Filtered doc:", item.data()))
+
+      const filteredDocContent = coursesSnapshot.docs
+        .map((contentDoc) => ({
+          contentId: contentDoc.id,
+          ...contentDoc.data()
+        }));
+
+      return filteredDocContent;       
+
+    } catch (error) {
+        console.log("Error fetching document:", error);
+    }
+  }
 
 
 // Fetch Courses function
