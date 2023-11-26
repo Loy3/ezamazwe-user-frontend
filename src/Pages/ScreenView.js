@@ -4,6 +4,7 @@ import { HeaderComp, HeaderSmallComp } from "../Components/HeaderComp";
 import { NavBar } from "../Components/NavBar";
 import Courses from "./Courses";
 import ViewCourse from "./ViewCourse";
+import UserPage from "./UserPage";
 
 export default function ScreenView() {
     return (
@@ -19,7 +20,8 @@ export default function ScreenView() {
                     // backgroundColor: "black",
                 }}>
                     {/* <Courses /> */}
-                    <ViewCourse />
+                    {/* <ViewCourse /> */}
+                    <UserPage/>
                 </Box>
             </Box>
             <FooterComp />

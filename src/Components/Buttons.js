@@ -23,6 +23,14 @@ export default function button({ text, buttonFunction }) {
     )
 }
 
+export  function UserButton({ text, buttonFunction }) {
+    return (
+        <>
+            <Button variant="contained" style={{ backgroundColor: "#1C3F53", width: "100%", borderRadius: 20 }} onClick={() => buttonFunction()}>{text}</Button>
+        </>
+    )
+}
+
 export const ImageButton = ({ handleImage, imageSrc }) => {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
     return (
