@@ -1,14 +1,16 @@
 import { Box } from "@mui/material";
 import { FooterComp } from "../Components/Footer";
-import { HeaderComp } from "../Components/HeaderComp";
+import { HeaderComp, HeaderSmallComp } from "../Components/HeaderComp";
 import { NavBar } from "../Components/NavBar";
 import Courses from "./Courses";
+import ViewCourse from "./ViewCourse";
 
 export default function ScreenView() {
     return (
         <>
             <NavBar />
-            <HeaderComp />
+            {/* <HeaderComp /> */}
+            <HeaderSmallComp />
             <Box sx={{
                 width: "100%", height: "auto", display: "flex", justifyContent: "center", alignItems: "center"
             }}>
@@ -17,6 +19,7 @@ export default function ScreenView() {
                     // backgroundColor: "black",
                 }}>
                     {/* <Courses /> */}
+                    <ViewCourse />
                 </Box>
             </Box>
             <FooterComp />

@@ -61,3 +61,22 @@ export const CourseContCard = ({ courseName, courseType, shortDescrip, image, ca
         </>
     )
 }
+
+export const ContCard = ({ lessonNumber, text, duration }) => {
+    return (
+        <>
+            <Box sx={{ width: "100%" }}>
+                <Typography variant="subtitle1" component="h4" sx={{ fontWeight: 'bold', color: 'primary.light', marginLeft:"5px" }}>
+                    {`Lession ${lessonNumber}`}
+                </Typography>
+                <Container sx={{ borderBottom: '1px solid #396781', borderTop: '1px solid #396781', paddingBottom: '0px', paddingTop: '0px' }}>
+                    <Typography variant="body1" sx={{ margin: "5px 0 5px -5px" }}>{text}</Typography>
+                    <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: 'primary.light', margin: "5px 0 5px -5px" }}  >
+                        {`Duration: ${duration}`}
+                    </Typography>
+
+                </Container>
+            </Box>
+        </>
+    )
+}
