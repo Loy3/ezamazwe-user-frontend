@@ -22,6 +22,7 @@ import { CourseCard, CourseContCard } from './Components/Cards';
 import video1 from "./Assets/Videos/video.mp4";
 import image1 from "./Assets/Images/cardsImages/caps1.jpg"
 import { SearchBar } from './Components/SearchBar';
+import ScreenView from './Pages/ScreenView';
 function App() {
   const [toProfileStatus, setToProfileStatus] = useState(false);
   // const [testingP, settestingP] = useState("");
@@ -72,7 +73,7 @@ function App() {
     // </div>
 
     <>
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <Routes>
           <Route path='' element={<SignIn />} />
           <Route path='/signup' element={<SignUp setToProfileStatus={setToProfileStatus} />} />
@@ -83,13 +84,15 @@ function App() {
           <Route path='/verification' element={<VerificationPage />} />
           <Route path='/verify-email' element={<VerifyEmail />} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
 
       {/* <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing}/> */}
 
       {/* <CourseContCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} image={image1} cardFunction={testing}/> */}
 
       {/* <SearchBar/> */}
+
+      <ScreenView />
     </>
   );
 }

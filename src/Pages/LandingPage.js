@@ -1,6 +1,6 @@
-import { Box, Container, Typography, useMediaQuery } from "@mui/material"
+import { Box, Typography, useMediaQuery } from "@mui/material"
 import { FooterComp } from "../Components/Footer"
-import { HeaderComp } from "../Components/HeaderComp"
+// import { HeaderComp } from "../Components/HeaderComp"
 import { NavBar } from "../Components/NavBar"
 import { HomeButtons } from "../Components/Buttons"
 import headerImage from "../Assets/Images/headerImage.jpg";
@@ -26,98 +26,110 @@ import entImg3 from "../Assets/Images/cardsImages/ent3.jpg";
 
 import tutorImage from "../Assets/Images/tutor.jpg";
 
-import { useEffect, useState } from "react"
+import impactVid1 from "../Assets/Videos/1.mp4";
+import impactVid2 from "../Assets/Videos/2.mp4";
+import impactVid3 from "../Assets/Videos/3.mp4";
+import impactVid4 from "../Assets/Videos/4.mp4";
+
+import { useEffect, useMemo, useState } from "react"
 import { CourseContCard } from "../Components/Cards"
 const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis.";
 function LandingPage() {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
 
-    const headCards = [
-        {
-            iconN: enrolledStuIcon,
-            title: "Enrolled Students",
-            numberC: "10000"
-        },
-        {
-            iconN: onCoursesIcon,
-            title: "Online Courses",
-            numberC: "10000"
-        },
-        {
-            iconN: tutorsIcon,
-            title: "Expert Tutors",
-            numberC: "10000"
-        }
-    ]
+    const headCards = useMemo(() => {
+        return [
+            {
+                iconN: enrolledStuIcon,
+                title: "Enrolled Students",
+                numberC: "10000"
+            },
+            {
+                iconN: onCoursesIcon,
+                title: "Online Courses",
+                numberC: "10000"
+            },
+            {
+                iconN: tutorsIcon,
+                title: "Expert Tutors",
+                numberC: "10000"
+            }
+        ]
+    }, [])
 
-    const newCoursesCards = [
-        {
-            courseName: "Intro to Geometry",
-            courseType: "Free",
-            shortDescrip: short,
-            cardImage: capsImg1,
-            type: "caps"
-        },
-        {
-            courseName: "Intro to Calculus",
-            courseType: "Free",
-            shortDescrip: short,
-            cardImage: capsImg2,
-            type: "caps"
-        },
-        {
-            courseName: "Intro to probability",
-            courseType: "Free",
-            shortDescrip: short,
-            cardImage: capsImg3,
-            type: "caps"
-        },
+    const newCoursesCards = useMemo(() => {
+        return [
+            {
+                courseName: "Intro to Geometry",
+                courseType: "Free",
+                shortDescrip: short,
+                cardImage: capsImg1,
+                type: "caps"
+            },
+            {
+                courseName: "Intro to Calculus",
+                courseType: "Free",
+                shortDescrip: short,
+                cardImage: capsImg2,
+                type: "caps"
+            },
+            {
+                courseName: "Intro to probability",
+                courseType: "Free",
+                shortDescrip: short,
+                cardImage: capsImg3,
+                type: "caps"
+            },
 
-        {
-            courseName: "Intro to Geometry",
-            courseType: "Free",
-            shortDescrip: short,
-            cardImage: iebImg1,
-            type: "ieb"
-        },
-        {
-            courseName: "Intro to Calculus",
-            courseType: "Free",
-            shortDescrip: short,
-            cardImage: iebImg2,
-            type: "ieb"
-        },
-        {
-            courseName: "Intro to probability",
-            courseType: "Free",
-            shortDescrip: short,
-            cardImage: iebImg3,
-            type: "ieb"
-        },
+            {
+                courseName: "Intro to Geometry",
+                courseType: "Free",
+                shortDescrip: short,
+                cardImage: iebImg1,
+                type: "ieb"
+            },
+            {
+                courseName: "Intro to Calculus",
+                courseType: "Free",
+                shortDescrip: short,
+                cardImage: iebImg2,
+                type: "ieb"
+            },
+            {
+                courseName: "Intro to probability",
+                courseType: "Free",
+                shortDescrip: short,
+                cardImage: iebImg3,
+                type: "ieb"
+            },
 
-        {
-            courseName: "Intro to business",
-            courseType: "Free",
-            shortDescrip: short,
-            cardImage: entImg1,
-            type: "ent"
-        },
-        {
-            courseName: "Intro to accounting",
-            courseType: "Free",
-            shortDescrip: short,
-            cardImage: entImg2,
-            type: "ent"
-        },
-        {
-            courseName: "Intro to finance",
-            courseType: "Free",
-            shortDescrip: short,
-            cardImage: entImg3,
-            type: "ent"
-        },
+            {
+                courseName: "Intro to business",
+                courseType: "Free",
+                shortDescrip: short,
+                cardImage: entImg1,
+                type: "ent"
+            },
+            {
+                courseName: "Intro to accounting",
+                courseType: "Free",
+                shortDescrip: short,
+                cardImage: entImg2,
+                type: "ent"
+            },
+            {
+                courseName: "Intro to finance",
+                courseType: "Free",
+                shortDescrip: short,
+                cardImage: entImg3,
+                type: "ent"
+            },
 
-    ]
+        ]
+    }, [])
+
+    const impactVideos = [impactVid1, impactVid2, impactVid3, impactVid4];
+
     const withBorder = "2px solid #396781";
     const withNoBorder = "none";
     const [viewCourses, setViewCourses] = useState([]);
@@ -132,8 +144,8 @@ function LandingPage() {
             viewArr.push(newCoursesCards[x]);
         }
         // console.log(viewArr);
-        setViewCourses(viewArr)
-    }, [])
+        setViewCourses(viewArr);
+    }, [newCoursesCards])
 
 
     function addSpace(num) {
@@ -214,14 +226,14 @@ function LandingPage() {
                     <Box sx={{ marginTop: isSmallScreen ? "50px" : "80px", marginBottom: "-30px", width: "100%", height: "80px", display: "flex", justifyContent: "center", alignItems: "center" }}>
                         <Box sx={{ width: isSmallScreen ? "94%" : "960px", height: "inherit", display: "flex", flexDirection: "row" }}>
                             {headCards.map((cont, index) => (
-                                <Box key={index} sx={{ width: isSmallScreen ? "30%" : "300px", height: "inherit", backgroundColor: "primary.light", margin: isSmallScreen ? "0 5px" : "0 10px", display: "flex", flexDirection: isSmallScreen ? "column" : "row", borderRadius: "20px" }}>
-                                    <Box sx={{ width: "100%", height: "inherit", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <Box key={index} sx={{ width: isSmallScreen ? "30%" : "300px", height: isSmallScreen ? "90px" : "inherit", backgroundColor: "primary.light", margin: isSmallScreen ? "0 5px" : "0 10px", display: "flex", flexDirection: isSmallScreen ? "column" : "row", borderRadius: "20px" }}>
+                                    <Box sx={{ width: isSmallScreen ? "100%" : "25%", height: "inherit", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                         <img src={cont.iconN} alt="enrolled" style={{ width: isSmallScreen ? "30px" : "60px", height: isSmallScreen ? "30px" : "60px", paddingTop: isSmallScreen ? "5px" : "0" }} />
                                     </Box>
                                     <Box sx={{ width: isSmallScreen ? "100%" : "75%", display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: isSmallScreen ? "5px" : "0" }}>
                                         <Box>
                                             <Typography variant={isSmallScreen ? "body2" : "subtitle1"} sx={{ width: "100%", textAlign: "center", color: "white", fontSize: isSmallScreen ? "11px" : "16px", marginTop: isSmallScreen ? "5px" : "0" }}>{cont.title}</Typography>
-                                            <Typography variant="h4" sx={{ width: "100%", textAlign: "center", color: "white", fontWeight: "bold", fontSize: isSmallScreen ? "16px" : "20px" }}>{`${addSpace(cont.numberC)}+`}</Typography>
+                                            <Typography variant={isSmallScreen ? "h6" : "h4"} sx={{ width: "100%", textAlign: "center", color: "white", fontWeight: "bold" }}>{`${addSpace(cont.numberC)}+`}</Typography>
                                         </Box>
                                     </Box>
                                 </Box>
@@ -316,8 +328,7 @@ function LandingPage() {
                         <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                             <SectionHeading children={"Our Impact"} />
                         </Box>
-                        <Box sx={{ width: "60%", display: "flex", justifyContent: "center", alignItems: "center", margin: "5px 20%" }}>
-                            <SectionSubHeading children={""} style={{}} />
+                        <Box sx={{ width: isSmallScreen ? "86%" : "60%", display: "flex", justifyContent: "center", alignItems: "center", margin: isSmallScreen ? "5px 7%" : "5px 20%" }}>
                             {isSmallScreen ?
                                 <Typography variant="body2" sx={{ color: 'primary.light', fontWeight: "400", textAlign: "center" }}>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas metus nulla, et tincidunt sapien faucibus quis. Proin accumsan, tortor a luctus euismod, ex orci sodales nunc.
@@ -328,17 +339,55 @@ function LandingPage() {
                                 </Typography>
                             }
                         </Box>
+
+                        <Box sx={{ width: "94%", height: "auto", margin: "100px 3% 50px 3%", display: "flex", flexDirection: isSmallScreen ? "column" : "row" }}>
+
+                            {/* <video
+                                // autoPlay
+                                controls
+                                // loop
+                                // muted
+                                style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "20px" }}>
+                                <source
+                                    src={impactVid3}
+                                    type="video/mp4"
+                                />
+                            </video> */}
+
+                            {impactVideos.map((vid, index) => (
+                                <Box key={index} sx={{ width: isSmallScreen ? "94%" : "24%", height: "30vh", margin: isSmallScreen ? "10px 3%" : "10px 0.5%" }}>
+                                    <video
+                                        controls
+                                        style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "20px" }}>
+                                        <source
+                                            src={vid}
+                                            type="video/mp4"
+                                        />
+                                    </video>
+                                </Box>
+                            ))}
+
+
+                            {/* <video
+                        muted
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}>
+                        <source
+                            src={video}
+                            type="video/mp4"
+                        />
+                    </video> */}
+                        </Box>
                     </Box>
 
                 </Box>
             </Box>
             {/* Body */}
-
-            < br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />< br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            < br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />< br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <FooterComp />
+            {/* < br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />< br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            < br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />< br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> */}
 
             {/* <HeaderComp/> */}
-            {/* <FooterComp/> */}
+
         </>
     )
 }

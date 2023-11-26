@@ -7,8 +7,8 @@ export const CourseCard = ({ courseName, courseType, shortDescrip, video, cardFu
 
     return (
         <>
-            <Box sx={{ width: "100%", height: isSmallScreen ? "400px" : "200px", display: "flex", flexDirection: isSmallScreen ? "column" : "row", margin: "10px 0" }}>
-                <Box sx={{ width: isSmallScreen ? "100%" : "30%", height: isSmallScreen ? "80%" : "100%", backgroundColor: "primary.light", position: "relative", cursor: "pointer" }} onClick={cardFunction}>
+            <Box sx={{ width: "100%", height: isSmallScreen ? "400px" : "150px", display: "flex", flexDirection: isSmallScreen ? "column" : "row", margin: "10px 0" }}>
+                <Box sx={{ width: isSmallScreen ? "100%" : "25%", height: isSmallScreen ? "80%" : "100%", backgroundColor: "primary.light", position: "relative", cursor: "pointer" }} onClick={cardFunction}>
                     <video
                         muted
                         style={{ width: "100%", height: "100%", objectFit: "cover" }}>
