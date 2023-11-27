@@ -5,89 +5,89 @@ import { collection, collectionGroup, getDocs, query, where } from "firebase/fir
 
 // Filter courses with subject, category, 
 export const fetchCoursesFunction = async (subject, category, grade, subscription) => {
-    
+
     try {
-      // Step 1: Query to get the course document based on subject, category and grade
-      const coursesQuery = query(collection(db, 'coursesCollection'), 
-      where('courseCategory.subjectOrTopic', '==', subject),
-      where('courseCategory.categoryType', '==', category),
-      where('courseCategory.categoryGrade', '==', grade),
-      where('coursePrice', '==', subscription)
-      );
-      const coursesSnapshot = await getDocs(coursesQuery);
+        // Step 1: Query to get the course document based on subject, category and grade
+        const coursesQuery = query(collection(db, 'coursesCollection'),
+            where('courseCategory.subjectOrTopic', '==', subject),
+            where('courseCategory.categoryType', '==', category),
+            where('courseCategory.categoryGrade', '==', grade),
+            where('coursePrice', '==', subscription)
+        );
+        const coursesSnapshot = await getDocs(coursesQuery);
 
-      if (coursesSnapshot.empty) {
-        alert('No courses found for the subject:', subject);
-        return;
-      }
+        if (coursesSnapshot.empty) {
+            alert('No courses found for the subject:', subject);
+            return;
+        }
 
-      coursesSnapshot.forEach(item=>console.log("Course:", item.data()))
+        coursesSnapshot.forEach(item => console.log("Course:", item.data()))
 
-      // Use the first document
-      const courseDoc = coursesSnapshot.docs[0];
-      const courseId = courseDoc.id;
+        // Use the first document
+        const courseDoc = coursesSnapshot.docs[0];
+        const courseId = courseDoc.id;
 
-      console.log("courseId:", courseId); 
+        console.log("courseId:", courseId);
 
 
-      // Step 2: Query the courseContent subcollection for the selected course
-      let items = [];
-      const courseContentQuery = collectionGroup(db, 'courseContent');
-      const courseContentSnapshot = await getDocs(courseContentQuery);
+        // Step 2: Query the courseContent subcollection for the selected course
+        let items = [];
+        const courseContentQuery = collectionGroup(db, 'courseContent');
+        const courseContentSnapshot = await getDocs(courseContentQuery);
 
-      courseContentSnapshot.forEach(item=>console.log("Course content:", item.data()))
+        courseContentSnapshot.forEach(item => console.log("Course content:", item.data()))
 
-      // Filter course content documents based on courseId
-      const filteredCourseContent = courseContentSnapshot.docs
-        // .filter((contentDoc) => contentDoc.data().courseId === courseId)
-        .map((contentDoc) => ({
-          contentId: contentDoc.id,
-          ...contentDoc.data()
-        }));
+        // Filter course content documents based on courseId
+        const filteredCourseContent = courseContentSnapshot.docs
+            // .filter((contentDoc) => contentDoc.data().courseId === courseId)
+            .map((contentDoc) => ({
+                contentId: contentDoc.id,
+                ...contentDoc.data()
+            }));
 
         console.log("Filtered courses:", filteredCourseContent);
 
-      return filteredCourseContent;
+        return filteredCourseContent;
 
     } catch (error) {
-      console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error);
     }
-  };
+};
 
 
-  // Course details function
-  export const fetchCourseDetailsFunction = async (subject, category, grade, subscription) => {
-    
+// Course details function
+export const fetchCourseDetailsFunction = async (subject, category, grade, subscription) => {
+
     try {
-      // Step 1: Query to get the course document based on subject, category and grade
-      const coursesQuery = query(collection(db, 'coursesCollection'), 
-      where('courseCategory.subjectOrTopic', '==', subject),
-      where('courseCategory.categoryType', '==', category),
-      where('courseCategory.categoryGrade', '==', grade),
-      where('coursePrice', '==', subscription)
-      );
-      const coursesSnapshot = await getDocs(coursesQuery);
+        // Step 1: Query to get the course document based on subject, category and grade
+        const coursesQuery = query(collection(db, 'coursesCollection'),
+            where('courseCategory.subjectOrTopic', '==', subject),
+            where('courseCategory.categoryType', '==', category),
+            where('courseCategory.categoryGrade', '==', grade),
+            where('coursePrice', '==', subscription)
+        );
+        const coursesSnapshot = await getDocs(coursesQuery);
 
-      if (coursesSnapshot.empty) {
-        alert('No courses found for the subject:', subject);
-        return;
-      }
+        if (coursesSnapshot.empty) {
+            alert('No courses found for the subject:', subject);
+            return;
+        }
 
-      coursesSnapshot.forEach(item=>console.log("Course:", item.data()))
+        coursesSnapshot.forEach(item => console.log("Course:", item.data()))
 
-      // Use the first document
-      const courseDoc = coursesSnapshot.docs[0];
-      const courseId = courseDoc.id;
+        // Use the first document
+        const courseDoc = coursesSnapshot.docs[0];
+        const courseId = courseDoc.id;
 
-      console.log("courseDoc", courseDoc);
-      console.log("courseId:", courseId); 
+        console.log("courseDoc", courseDoc);
+        console.log("courseId:", courseId);
 
-      return courseDoc;
+        return courseDoc;
 
     } catch (error) {
-      console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error);
     }
-  };
+};
 
 
 
@@ -221,8 +221,8 @@ export const FetchUserCoursesFunction = async (userId) => {
             id: doc.id,
             ...doc.data(),
         }));
-        
-       return coursesData;
+
+        return coursesData;
 
     } catch (error) {
         console.error('Error fetching courses:', error);
@@ -239,7 +239,7 @@ export const ContactUsFunction = async (firstName, lastName, email, subject, mes
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ firstName:firstName, lastName:lastName, email:email, subject:subject, message:message  }),
+                body: JSON.stringify({ firstName: firstName, lastName: lastName, email: email, subject: subject, message: message }),
             });
         const response = await apiUrl.json();
 
@@ -268,5 +268,33 @@ export const ViewMembersFunction = async () => {
 
     } catch (error) {
         console.log("Failed to fetch members data", error);
-    } 
+    }
+}
+
+// Payment function
+export const PaymentFunction = async (cardName, cardNumber, expiryDate, secureCode, email) => {
+    try {
+
+        const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/subscribe`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    cardName: cardName,
+                    cardNumber: cardNumber,
+                    expiryDate: expiryDate,
+                    secureCode: secureCode,
+                    email: email,
+                }),
+            });
+        const response = await apiUrl.json();
+
+        // Handle the response here
+        console.log('Server payment process response:', response);
+
+    } catch (error) {
+        console.log("Error making payment:", error);
+    }
 }

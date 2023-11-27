@@ -161,14 +161,13 @@ export const GetUserDataFunction = async (userId) => {
             user = docSnap.data();
             console.log("User data:", docSnap.data());
         } else {
-            alert('Error', 'User data not found.');
+            console.log('Error! User data not found.');
         }
 
         return user;
 
     } catch (error) {
         console.log('Failed to fetch user data', error);
-        alert('Unable to fetch account information!');
     }
 };
 

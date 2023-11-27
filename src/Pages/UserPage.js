@@ -7,6 +7,15 @@ import { GetUserDataFunction } from '../Services/AuthService';
 import { FetchUserCoursesFunction } from "../Services/CourseService";
 import { auth } from "../Services/firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import Button from '@mui/material/Button';
+import { TextField, InputLabel, Link, Grid, Typography, Box } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import { useTheme } from '@mui/material';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 
 const UserPage = () => {
@@ -19,7 +28,9 @@ const UserPage = () => {
     const [imageUpload, setImageUpload] = useState(null);
     const [userId, setUserId] = useState('');
     const [userCourses, setUserCourses] = useState([]);
+    const [open, setOpen] = useState(false);
     const navigate = useNavigate();
+    const theme = useTheme();
 
     useEffect(() => {
         const user = auth.currentUser;
@@ -30,10 +41,23 @@ const UserPage = () => {
         }
     }, []);
 
-    useEffect(()=>{
+    useEffect(() => {
 
         handleGetUserData();
     }, []);
+
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleContinue = () => {
+        navigate('/payment');
+    }
 
 
     // User information
@@ -93,7 +117,60 @@ const UserPage = () => {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <div style={{marginTop:'100px', marginLeft:'50px'}}>
+            <div style={{ marginTop: '100px', marginLeft: '50px' }}>
+                <Button variant="outlined" color="primary" onClick={handleOpen}>
+                    SUBSCRIBE
+                </Button>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    sx={{
+                        borderRadius: '20px',
+                    }}
+                >
+                    <DialogTitle component='h1' variant='h4' sx={{ textAlign: 'center', mt: 3 }}>
+                        Subscribe
+                    </DialogTitle>
+
+                    <DialogContent sx={{ height: '300px' }}>
+
+                        <Typography sx={{ textAlign: 'center', mt: 0, mb: 2, fontWeight: 400, fontSize: '20px', lineHeight: '30px' }}>
+                            Become a subscribed user.
+                        </Typography>
+
+                        <Typography sx={{ textAlign: 'center', mt: 0, mb: 2, fontWeight: 400, fontSize: '20px', lineHeight: '30px' }}>
+                            To become a subscribed user a fee has to be 
+                            paid, so click on continue to make payment.
+                        </Typography>
+
+                    </DialogContent>
+
+                    <DialogActions sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Box>
+                            <Button
+                                onClick={handleContinue}
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{
+                                    mt: 5, mb: 5,
+                                    borderRadius: 30,
+                                    backgroundColor: '#1C3F53',
+                                    width: '300px',     // Default width for larger screens
+                                    height: '55px',
+                                    [theme.breakpoints.down('sm')]: {
+                                        // Use 456px width on screens smaller or equal to 'sm' breakpoint
+                                        width: '456px',
+                                    },
+                                }}
+                            >
+                                Continue
+                            </Button>
+                        </Box>
+                    </DialogActions>
+                </Dialog>
+            </div>
+            <div style={{ marginTop: '100px', marginLeft: '50px' }}>
                 <br></br>
                 <h3> Profile</h3>
                 <br></br>
@@ -121,7 +198,7 @@ const UserPage = () => {
                 <br></br>
             </div>
 
-            <div style={{marginTop:'100px', marginLeft:'50px'}}>
+            <div style={{ marginTop: '100px', marginLeft: '50px' }}>
                 <button onClick={handleGetUserCourses}><h3>Courses</h3></button>
                 <div>
                     {userCourses.map((course) => (

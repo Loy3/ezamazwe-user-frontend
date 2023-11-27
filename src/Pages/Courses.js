@@ -111,7 +111,7 @@ const Courses = () => {
     const handleViewCourse = (id) => {
         const [course_data] = courses.filter((course) => course.id === id);
 
-        navigate('/courseview', { state: { course_data: course_data, docData: docData } });
+        navigate('/courseview', { state: { course_data: course_data, docData: details } });
     }
 
 
