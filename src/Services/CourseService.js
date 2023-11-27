@@ -4,14 +4,15 @@ import { db, auth } from './firebaseConfig';
 import { collection, collectionGroup, getDocs, query, where } from "firebase/firestore";
 
 // Filter courses with subject, category, 
-export const fetchCoursesFunction = async (subject, category, grade) => {
+export const fetchCoursesFunction = async (subject, category, grade, subscription) => {
     
     try {
       // Step 1: Query to get the course document based on subject, category and grade
       const coursesQuery = query(collection(db, 'coursesCollection'), 
       where('courseCategory.subjectOrTopic', '==', subject),
       where('courseCategory.categoryType', '==', category),
-      where('courseCategory.categoryGrade', '==', grade)
+      where('courseCategory.categoryGrade', '==', grade),
+      where('coursePrice', '==', subscription)
       );
       const coursesSnapshot = await getDocs(coursesQuery);
 
@@ -52,6 +53,42 @@ export const fetchCoursesFunction = async (subject, category, grade) => {
       console.error('Error fetching data:', error);
     }
   };
+
+
+  // Course details function
+  export const fetchCourseDetailsFunction = async (subject, category, grade, subscription) => {
+    
+    try {
+      // Step 1: Query to get the course document based on subject, category and grade
+      const coursesQuery = query(collection(db, 'coursesCollection'), 
+      where('courseCategory.subjectOrTopic', '==', subject),
+      where('courseCategory.categoryType', '==', category),
+      where('courseCategory.categoryGrade', '==', grade),
+      where('coursePrice', '==', subscription)
+      );
+      const coursesSnapshot = await getDocs(coursesQuery);
+
+      if (coursesSnapshot.empty) {
+        alert('No courses found for the subject:', subject);
+        return;
+      }
+
+      coursesSnapshot.forEach(item=>console.log("Course:", item.data()))
+
+      // Use the first document
+      const courseDoc = coursesSnapshot.docs[0];
+      const courseId = courseDoc.id;
+
+      console.log("courseDoc", courseDoc);
+      console.log("courseId:", courseId); 
+
+      return courseDoc;
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
 
 
 
@@ -212,4 +249,24 @@ export const ContactUsFunction = async (firstName, lastName, email, subject, mes
     } catch (error) {
         console.log("Error sending message:", error);
     }
+}
+
+
+// Fetch or View Members function
+export const ViewMembersFunction = async () => {
+    try {
+        const querySnapshot = await getDocs(collection(db, "admins"));
+
+        const members = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        console.log("All members data:", members);
+
+        return members;
+
+    } catch (error) {
+        console.log("Failed to fetch members data", error);
+    } 
 }

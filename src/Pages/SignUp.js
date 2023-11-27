@@ -23,7 +23,7 @@ const SignUp = () => {
       navigate('/verification', { state: { userId: user_id,  userEmail: user_email } });
    
     } catch (error) {
-      console.error('Error during signup:', error.message);
+      console.error('Error occurred during signup:', error.message);
     }
   };
 

@@ -7,11 +7,13 @@ import { FilterGradeFunction } from "../Services/CourseService";
 import { FilterSubscriptionFunction } from "../Services/CourseService";
 import { useNavigate } from "react-router-dom";
 import { fetchCoursesFunction } from "../Services/CourseService";
+import { fetchCourseDetailsFunction } from "../Services/CourseService";
 
 
 const Courses = () => {
 
     const [courses, setCourses] = useState([]);
+    const [details, setDetails] = useState([]);
     const [category, setCategory] = useState('');
     const [subject, setSubject] = useState('');
     const [grade, setGrade] = useState('');
@@ -23,14 +25,29 @@ const Courses = () => {
     // View filtered courses
     const handleFilteredCourses = async () => {
         try {
-            const data = await fetchCoursesFunction(subject, category, grade);
+            const data = await fetchCoursesFunction(subject, category, grade, subscription);
             console.log("Courses filtered data:", data);
             setCourses(data);
 
+            handleFilteredCourseDetails();
+
         } catch (error) {
-            console.log("Error fetching data",);
+            console.log("Error fetching data", error);
         }
     }
+
+    // View filtered courses
+    const handleFilteredCourseDetails = async () => {
+        try {
+            const data = await fetchCourseDetailsFunction(subject, category, grade, subscription);
+            console.log("Course details:", data);
+            setDetails(data);
+
+        } catch (error) {
+            console.log("Error fetching course details", error);
+        }
+    }
+
 
 
     // View all courses
@@ -41,7 +58,7 @@ const Courses = () => {
             setCourses(data);
 
         } catch (error) {
-            console.log("Error fetching data",);
+            console.log("Error fetching data", error);
         }
     }
 
@@ -140,11 +157,25 @@ const Courses = () => {
                     <br></br>
                     <div>
                         <button onClick={handleSubscriptionFilter}>Filter</button>
-                        <input type="text"
-                            placeholder="Subscription"
-                            value={subscription}
-                            onChange={(e) => setSubscription(e.target.value)}
-                        />
+                        <label>
+                            <input
+                                type="radio"
+                                value="Free"
+                                checked={subscription === 'Free'}
+                                onChange={(e) => setSubscription(e.target.value)}
+                            />
+                            Free
+                        </label>
+
+                        <label>
+                            <input
+                                type="radio"
+                                value="Subscription"
+                                checked={subscription === 'Subscription'}
+                                onChange={(e) => setSubscription(e.target.value)}
+                            />
+                            Subscription
+                        </label>
                     </div>
                 </div>
 
@@ -163,6 +194,7 @@ const Courses = () => {
                                         <source src={course.lessonUrl} type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
+                                    <p>{details.courseShortDescription}</p>  
                                     <button onClick={() => handleViewCourse(course.id)}>View Course</button>
                                     <h3>____________________________________________________________________________________________</h3>
                                 </div>

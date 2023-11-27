@@ -21,8 +21,10 @@ const HomePage = () => {
             <Link to='/userpage'>User Page</Link>
             <br></br>
             <br></br>
-            <Link to='/contactus'>Contact Us</Link>
-
+            <Link to='/contactus'>Contact Us</Link>  
+            <br></br>
+            <br></br>
+            <Link to='/aboutus'>About Us</Link>
         </div>
     );
 };
