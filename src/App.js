@@ -28,6 +28,7 @@ import ViewCoursePage from './Pages/ViewCoursePage';
 import User from './Pages/User';
 import { auth, db } from './Services/firebaseConfig';
 import { collection, doc, getDoc, query } from 'firebase/firestore';
+import CourseFullView from './Pages/CourseFullView';
 function App() {
   const [isSignedIn, setSignIn] = useState(false);
   const [userId, setUserId] = useState("");
@@ -84,7 +85,7 @@ function App() {
     // </div>
 
     <>
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <Routes>
           <Route path='/signin' element={<SignIn />} />
           <Route path='/signup' element={<SignUp setToProfileStatus={setToProfileStatus} />} />
@@ -99,13 +100,14 @@ function App() {
           <Route path='/verification' element={<VerificationPage />} />
           <Route path='/verify-email' element={<VerifyEmail />} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
 
       {/* <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing}/> */}
 
       {/* <CourseContCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} image={image1} cardFunction={testing}/> */}
 
       {/* <SearchBar/> */}
+      <CourseFullView/>
 
       {/*  */}
     </>
