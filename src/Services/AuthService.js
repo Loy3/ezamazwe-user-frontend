@@ -168,7 +168,7 @@ export const GetUserDataFunction = async (userId) => {
 
     } catch (error) {
         console.log('Failed to fetch user data', error);
-        alert('Error', 'Unable to fetch account information!');
+        alert('Unable to fetch account information!');
     }
 };
 
