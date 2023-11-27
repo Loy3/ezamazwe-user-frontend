@@ -1,11 +1,12 @@
-import { Box, Container, Typography } from "@mui/material"
+import { Box, Container, Typography,useMediaQuery } from "@mui/material"
 import bgImage from "../Assets/Images/bg.jpg";
 export const HeaderComp = ({text, paragraph}) => {
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
     return (
         <>
             <Box sx={{
                 width: "100%",
-                height: "60vh",
+                height: isSmallScreen?"40vh":"60vh",
                 backgroundImage: `url(${bgImage})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
@@ -26,6 +27,7 @@ export const HeaderComp = ({text, paragraph}) => {
 
 
 export const HeaderSmallComp = () => {
+    
     return (
         <>
             <Box sx={{

@@ -85,7 +85,7 @@ export const ToUserButton = ({ buttonFunction, isSignedIn }) => {
 
     return (
         <>
-            <Button component="label" variant="contained" startIcon={<PersonIcon sx={{ width: "40px", height: "40px", marginLeft: "12px" }} />} sx={{ marginLeft: "10px", width: "50px", height: "60px", borderRadius: "100%", backgroundColor: "primary.light", display: "flex", justifyContent: "center", alignItems: "center" }} onClick={handleNavigate}/>
+            <Button component="label" variant="contained" startIcon={<PersonIcon sx={{ width: "40px", height: "40px", marginLeft: "12px" }} />} sx={{ marginLeft: "10px", width: "50px", height: "60px", borderRadius: "100%", backgroundColor: "primary.light", display: "flex", justifyContent: "center", alignItems: "center" }} onClick={handleNavigate} />
             {/* <VisuallyHiddenInput type="file" onChange={event => handleImage(event)} /> */}
             {/*  */}
         </>
@@ -112,13 +112,20 @@ export const ToSignInUserButton = ({ text, buttonFunction }) => {
 }
 
 export const FilterButton = ({ text, buttonFunction }) => {
+
     return (
         <>
             {/* <Button variant="contained" style={{ backgroundColor: "#1C3F53", width: "50%", borderRadius: 20 }} onClick={() => buttonFunction()}>{text}</Button> */}
             {/* <Button variant="outlined" startIcon={<DeleteIcon />} style={{ backgroundColor: "#1C3F53", width: "50%", borderRadius: 20, color:"white" }} onClick={() => buttonFunction()}>{text}</Button> */}
-            <Button variant="outlined" startIcon={<TuneIcon />} sx={{ width: "100%", height: "50px", border: "2px solid", fontWeight: "bold", borderRadius: "12px" }}>
-                {text}
-            </Button>
+            {buttonFunction ?
+                <Button variant="outlined" startIcon={<TuneIcon />} sx={{ width: "100%", height: "50px", border: "2px solid", fontWeight: "bold", borderRadius: "12px" }} onClick={() => buttonFunction()}>
+                    {text}
+                </Button>
+                :
+                <Button variant="outlined" startIcon={<TuneIcon />} sx={{ width: "100%", height: "50px", border: "2px solid", fontWeight: "bold", borderRadius: "12px" }} >
+                    {text}
+                </Button>
+            }
         </>
     )
 }
