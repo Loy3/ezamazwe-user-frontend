@@ -83,7 +83,7 @@ function ResetPassword() {
                 setConfrimPasswordErrMsg("");
                 try {
                     await ResetPasswordFunction(user, currentPassword, newPassword).then(()=>{
-                        navigate('');
+                        navigate('/signin');
                     })                   
 
                 } catch (error) {

@@ -1,8 +1,9 @@
-import { Box, Button, useMediaQuery } from "@mui/material";
+import { Box, Button, Typography, useMediaQuery } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import PersonIcon from '@mui/icons-material/Person';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import TuneIcon from '@mui/icons-material/Tune';
+import { useNavigate } from 'react-router-dom';
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
@@ -23,7 +24,7 @@ export default function button({ text, buttonFunction }) {
     )
 }
 
-export  function UserButton({ text, buttonFunction }) {
+export function UserButton({ text, buttonFunction }) {
     return (
         <>
             <Button variant="contained" style={{ backgroundColor: "#1C3F53", width: "100%", borderRadius: 20 }} onClick={() => buttonFunction()}>{text}</Button>
@@ -71,24 +72,51 @@ export const SmallButton = ({ text, buttonFunction }) => {
     )
 }
 
-export const ToUserButton = ({ buttonFunction }) => {
+export const ToUserButton = ({ buttonFunction, isSignedIn }) => {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
+    const navigate = useNavigate();
+
+    function handleNavigate() {
+        if (!isSignedIn) {
+            alert("Please sign in");
+            navigate("/signin")
+        }
+    }
+
     return (
         <>
-            <Button component="label" variant="contained" startIcon={<PersonIcon sx={{ width: "40px", height: "40px", marginLeft: "12px" }} />} sx={{ marginLeft: "10px", width: "50px", height: "60px", borderRadius: "100%", backgroundColor: "primary.light", display: "flex", justifyContent: "center", alignItems: "center" }} />
+            <Button component="label" variant="contained" startIcon={<PersonIcon sx={{ width: "40px", height: "40px", marginLeft: "12px" }} />} sx={{ marginLeft: "10px", width: "50px", height: "60px", borderRadius: "100%", backgroundColor: "primary.light", display: "flex", justifyContent: "center", alignItems: "center" }} onClick={handleNavigate}/>
             {/* <VisuallyHiddenInput type="file" onChange={event => handleImage(event)} /> */}
             {/*  */}
         </>
     )
 }
 
+export const ToSignInUserButton = ({ text, buttonFunction }) => {
+    const isSmallScreen = useMediaQuery("(max-width:600px)");
+    const navigate = useNavigate();
+
+    function handleNavigate() {
+        navigate('/user');
+    }
+
+    return (
+        <>
+            <Button component="label" variant="contained" sx={{ marginLeft: "10px", width: "50px", height: "60px", borderRadius: "100%", backgroundColor: "primary.light", display: "flex", justifyContent: "center", alignItems: "center" }} onClick={handleNavigate}>
+                <Typography variant="h4" sx={{ fontWeight: "bold", color: "white" }}>{text}</Typography>
+            </Button>
+            {/* <VisuallyHiddenInput type="file" onChange={event => handleImage(event)} /> */}
+            {/*  */}
+        </>
+    )
+}
 
 export const FilterButton = ({ text, buttonFunction }) => {
     return (
         <>
             {/* <Button variant="contained" style={{ backgroundColor: "#1C3F53", width: "50%", borderRadius: 20 }} onClick={() => buttonFunction()}>{text}</Button> */}
             {/* <Button variant="outlined" startIcon={<DeleteIcon />} style={{ backgroundColor: "#1C3F53", width: "50%", borderRadius: 20, color:"white" }} onClick={() => buttonFunction()}>{text}</Button> */}
-            <Button variant="outlined" startIcon={<TuneIcon />} sx={{ width: "100%", height:"50px", border: "2px solid", fontWeight: "bold", borderRadius: "12px" }}>
+            <Button variant="outlined" startIcon={<TuneIcon />} sx={{ width: "100%", height: "50px", border: "2px solid", fontWeight: "bold", borderRadius: "12px" }}>
                 {text}
             </Button>
         </>

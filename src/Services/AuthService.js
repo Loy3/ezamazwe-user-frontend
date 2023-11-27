@@ -1,7 +1,7 @@
 
 // Imports from the firebase config file
 import { db, auth, storage } from './firebaseConfig';
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 // import { addDoc, collection, doc, updateDoc, setDoc, getDoc } from "firebase/firestore";
 // import {
 //     createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification
@@ -53,9 +53,9 @@ export const SignupFunction = async (email, password) => {
     }
 };
 export const CheckVerificationFunction = async (email) => {
-console.log(email);
+    console.log(email);
     try {
-        const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/email-verification`,   
+        const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/email-verification`,
             {
                 method: 'POST',
                 headers: {
@@ -223,3 +223,56 @@ export const ForgotPasswordFunction = async (email) => {
         console.log("Error resetting password", error);
     }
 }
+
+
+
+// Profile view function
+export const GetUserDataFunction = async (userId) => {
+
+    let user = null;
+
+    try {
+        const docRef = doc(db, "users", userId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            user = docSnap.data();
+            console.log("User data:", docSnap.data());
+        } else {
+            alert('Error', 'User data not found.');
+        }
+
+        return user;
+
+    } catch (error) {
+        console.log('Failed to fetch user data', error);
+        alert('Unable to fetch account information!');
+    }
+};
+
+// Profile update function
+export const ProfileUpdateFunction = async (userId, firstName, lastName, userEmail, phoneNum, imageURL, role, subscription) => {
+    console.log("User id:", userId);
+
+    try {
+
+        const userInfo = {
+            user_id: userId,
+            firstName: firstName,
+            lastName: lastName,
+            email: userEmail,
+            phoneNum: phoneNum,
+            imageURL: imageURL,
+            role: role,
+            subscription: subscription,
+        };
+
+        await setDoc(doc(db, 'users', userId), userInfo);
+
+        console.log('Profile updated successfully:');
+        alert('Profile updated successfully');
+
+    } catch (error) {
+        console.error('Error updating profile:', error.message);
+    }
+};

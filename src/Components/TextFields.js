@@ -110,3 +110,28 @@ export const TextFieldPassword = ({ label, errorStatus, errorMessage, setState, 
         </>
     )
 }
+
+export const UserTextFields = ({ label, errorStatus, errorMessage, setState, disabled, placeholder }) => {
+    const isSmallScreen = useMediaQuery("(max-width:600px)");
+    return (
+        <>
+            <Box style={{ flex: "1", height: "auto" }}>
+                <InputLabel sx={{ marginBottom: "10px", color: "primary.light", fontSize: isSmallScreen ? "16px" : "18px", textAlign: "left" }}>{label}</InputLabel>
+                <OutlinedInput placeholder={ placeholder} variant="outlined" sx={{
+                    width: "100%",
+                    height: isSmallScreen ? "45px" : "50px",
+                    fontSize: isSmallScreen ? "14px" : "16px",
+                    borderRadius: "12px",
+                    "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "primary.light",
+                        borderWidth: 2
+                    },
+                    "&:hover > .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "primary.main"
+                    }
+                }} onChange={(e) => setState(e.target.value)} disabled={disabled} />
+
+            </Box>
+        </>
+    )
+}
