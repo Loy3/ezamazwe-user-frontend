@@ -7,8 +7,8 @@ export const CourseCard = ({ courseName, courseType, shortDescrip, video, cardFu
 
     return (
         <>
-            <Box sx={{ width: "100%", height: isSmallScreen ? "400px" : "150px", display: "flex", flexDirection: isSmallScreen ? "column" : "row", margin: "10px 0" }}>
-                <Box sx={{ width: isSmallScreen ? "100%" : "25%", height: isSmallScreen ? "80%" : "100%", backgroundColor: "primary.light", position: "relative", cursor: "pointer" }} onClick={cardFunction}>
+            <Box sx={{ width: "100%", height: isSmallScreen ? "400px" : "auto", display: "flex", flexDirection: isSmallScreen ? "column" : "row", margin: isSmallScreen? "10px 0 30px 0" : "10px 0" }}>
+                <Box sx={{ width: isSmallScreen ? "100%" : "25%", height: isSmallScreen ? "80%" : "inherit", backgroundColor: "primary.light", position: "relative", cursor: "pointer" }} onClick={cardFunction}>
                     <video
                         muted
                         style={{ width: "100%", height: "100%", objectFit: "cover" }}>
@@ -29,7 +29,7 @@ export const CourseCard = ({ courseName, courseType, shortDescrip, video, cardFu
                             <Typography variant="h5" sx={{ color: "primary.light", fontWeight: "bold" }}>{courseType}</Typography>
                         </Box>
                         <Typography variant="h5" sx={{ color: "primary.light", fontWeight: "bold" }}>{courseName}</Typography>
-                        <Typography variant="body2" sx={{ width: isSmallScreen ? "100%" : "80%", marginTop: "20px" }} >
+                        <Typography variant="body2" sx={{ width: isSmallScreen ? "100%" : "95%", marginTop: "20px" }} >
                             {shortDescrip}
                         </Typography>
                         <Typography variant="body2" sx={{ color: "primary.light", marginTop: "20px" }}>by: Company name</Typography>

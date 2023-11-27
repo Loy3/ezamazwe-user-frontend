@@ -6,9 +6,15 @@ import video1 from "../Assets/Videos/video1.mp4";
 import { CourseCard } from "../Components/Cards"
 import { useMediaQuery } from '@mui/material';
 import { FilterButton } from '../Components/Buttons';
+import { FilterCategoryFunction } from "../Services/CourseService";
+import { FilterTopicFunction } from "../Services/CourseService";
+import { FilterGradeFunction } from "../Services/CourseService";
+import { FilterSubscriptionFunction } from "../Services/CourseService";
+import { fetchCourseDetailsFunction } from "../Services/CourseService";
 import { FilteredDocFunction, fetchCoursesFunction, getCategoryData } from '../Services/CourseService';
+import { ViewCoursesFunction } from "../Services/CourseService";
 import zIndex from '@mui/material/styles/zIndex';
-
+import { useNavigate } from 'react-router-dom';
 import CancelIcon from '@mui/icons-material/Cancel';
 const Category = ["CAP", "IEB", "Entrapreneur"]
 const Grades = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
@@ -17,6 +23,8 @@ const Subscription = ["Free", "Subscribed"]
 const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis.";
 
 function Courses() {
+    const navigate = useNavigate();
+
     const isSmallScreen = useMediaQuery('(max-width:600px)');
     // const [returnType, setReturnType] = useState('')
     const [filterCategories, setFilterCategories] = useState([])
@@ -132,6 +140,7 @@ function Courses() {
     //     handleFilteredCourses()
     // },[])
 
+
     // View filtered courses
     const handleFilteredCourses = async () => {
         try {
@@ -189,6 +198,77 @@ function Courses() {
         }
     }
 
+    function viewCourse() {
+        navigate("/course")
+    }
+
+    // View all courses
+    useEffect(() => {
+        handleViewCourses()
+    }, [])
+    const handleViewCourses = async () => {
+        try {
+            const data = await ViewCoursesFunction();
+            console.log("Courses data:", data);
+            setCourses(data);
+
+        } catch (error) {
+            console.log("Error fetching data", error);
+        }
+    }
+
+    // Filter courses with category
+    const handleCategoryFilter = async () => {
+        try {
+            const data = await FilterCategoryFunction(category);
+            console.log("Courses data:", data);
+            setCourses(data);
+
+        } catch (error) {
+            console.log("Error fetching data", error);
+        }
+    }
+
+    // Filter courses with topic or subject
+    const handleTopicFilter = async () => {
+        try {
+            const data = await FilterTopicFunction(subject);
+            console.log("Courses data filtered with topic:", data);
+            setCourses(data);
+
+        } catch (error) {
+            console.log("Error fetching data",);
+        }
+    }
+
+    const handleGradeFilter = async () => {
+        try {
+            const data = await FilterGradeFunction(grade);
+            console.log("Courses data filtered with topic:", data);
+            setCourses(data);
+
+        } catch (error) {
+            console.log("Error fetching data",);
+        }
+    }
+
+    const handleSubscriptionFilter = async () => {
+        try {
+            const data = await FilterSubscriptionFunction(subscription);
+            console.log("Courses data filtered with subscription:", data);
+            setCourses(data);
+
+        } catch (error) {
+            console.log("Error fetching data",);
+        }
+    }
+
+    const handleViewCourse = (id) => {
+        const [course_data] = courses.filter((course) => course.id === id);
+
+        navigate('/course', { state: { course_data: course_data, docData: docData } });
+    }
+
     if (filterCategories === null) {
         return (
             <>
@@ -199,18 +279,20 @@ function Courses() {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: isSmallScreen ? 'column' : 'row', margin: '50px 2%', width: "96%" }}>
-            <Grid sx={{ width: isSmallScreen ? '100%' : '20%', }}>
-               
+            <Grid sx={{ width: isSmallScreen ? '100%' : '20%', margin: isSmallScreen ? "0 0 30px 0" : "0" }}>
+
                 <Box sx={{ justifyContent: 'flex-start', paddingTop: '20px', width: "96%", margin: "0 2%" }}>
                     {isSmallScreen ?
                         <Box sx={{ width: "96%", margin: "0 2%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                             <Box sx={{ width: "80%" }}>
-                                <FilterButton text={"Filter"} buttonFunction={()=>openMenu("open")} />
+                                <FilterButton text={"Filter"} buttonFunction={() => openMenu("open")} />
                             </Box>
                         </Box>
                         :
-                        <Box sx={{ width: "96%", margin: "0 2%" }}>
-                            <FilterButton text={"Filter"} />
+                        <Box sx={{ width: "96%", margin: "0 2%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                            <Box sx={{ width: "90%", marginLeft: "-30px" }}>
+                                <FilterButton text={"Filter"} />
+                            </Box>
 
                         </Box>
                     }
@@ -219,11 +301,11 @@ function Courses() {
         </Button> */}
                     {/* {console.log(filterCategories)} */}
                     {openMenuStatus ?
-                        <Box sx={{ width:"88%", padding:isSmallScreen?"70px 5% 80px 5%":"auto",backgroundColor: "white", marginBottom: isSmallScreen ? "50px" : "0", height: isSmallScreen ? "100%" : "auto", position: isSmallScreen ? "fixed" : "relative",zIndex:"70", top:isSmallScreen?"0":"unset", overflowY:isSmallScreen?"scroll":"unset"}}>
+                        <Box sx={{ width: "88%", padding: isSmallScreen ? "70px 5% 80px 5%" : "auto", backgroundColor: "white", marginBottom: isSmallScreen ? "50px" : "0", height: isSmallScreen ? "100%" : "auto", position: isSmallScreen ? "fixed" : "relative", zIndex: "70", top: isSmallScreen ? "0" : "unset", overflowY: isSmallScreen ? "scroll" : "unset" }}>
                             {/* <Box sx={{width:"30px", height:"30px", backgroundColor:"black", position:"absolute", top:"20px", right:"30px",zIndex:"70" }}></Box> */}
-                           {isSmallScreen?
-                            <Button sx={{ textDecoration: "none", padding: "0 5px", color: "black", cursor: "pointer", position: "absolute", right: "5px", top: "20px", zIndex: "50" }} onClick={()=>openMenu("close")}> <CancelIcon sx={{ color: "primary.light", width: "30px", height: "30px" }} /></Button>
-                           :null}
+                            {isSmallScreen ?
+                                <Button sx={{ textDecoration: "none", padding: "0 5px", color: "black", cursor: "pointer", position: "absolute", right: "5px", top: "20px", zIndex: "50" }} onClick={() => openMenu("close")}> <CancelIcon sx={{ color: "primary.light", width: "30px", height: "30px" }} /></Button>
+                                : null}
                             <Box sx={{ paddingTop: '20px' }}>
                                 <Accordians label={'Category'} types={filterCategories} setReturnType={setRtnCategory} returnType={rtnCategory} />
                             </Box>
@@ -240,14 +322,14 @@ function Courses() {
                                 : null
                             }
                             {typeStatus ?
-                                <Box sx={{ paddingTop: '20px', paddingBottom:"60px" }}>
+                                <Box sx={{ paddingTop: '20px', paddingBottom: "60px" }}>
                                     <Accordians label={'Subscription'} types={Subscription} setReturnType={setType} returnType={type} />
                                 </Box>
                                 : null
                             }
                         </Box>
-                         : null
-                    } 
+                        : null
+                    }
 
                 </Box>
             </Grid>
@@ -263,14 +345,13 @@ function Courses() {
                     </Box>
                 </Box>
                 <Box sx={{ flexDirection: 'column', padding: '20px' }}>
-                    <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing} />
-                    <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing} />
-                    <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing} />
-                    <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing} />
-                    <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing} />
-                    <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing} />
-                    <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing} />
+                    {courses.map((course, index) => (
+                        <Box key={index} sx={{ margin: "20px 0" }}>
+                            <CourseCard courseName={course.courseName} courseType={course.coursePrice} shortDescrip={course.courseShortDescription} video={video1} cardFunction={() => handleViewCourse(course.id)} />
+                        </Box>
+                    ))}
                 </Box>
+                {/* <button onClick={handleViewCourses}>All Courses</button> */}
             </Grid>
         </Box>
     )
