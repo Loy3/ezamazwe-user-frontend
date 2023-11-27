@@ -33,7 +33,6 @@ function ContactUs() {
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas metus nulla."
           }
         />
-        <SideCard header={"Company Name"} />
       </Box>
     </>
   );
