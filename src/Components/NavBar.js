@@ -92,8 +92,7 @@ export const NavBar = () => {
                 console.log("Tutors");
                 break;
             case "contact":
-                // navigate("");
-                console.log("contact us");
+                navigate("/contact");
                 break;
         }
     }

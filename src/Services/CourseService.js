@@ -228,7 +228,7 @@ export const ContactUsFunction = async (firstName, lastName, email, subject, mes
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ firstName:firstName, lastName:lastName, email:email, subject:subject, message:message  }),
+                body: JSON.stringify({ firstName: firstName, lastName: lastName, email: email, subject: subject, message: message }),
             });
         const response = await apiUrl.json();
 
@@ -268,3 +268,4 @@ export const getCategoryData = async () =>{
       console.error("Error fetching collection", error);
   }
   }
+  

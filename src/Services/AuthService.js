@@ -86,7 +86,7 @@ export const CheckVerificationFunction = async (email) => {
 
 // Profile setup function
 export const ProfileSetupFunction = async (userId, firstName, lastName, userEmail, phoneNum, image) => {
-    console.log("User id:", userId);
+    // console.log("User id:", userId);
 
     try {
         await UploadImageFunction(image).then(async (result) => {
