@@ -82,7 +82,7 @@ const Courses = () => {
             setCourses(data);
 
         } catch (error) {
-            console.log("Error fetching data",);
+            console.log("Error fetching data", error);
         }
     }
 
@@ -93,7 +93,7 @@ const Courses = () => {
             setCourses(data);
 
         } catch (error) {
-            console.log("Error fetching data",);
+            console.log("Error fetching data", error);
         }
     }
 
@@ -104,14 +104,21 @@ const Courses = () => {
             setCourses(data);
 
         } catch (error) {
-            console.log("Error fetching data",);
+            console.log("Error fetching data", error);
         }
     }
 
+    // View selected course
     const handleViewCourse = (id) => {
         const [course_data] = courses.filter((course) => course.id === id);
+        const selectedDetails = details.filter((detail) => detail.courseId === id);
 
-        navigate('/courseview', { state: { course_data: course_data, docData: details } });
+        navigate('/courseview', {
+            state: {
+                course_data: course_data,
+                details: selectedDetails           // CourseTitle, CourseDescription, FREE/Subscription, 
+            }
+        });
     }
 
 
@@ -194,7 +201,7 @@ const Courses = () => {
                                         <source src={course.lessonUrl} type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
-                                    <p>{details.courseShortDescription}</p>  
+                                    <p>{details.courseShortDescription}</p>
                                     <button onClick={() => handleViewCourse(course.id)}>View Course</button>
                                     <h3>____________________________________________________________________________________________</h3>
                                 </div>

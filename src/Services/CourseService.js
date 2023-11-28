@@ -3,7 +3,7 @@
 import { db, auth } from './firebaseConfig';
 import { collection, collectionGroup, getDocs, query, where } from "firebase/firestore";
 
-// Filter courses with subject, category, 
+// Filter courses with subject, category, grade, subscription 
 export const fetchCoursesFunction = async (subject, category, grade, subscription) => {
 
     try {
@@ -79,10 +79,17 @@ export const fetchCourseDetailsFunction = async (subject, category, grade, subsc
         const courseDoc = coursesSnapshot.docs[0];
         const courseId = courseDoc.id;
 
+        const filteredCourseDetails = coursesSnapshot.docs
+            .map((contentDoc) => ({
+                contentId: contentDoc.id,
+                ...contentDoc.data()
+            }));
+
+        console.log("Filtered course details:", filteredCourseDetails);
         console.log("courseDoc", courseDoc);
         console.log("courseId:", courseId);
 
-        return courseDoc;
+        return filteredCourseDetails;
 
     } catch (error) {
         console.error('Error fetching data:', error);

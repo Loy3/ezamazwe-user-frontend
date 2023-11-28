@@ -8,18 +8,19 @@ import { useNavigate } from "react-router-dom";
 import { GetUserDataFunction } from "../Services/AuthService";
 
 
-const CourseView = ({ course_data, docData }) => {
+const CourseView = ({ course_data, details }) => {
     const location = useLocation();
     const courseData = location.state.course_data;
-    const doc_data = location.state.docData;
+    const doc_data = location.state.details;
     console.log("courseData", courseData);
     console.log("doc_data:", doc_data);
 
     const [courseId, setCourseId] = useState(courseData.id);
-    const [courseTitle, setCourseTitle] = useState(doc_data.courseName);
-    const [courseDescription, setCourseDescription] = useState(doc_data.courseShortDescription);
-    const [courseFullDescription, setCourseFullDescription] = useState(doc_data.courseDescription);
-    const [costPrice, setCostPrice] = useState(doc_data.coursePrice);
+    const [courseDetails, setCourseDetails] = useState(null)
+    const [courseTitle, setCourseTitle] = useState('');
+    const [courseDescription, setCourseDescription] = useState('');
+    const [courseFullDescription, setCourseFullDescription] = useState('');
+    const [costPrice, setCostPrice] = useState('');
     const [video, setVideo] = useState(courseData.lessonUrl);
     const [userInfo, setUserInfo] = useState(null);
     const [userSubscription, setUserSubscription] = useState(false);
@@ -29,6 +30,17 @@ const CourseView = ({ course_data, docData }) => {
     const user = auth.currentUser;
     let userId = '';
     const navigate = useNavigate();
+
+    useEffect(() => {
+
+        setCourseTitle(doc_data.map(course => course.courseName));
+        setCourseDescription(doc_data.map(course => course.courseShortDescription));
+        setCourseFullDescription(doc_data.map(course => course.courseDescription));
+        setCostPrice(doc_data.map(course => course.coursePrice));
+
+        console.log("courseTitle:", courseTitle);
+
+    }, []);
 
     useEffect(() => {
         if (user) {
@@ -59,19 +71,30 @@ const CourseView = ({ course_data, docData }) => {
 
 
     const handleStartCourse = () => {
+        console.log("costPrice:", costPrice);
 
         if (user) {
             if (costPrice === "Free") {
-                navigate('/coursefullview', { state: { courseData: courseData, doc_data: doc_data } });
-            } else if (costPrice === "Subscription" && userSubscription === true) {
-                navigate('/coursefullview', { state: { courseData: courseData } });
+                navigate('/coursefullview', {
+                    state: {
+                        courseData: courseData,
+                        doc_data: doc_data
+                    }
+                });
+            } else if (costPrice === "Subscription" && userSubscription) {
+                navigate('/coursefullview', {
+                    state: {
+                        courseData: courseData,
+                        doc_data: doc_data
+                    }
+                });
             } else {
                 alert("Only subscribed users can access this course");
                 navigate('/courses');   // Navigate back to courses page
             }
         } else {
             // Navigate to signin page
-            navigate('/');
+            navigate('/signin');
         }
     }
 
@@ -79,12 +102,12 @@ const CourseView = ({ course_data, docData }) => {
     return (
         <div>
             <h2>Course View</h2>
-            <video ref={videoRef} width="400" height="300">
+            <video ref={videoRef} controls width="400" height="300">
                 <source src={video} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
-            <h3>{lessonName}</h3>
-            <p>Description: {courseDescription}</p>
+            <h3>{courseTitle}</h3>
+            <p> {courseDescription}</p>
             <h3>{costPrice}</h3>
 
             <button onClick={handleStartCourse}>START</button>

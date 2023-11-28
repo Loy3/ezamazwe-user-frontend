@@ -3,12 +3,13 @@
 import { db, auth, storage } from './firebaseConfig';
 import { addDoc, collection, doc, setDoc, getDoc } from "firebase/firestore";
 import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail
+    createUserWithEmailAndPassword, signOut as firebaseSignOut,
+    signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { getStorage, ref, uploadBytes, list, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";  //Import v4 from the uuid library and use it to randomise characters 
 import { getAuth, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
+
 
 
 // Upload image function
@@ -34,7 +35,6 @@ export const UploadImageFunction = async (imageUpload) => {
         alert('Error uploading image!');
         throw error; // Re-throw the error to propagate it if needed
     }
-
 }
 
 // Sign up function
@@ -136,7 +136,7 @@ export const ProfileSetupFunction = async (userId, firstName, lastName, userEmai
             phoneNum: phoneNum,
             imageURL: imageURL,
             role: "user",
-            subscription: "unsubscribed",
+            subscription: false,
         });
         console.log('Profile setup successfully:');
         alert("Profile setup successfully");
@@ -170,6 +170,7 @@ export const GetUserDataFunction = async (userId) => {
         console.log('Failed to fetch user data', error);
     }
 };
+
 
 // Profile update function
 export const ProfileUpdateFunction = async (userId, firstName, lastName, userEmail, phoneNum, imageURL) => {
@@ -268,5 +269,17 @@ export const ForgotPasswordFunction = async (email) => {
     } catch (error) {
         console.log("Error resetting password", error);
     }
-
 }
+
+export const SignOutFunction = () => {
+
+    firebaseSignOut(auth)
+        .then(() => {
+            console.log("User signed out");
+        })
+        .catch((error) => {
+            // An error occurred during sign-out.
+            console.error('Sign out error: ', error);
+            alert("Error. Something went wrong.");
+        });
+};

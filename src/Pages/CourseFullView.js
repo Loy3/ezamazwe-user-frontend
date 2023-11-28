@@ -7,15 +7,17 @@ import { auth } from "../Services/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 
 
-const CourseFullView = ({ courseData }) => {
+const CourseFullView = ({ courseData, doc_data }) => {
     const location = useLocation();
     const course = location.state.courseData;
+    const course_details = location.state.doc_data;
 
     const [courseId, setCourseId] = useState(course.id);
-    const [courseTitle, setCourseTitle] = useState(course.courseName);
-    const [courseDescription, setCourseDescription] = useState(course.courseShortDescription);
-    const [courseFullDescription, setCourseFullDescription] = useState(course.courseDescription);
-    const [subscription, setSubscription] = useState(course.coursePrice);
+    const [courseTitle, setCourseTitle] = useState('');
+    const [courseDescription, setCourseDescription] = useState('');
+    const [courseFullDescription, setCourseFullDescription] = useState('');
+    const [subscription, setSubscription] = useState('');
+    const [costPrice, setCostPrice] = useState('');
     const [video, setVideo] = useState(course.lessonUrl);
     const [lesson, setLesson] = useState(course.lessonName);
 
@@ -27,6 +29,18 @@ const CourseFullView = ({ courseData }) => {
     const videoRef = useRef(null);
     const videoSource = "https://firebasestorage.googleapis.com/v0/b/edutech-app-eecfd.appspot.com/o/courses%2F2.1%20React%20Native%20-%20Lesson%202%20-%20Creating%20a%20New%20Application.mp4?alt=media&token=91cba07f-7253-4b84-8441-76790a32bb93"
     const [isPlaying, setIsPlaying] = useState(false);
+
+    useEffect(() => {
+
+        setCourseTitle(course_details.map(course => course.courseName));
+        setCourseDescription(course_details.map(course => course.courseShortDescription));
+        setCourseFullDescription(course_details.map(course => course.courseDescription));
+        setCostPrice(course_details.map(course => course.coursePrice));
+        setSubscription(course_details.map(course => course.subscription));
+
+        console.log("courseTitle:", courseTitle);
+
+    }, []);
 
     const handlePlayPause = () => {
         if (videoRef.current.paused) {
