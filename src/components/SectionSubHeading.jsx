@@ -1,11 +1,20 @@
 import React from 'react'
-import { Typography } from '@mui/material'
+import { Typography, useMediaQuery } from '@mui/material'
 
-const SectionSubHeading = ({children}) => {
+const SectionSubHeading = ({ children }) => {
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
   return (
-    <Typography variant="h6" sx={{color: 'primary.light', fontWeight: "400"}}>
-      {children}
-    </Typography>
+    <>
+      {isSmallScreen ?
+        <Typography variant="subtitle1" sx={{ color: 'primary.light', fontWeight: "400" }}>
+          {children}
+        </Typography>
+        :
+        <Typography variant="h6" sx={{ color: 'primary.light', fontWeight: "400" }}>
+          {children}
+        </Typography>
+      }
+    </>
   )
 }
 

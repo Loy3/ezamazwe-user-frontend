@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;1,800&display=swap');
+
+*{
+  font-family: 'Poppins', sans-serif;
+}
+
 .App {
   text-align: center;
 }
@@ -32,7 +38,26 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0
+}
+
+.list li::before {
+  content: "\2022";
+  color: #396781;
+  font-weight: bolder;
+  display: inline-block;
+  font-size: 1.5em;
+  margin-right: 0.5em
+
 }
