@@ -12,16 +12,16 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import sidebg from "../Assets/Images/sidebg.png";
 
 function SideCard({ children, header, slogan, location, contact, email }) {
-  
+
   return (
     <Box sx={{ width: "100%", height: "100", display: "flex" }}>
       <Box
         sx={{
-          width: "450px",
+          width: { xs: "425px", sm: "425px", md: "400px", lg: "450px", xl: "450px" },
           height: "869px",
           bgcolor: "#E3ECF5",
           gap: "50px",
-          marginLeft: {xs: "0px", xl: "70px"},
+          marginLeft: { xs: "0px", sm: "50px", md: "20px", lg: "50px", xl: "70px" },
           zIndex: 1,
         }}
       >
@@ -242,10 +242,14 @@ function SideCard({ children, header, slogan, location, contact, email }) {
           </Link>
         </Box>
         <Box sx={{ marginTop: "30px", width: "100%" }}>
-          <img
-            src={sidebg}
-            alt="sidebg"
-            style={{ width: "450px", height: "379px" }}
+          <Box
+            sx={{
+              backgroundImage: `url(${sidebg})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              width: { xs: "425px", sm: "425px", md: "400px", lg: "450px", xl: "450px" },
+              height: "379px",
+            }}
           />
         </Box>
       </Box>

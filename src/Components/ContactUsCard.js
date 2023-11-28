@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, OutlinedInput } from "@mui/material";
+import { Box, Typography, OutlinedInput, Grid } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 function ContactUsCard({
@@ -14,15 +14,15 @@ function ContactUsCard({
 }) {
   return (
     <Box sx={{ width: "100%" }}>
-      <Box sx={{ marginTop: {xs: "900px", xl: "120px"} }}>
+      <Box sx={{ marginTop: { xs: "900px", sm: "900px", md: "120px", lg: "120px", xl: "120px" } }}>
         <Typography
           sx={{
             color: "#396781",
             fontFamily: "Poppins, sanserif",
             fontWeight: "700",
-            fontSize: {xs: "40px", xl: "50px"},
+            fontSize: { xs: "40px", sm: "50px", md: "50px", lg: "50px", xl: "50px" },
             lineHeight: "60.51px",
-            marginLeft: {xs: "10px",xl: "50%"},
+            marginLeft: { xs: "10px", sm: "19%", md: "45%", lg: "48%", xl: "50%" },
           }}
         >
           {header}
@@ -31,16 +31,16 @@ function ContactUsCard({
           sx={{
             fontFamily: "Poppins, sanserif",
             fontWeight: "400",
-            fontSize: {xs: "15px", xl: "20px"},
+            fontSize: { xs: "15px", sm: "18px", md: "20px", lg: "20px", xl: "20px" },
             lineHeight: "24.2px",
             alignItems: "center",
-            marginLeft: {xs: "10px",xl: "48.5%"},
+            marginLeft: { xs: "10px", sm: "19%", md: "42%", lg: "46%", xl: "48.5%" },
           }}
         >
           {description}
         </Typography>
       </Box>
-      <Box sx={{ marginLeft: {xs: "10px", xl: "35%"}, marginTop: "120px" }}>
+      <Box sx={{ marginLeft: { xs: "7px", sm: "5%", md: "44%", lg: "38%", xl: "35%" }, marginTop: "120px" }}>
         <Box sx={{ display: "flex", flexDirection: "row", gap: "10px" }}>
           <Box>
             <Typography
@@ -58,7 +58,7 @@ function ContactUsCard({
             </Typography>
             <OutlinedInput
               sx={{
-                width: {xs: "200px", xl: "550px"},
+                width: { xs: "200px", sm: "350px", md: "250px", lg: "400px", xl: "550px" },
                 height: "48px",
                 borderRadius: "12px",
                 bgcolor: "#E3ECF1",
@@ -66,11 +66,11 @@ function ContactUsCard({
                 gap: "10px",
                 "& .MuiOutlinedInput-notchedOutline": {
                   borderColor: "#396781",
-                  borderWidth: 2
-              },
-              "&:hover > .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#396781"
-              }
+                  borderWidth: 2,
+                },
+                "&:hover > .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#396781",
+                },
               }}
             />
           </Box>
@@ -90,7 +90,7 @@ function ContactUsCard({
             </Typography>
             <OutlinedInput
               sx={{
-                width: {xs: "200px", xl: "550px"},
+                width: { xs: "200px",sm: "350px", md: "250px", lg: "400px", xl: "550px" },
                 height: "48px",
                 borderRadius: "12px",
                 bgcolor: "#E3ECF1",
@@ -98,11 +98,11 @@ function ContactUsCard({
                 gap: "10px",
                 "& .MuiOutlinedInput-notchedOutline": {
                   borderColor: "#396781",
-                  borderWidth: 2
-              },
-              "&:hover > .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#396781"
-              }
+                  borderWidth: 2,
+                },
+                "&:hover > .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#396781",
+                },
               }}
             />
           </Box>
@@ -123,7 +123,7 @@ function ContactUsCard({
           </Typography>
           <OutlinedInput
             sx={{
-              width: {xs: "410px", xl: "1110px"},
+              width: { xs: "410px", sm: "710px", md: "510px", lg: "810px", xl: "1110px" },
               height: "48px",
               borderRadius: "12px",
               bgcolor: "#E3ECF1",
@@ -131,11 +131,11 @@ function ContactUsCard({
               gap: "10px",
               "& .MuiOutlinedInput-notchedOutline": {
                 borderColor: "#396781",
-                borderWidth: 2
-            },
-            "&:hover > .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#396781"
-            }
+                borderWidth: 2,
+              },
+              "&:hover > .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#396781",
+              },
             }}
           />
         </Box>
@@ -155,7 +155,7 @@ function ContactUsCard({
           </Typography>
           <OutlinedInput
             sx={{
-              width: {xs: "410px", xl: "1110px"},
+              width: { xs: "410px", sm: "710px", md: "510px", lg: "810px", xl: "1110px" },
               height: "48px",
               borderRadius: "12px",
               bgcolor: "#E3ECF1",
@@ -163,11 +163,11 @@ function ContactUsCard({
               gap: "10px",
               "& .MuiOutlinedInput-notchedOutline": {
                 borderColor: "#396781",
-                borderWidth: 2
-            },
-            "&:hover > .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#396781"
-            }
+                borderWidth: 2,
+              },
+              "&:hover > .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#396781",
+              },
             }}
           />
         </Box>
@@ -187,7 +187,7 @@ function ContactUsCard({
           </Typography>
           <OutlinedInput
             sx={{
-              width: {xs: "410px", xl: "1110px"},
+              width: { xs: "410px", sm: "710px", md: "510px", lg: "810px", xl: "1110px" },
               height: "120px",
               borderRadius: "12px",
               bgcolor: "#E3ECF1",
@@ -195,11 +195,11 @@ function ContactUsCard({
               gap: "10px",
               "& .MuiOutlinedInput-notchedOutline": {
                 borderColor: "#396781",
-                borderWidth: 2
-            },
-            "&:hover > .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#396781"
-            }
+                borderWidth: 2,
+              },
+              "&:hover > .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#396781",
+              },
             }}
           />
         </Box>
@@ -227,17 +227,24 @@ function ContactUsCard({
       <br></br>
       <Box
         sx={{
+          width: {xs: "425px", sm: "770px", md: "1000px", lg: "1350px", xl: "1750px"},
           height: "100%",
           display: "flex",
-          flexDirection: {xs: "column", xl: "row"},
+          flexDirection: { xs: "column", sm: "column", md: "row", lg: "row", xl: "row" },
           marginTop: "50px",
-          marginLeft: {xs: "0px", xl: "70px"},
+          marginLeft: { xs: "0px", sm: "0px", md: "20px", lg: "50px", xl: "70px" },
         }}
       >
         <Box
           sx={{
-            width: {xs: "410px", xl: "450px"},
-            marginLeft: {xs: "10px", sm: "0px", md: "0px", lg: "0px", xl: "0px"},
+            width: { xs: "425px", sm: "770px", md: "400px", lg: "680px", xl: "610px" },
+            marginLeft: {
+              xs: "0px",
+              sm: "0px",
+              md: "0px",
+              lg: "0px",
+              xl: "0px",
+            },
             height: "393px",
             bgcolor: "#396781",
             color: "white",
@@ -254,10 +261,11 @@ function ContactUsCard({
               alignItems: "center",
               textAlign: "center",
               justifyContent: "center",
-              width: {xs: "360px", xl: "410px"},
+              alignSelf: "center",
+              width: { xs: "360px",sm: "500px", md: "350px", lg: "410px", xl: "410px" },
               height: "144px",
-              marginTop: "25%",
-              marginLeft: "20px",
+              marginTop: {xs: "25%", sm: "18%", md: "28%", lg: "28%", xl: "27%"},
+              marginLeft: {xs: "20px", sm: "120px", md: "25px", lg: "20px", xl: "20px"},
             }}
           >
             {Desc}
@@ -266,13 +274,12 @@ function ContactUsCard({
         <Box sx={{width: "100%"}}>
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14372.641308820334!2d28.26240085!3d-25.7652674!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e956057c13cbcc9%3A0x265c611461e24f9!2sLynnwood%2C%20Pretoria%2C%200081!5e0!3m2!1sen!2sza!4v1701081112705!5m2!1sen!2sza"
-            width={"1279px"}
+            width="100%"
             height="393px"
-            style={{ border: "0", marginLeft: {xs: "10px", sm: "0px", md: "0px", lg: "0px", xl: "0px"} }}
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
+            style={{
+              border: "0",
+            }}
+          />
         </Box>
       </Box>
     </Box>
