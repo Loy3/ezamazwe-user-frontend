@@ -1,3 +1,4 @@
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useState, useEffect } from "react";
 // import { VerifyEmailFunction } from "../Services/AuthService";
@@ -41,7 +42,7 @@ const VerifyEmail = () => {
             setStatus(true);
 
             // Navigate to profile setup
-            // navigate('/profilesetup', { state: { user: email } });
+            navigate('/');
 
         } catch (error) {
 
@@ -51,17 +52,27 @@ const VerifyEmail = () => {
 
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            {status ? (
-                <div>
-                    <h3>{verificationStatus}</h3>
-                </div>
-            ) : (
-                <div>
-                    <h3>Verifying...</h3>
-                </div>
-            )}
-        </div>
+        // <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        //     {status ? (
+        //         <div>
+        //             <h3>{verificationStatus}</h3>
+        //         </div>
+        //     ) : (
+        //         <div>
+        //             <h3>Verifying...</h3>
+        //         </div>
+        //     )}
+        // </div>
+        <>
+            <Box sx={{ height: "100vh", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              
+                {status ?
+                    <Typography variant='h5' sx={{ color: "primary.light", fontWeight: "bold" }}>{verificationStatus}</Typography>
+                    :
+                    <div className='loader' />
+                }
+            </Box>
+        </>
     );
 }
 

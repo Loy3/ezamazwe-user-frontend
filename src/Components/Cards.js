@@ -80,3 +80,26 @@ export const ContCard = ({ lessonNumber, text, duration }) => {
         </>
     )
 }
+
+
+export const UserCourseContCard = ({ courseName, courseType, shortDescrip, image, cardFunction }) => {
+    return (
+        <>
+            <Box sx={{
+                width: "100%",
+                height: "400px",
+                borderRadius: "20px",
+                backgroundColor: "secondary.main",
+            }}>
+                <img src={image} alt="my photo" style={{ width: "100%", height: "50%", objectFit: "cover", borderTopLeftRadius: "20px", borderTopRightRadius: "20px" }} />
+
+                <Box sx={{ width: "94%", height: "36%", margin: "0.5% 3%" }}>
+                    <Typography variant="h6" sx={{ color: "primary.light", fontWeight: "bold", marginBottom: "10px" }}>{courseName}</Typography>
+                    <Typography variant="body2" sx={{ marginBottom: "10px" }}>{shortDescrip}</Typography>
+                    <Typography variant="body2" sx={{ color: "primary.light", marginBottom: "10px" }}>By: Company Name</Typography>
+                    <Typography variant="h6" sx={{ color: "primary.light", fontWeight: "bold", marginBottom: "10px" }}>{courseType}</Typography>
+                </Box>
+            </Box >
+        </>
+    )
+}

@@ -3,7 +3,7 @@ import logo from "../Assets/Images/logo2.png";
 import { Image } from "@mui/icons-material";
 import CancelIcon from '@mui/icons-material/Cancel';
 import MenuIcon from '@mui/icons-material/Menu';
-import { SmallButton, ToSignInUserButton, ToSignInUserButton2, ToUserButton } from "./Buttons";
+import { SignOutBtn, SmallButton, ToSignInUserButton, ToSignInUserButton2, ToUserButton } from "./Buttons";
 import fbIcon from "../Assets/Icons/fb.png";
 import insIcon from "../Assets/Icons/ins.png";
 import twIcon from "../Assets/Icons/tw.png";
@@ -97,6 +97,19 @@ export const NavBar = () => {
                 break;
         }
     }
+    function signIn() {
+            navigate("/signin");
+    }
+    function signOut() {
+        auth.signOut().then(() => {
+         console.log("Success");
+        }).catch((error) => {
+            console.log(error.message);
+            navigate("/")
+        });
+
+        window.location.reload();
+    }
     return (
         <>
             {/* <div style={{ width: "100%", height: "100vh", backgroundColor: "gray" }}> */}
@@ -140,12 +153,13 @@ export const NavBar = () => {
                         <Box sx={{ width: isSmallScreen ? "100%" : "20%", height: isSmallScreen ? "auto" : "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: isSmallScreen ? "50px" : "0", position: isSmallScreen ? "absolute" : "relative", bottom: isSmallScreen ? "50px" : "unset" }}>
                             {!isSignedIn ?
                                 <Box sx={{ display: "flex", flexDirection: "row", marginLeft: isSmallScreen ? "20px" : "0" }}>
-                                    <SmallButton text={"Sign In"} />
+                                    <SmallButton text={"Sign In"} buttonFunction={signIn}/>
                                     <ToUserButton isSignedIn={isSignedIn} />
                                 </Box>
                                 :
                                 <Box sx={{ display: "flex", flexDirection: "row", marginLeft: isSmallScreen ? "20px" : "0" }}>
                                     <ToSignInUserButton text={getFirstInit(signInUser.firstName)} />
+                                    {/* <SignOutBtn text={"Sign Out"} buttonFunction={signOut}/> */}
                                 </Box>
                             }
                         </Box>

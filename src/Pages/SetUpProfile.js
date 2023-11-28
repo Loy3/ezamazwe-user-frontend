@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Paper from '@mui/material/Paper';
 // import { Box, Link } from '@mui/material';
-import { Box,useMediaQuery } from '@mui/material';
+import { Backdrop, Box, CircularProgress, useMediaQuery } from '@mui/material';
 import TextFields from '../Components/TextFields'
 import Button, { ImageButton } from '../Components/Buttons'
 // import { TextFieldPassword } from '../Components/TextFields';
@@ -37,7 +37,7 @@ function SetUpProfile({ setToProfileStatus }) {
     const [imageStatus, setImageStatus] = useState(false);
     const [imageSrc, setImageSrc] = useState(null);
     const [userImage, setUserImage] = useState(null);
-
+    const [open, setOpen] = React.useState(false);
     function handleImage(event) {
         const file = event.target.files[0];
         // var image = document.getElementById('image');
@@ -45,31 +45,34 @@ function SetUpProfile({ setToProfileStatus }) {
         const image = new Image();
         image.src = imageUrl;
         image.onload = () => {
-            console.log("Hello");
+            // console.log("Hello");
             setImageSrc(URL.createObjectURL(event.target.files[0]));
         };
-        
+
         setImageStatus(true);
         setUserImage(file);
-        console.log(file.size/ 1024 / 1024 );
+        console.log(file.size / 1024 / 1024);
     }
 
     async function setUpUser() {
+        setOpen(true);
         const userId = userData;
 
         // console.log(userId, firstName, lastName, email, pNumber, userImage);
 
         if (userId && firstName && lastName && email && pNumber && userImage) {
-            await ProfileSetupFunction(userId, firstName, lastName, email, pNumber, userImage).then(()=>{
+            await ProfileSetupFunction(userId, firstName, lastName, email, pNumber, userImage).then(() => {
                 setToProfileStatus(false);
-                 navigate("/home")
-            })           
+                setOpen(false);
+                navigate("/")
+            })
         } else {
             // alert("Something went wrong.")
 
             if (!firstName) {
                 setFirstNameErr(true);
                 setFirstNameErrMsg("*input is required.")
+                setOpen(false);
             } else {
                 setFirstNameErr(false);
                 setFirstNameErrMsg("")
@@ -78,6 +81,7 @@ function SetUpProfile({ setToProfileStatus }) {
             if (!lastName) {
                 setLastNameErr(true);
                 setLastNameErrMsg("*input is required.")
+                setOpen(false);
             } else {
                 setLastNameErr(false);
                 setLastNameErrMsg("")
@@ -86,6 +90,7 @@ function SetUpProfile({ setToProfileStatus }) {
             if (!pNumber) {
                 setPnumberErr(true);
                 setPnumberErrMsg("*input is required.")
+                setOpen(false);
             } else {
                 setPnumberErr(false);
                 setPnumberErrMsg("")
@@ -93,6 +98,7 @@ function SetUpProfile({ setToProfileStatus }) {
 
             if (!userImage) {
                 alert("Click on the icon to add a image")
+                setOpen(false);
             }
         }
 
@@ -100,40 +106,48 @@ function SetUpProfile({ setToProfileStatus }) {
 
 
     return (
-        <div style={{ backgroundColor: '#B3B3B3', height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', }} >
-            <div style={{ maxWidth: '1440px', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-            <Paper elevation={3} style={{ padding: isSmallScreen ? "30px 20px" : '50px', width: isSmallScreen ? "85%" : '35%', height: 'auto', borderRadius: '10px', position:"relative" }}>
-                    
-                    <Box sx={{ position: "absolute", right: isSmallScreen?"20px" : "50px", top: isSmallScreen?"20px" :  "50px" }}>
-                        <ImageButton handleImage={handleImage} imageSrc={imageSrc} />
-                    </Box>
-                    <div style={{
-                        height: 'fit-content', paddingBottom: theme.spacing(4), paddingLeft:"10px"
-                    }}>
-                        <SectionSubHeading children={"Profile"} /> <Box >
+        <>
+            <div style={{ backgroundColor: '#B3B3B3', height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', }} >
+                <div style={{ maxWidth: '1440px', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                    <Paper elevation={3} style={{ padding: isSmallScreen ? "30px 20px" : '50px', width: isSmallScreen ? "85%" : '35%', height: 'auto', borderRadius: '10px', position: "relative" }}>
+
+                        <Box sx={{ position: "absolute", right: isSmallScreen ? "20px" : "50px", top: isSmallScreen ? "20px" : "50px" }}>
+                            <ImageButton handleImage={handleImage} imageSrc={imageSrc} />
                         </Box>
-                        <SectionSubHeading children={"Lets setup your profile"} />
-                    </div>
-                    <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
-                        <TextFields label={"First Name:"} errorStatus={firstNameErr} errorMessage={firstNameErrMsg} setState={setFirstName} />
-                    </Box>
-                    <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
-                        <TextFields label={"Last Name:"} errorStatus={lastNameErr} errorMessage={lastNameErrMsg} setState={setLastName} />
-                    </Box>
-                    <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
-                        <TextFields label={"Phone Number:"} errorStatus={pNumberErr} errorMessage={pNumberErrMsg} setState={setPnumber} />
-                    </Box>
-                    <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
-                        <TextFields label={"Email Address:"} placeholder={email} errorStatus={emailErr} errorMessage={"disabled"} setState={setEmail} disabled={true} />
-                    </Box>
+                        <div style={{
+                            height: 'fit-content', paddingBottom: theme.spacing(4), paddingLeft: "10px"
+                        }}>
+                            <SectionSubHeading children={"Profile"} /> <Box >
+                            </Box>
+                            <SectionSubHeading children={"Lets setup your profile"} />
+                        </div>
+                        <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
+                            <TextFields label={"First Name:"} errorStatus={firstNameErr} errorMessage={firstNameErrMsg} setState={setFirstName} />
+                        </Box>
+                        <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
+                            <TextFields label={"Last Name:"} errorStatus={lastNameErr} errorMessage={lastNameErrMsg} setState={setLastName} />
+                        </Box>
+                        <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
+                            <TextFields label={"Phone Number:"} errorStatus={pNumberErr} errorMessage={pNumberErrMsg} setState={setPnumber} />
+                        </Box>
+                        <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
+                            <TextFields label={"Email Address:"} placeholder={email} errorStatus={emailErr} errorMessage={"disabled"} setState={setEmail} disabled={true} />
+                        </Box>
 
-                    <Box style={{ paddingTop: theme.spacing(4), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 15 }}>
-                        <Button text={"Submit"} buttonFunction={setUpUser} />
-                    </Box>
+                        <Box style={{ paddingTop: theme.spacing(4), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 15 }}>
+                            <Button text={"Submit"} buttonFunction={setUpUser} />
+                        </Box>
 
-                </Paper>
+                    </Paper>
+                </div>
             </div>
-        </div>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+        </>
     )
 }
 

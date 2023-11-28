@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -7,7 +7,7 @@ import Button, { SmallButton, ToUserButton } from '../Components/Buttons';
 import Typography from '@mui/material/Typography';
 import parabola from '../Assets/Images/parabola.jpg';
 import SectionHeading from '../Components/SectionHeading';
-import { Box, Container, FormControl, FormControlLabel, FormLabel, Grid, Paper, Radio, RadioGroup, useMediaQuery, Link } from '@mui/material';
+import { Box, Container, FormControl, FormControlLabel, FormLabel, Grid, Paper, Radio, RadioGroup, useMediaQuery, Link, Backdrop, CircularProgress } from '@mui/material';
 import userpicture from '../Assets/Images/user.jpg';
 import { UserTextFields } from '../Components/TextFields';
 import { SigninFunction } from '../Services/AuthService';
@@ -21,6 +21,12 @@ import { GetUserDataFunction } from '../Services/AuthService';
 import { auth } from "../Services/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 
+import capsImg1 from "../Assets/Images/cardsImages/caps1.jpg";
+import entImg2 from "../Assets/Images/cardsImages/ent2.jpg";
+import iebImg3 from "../Assets/Images/cardsImages/ieb3.jpg";
+import { CourseContCard, UserCourseContCard } from '../Components/Cards';
+const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis.";
+
 function UserPage({ signInUser }) {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
 
@@ -30,11 +36,13 @@ function UserPage({ signInUser }) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phoneNum, setPhoneNum] = useState('');
+    const [imageURL, setImageURL] = useState('');
+    const [imageName, setImageName] = useState('');
     const [imageUpload, setImageUpload] = useState(null);
     const [userId, setUserId] = useState('');
     const [userCourses, setUserCourses] = useState([]);
     // const navigate = useNavigate();
-
+    const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
         const user = signInUser;
@@ -55,18 +63,46 @@ function UserPage({ signInUser }) {
     const handleGetUserData = async () => {
         try {
             const user = signInUser;
-            // console.log("User data fetched on EditProfile component", user);
+            console.log("User data fetched on EditProfile component", user);
             setFirstName(user.firstName);
             setLastName(user.lastName);
             setEmail(user.email);
             setPhoneNum(user.phoneNum);
-            // setImageURL(user.imageURL);
+            setImageURL(user.image.imageURL);
+            setImageName(user.image.imageName)
 
         } catch (error) {
             console.log("Error fetching data on EditProfile component", error);
         }
     }
+    const userCoursesCards = useMemo(() => {
+        return [
+            {
+                courseName: "Intro to Geometry",
+                courseType: "Free",
+                shortDescrip: short,
+                cardImage: capsImg1,
+                type: "caps"
+            },
 
+            {
+                courseName: "Intro to Calculus",
+                courseType: "Free",
+                shortDescrip: short,
+                cardImage: iebImg3,
+                type: "ieb"
+            },
+
+            {
+                courseName: "Intro to finance",
+                courseType: "Free",
+                shortDescrip: short,
+                cardImage: entImg2,
+                type: "ent"
+            },
+
+        ]
+    }, [])
 
     // // Courses 
     // const handleGetUserCourses = async () => {
@@ -85,6 +121,8 @@ function UserPage({ signInUser }) {
 
     // Update
     const handleUpdate = async () => {
+        setOpen(true);
+
         try {
             // if (!firstName || !lastName || !userEmail || !phoneNum) {
             //     return alert('Warning', 'All fields are required!');
@@ -94,32 +132,80 @@ function UserPage({ signInUser }) {
             var emailA = email;
             var phNum = phoneNum;
             var userId = signInUser.user_id
-            var imageUrl = signInUser.image.imageURL;
+            var imageUrl = imageURL;
             var role = signInUser.role;
             var subscription = signInUser.subscription;
 
-
             // console.log(userId, fName, lName, emailA, phNum, imageUrl, role, subscription);
 
-            await ProfileUpdateFunction(userId, fName, lName, emailA, phNum, imageUrl, role, subscription);
 
+            await ProfileUpdateFunction(userId, fName, lName, emailA, phNum, imageUrl, role, subscription, imageName);
+            setOpen(false);
+            window.location.reload();
         } catch (error) {
             console.log("Unable to update profile", error);
         }
     };
+    const withBorder = "4px solid #396781";
+    const withNoBorder = "none";
+    const [accBorder, setAccBorder] = useState(withBorder);
+    const [couBorder, setCouBorder] = useState(withNoBorder);
+    const [tutBorder, setTutBorder] = useState(withNoBorder);
+    const [accStatus, setAccStatus] = useState(true);
+    const [couStatus, setCouStatus] = useState(false);
+    const [tutStatus, setTutStatus] = useState(false);
+    function userNavigate(type) {
+        console.log("hello");
+
+        switch (type) {
+            case "account":
+                setAccBorder(withBorder);
+                setCouBorder(withNoBorder);
+                setTutBorder(withNoBorder);
+
+                setAccStatus(true);
+                setCouStatus(false);
+                setTutStatus(false);
+                break;
+
+            case "courses":
+                setAccBorder(withNoBorder);
+                setCouBorder(withBorder);
+                setTutBorder(withNoBorder);
+
+                setAccStatus(false);
+                setCouStatus(true);
+                setTutStatus(false);
+                break;
+
+            case "tutors":
+                setAccBorder(withNoBorder);
+                setCouBorder(withNoBorder);
+                setTutBorder(withBorder);
+
+                setAccStatus(false);
+                setCouStatus(false);
+                setTutStatus(true);
+                break;
+            default:
+        }
+
+    }
+
+    
 
 
     return (
-        <Grid sx={{ display: 'flex', flexDirection: isSmallScreen ? 'column' : 'row', marginTop: '30px', padding: '20px', width: "96%", margin:isSmallScreen? "-30vh 2% 2% 2%": "-150px 2% 2% 2%" }}>
+        <Grid sx={{ display: 'flex', flexDirection: isSmallScreen ? 'column' : 'row', marginTop: '30px', padding: '20px', width: "96%", margin: isSmallScreen ? "-30vh 2% 2% 2%" : "-150px 2% 2% 2%" }}>
             <Box sx={{ width: isSmallScreen ? '100%' : "30%", height: "700px", backgroundColor: '#E3ECF1', position: 'relative', paddingBottom: "10px", borderRadius: '20px', marginBottom: isSmallScreen ? "30px" : "0" }}>
 
                 <img
                     style={{ height: "60%", width: "100%", objectFit: "cover", borderTopLeftRadius: "20px", borderTopRightRadius: "20px" }}
-                    src={userpicture} alt='card' />
+                    src={imageURL} alt='card' />
 
                 <CardContent sx={{ margin: '10px', position: "relative", height: "40%" }}>
                     <Typography variant='h5' sx={{ color: '#396781', fontWeight: 'bold', width: "100%", textAlign: "center" }}>
-                        First & Last Name
+                        {`${firstName} ${lastName}`}
                     </Typography>
                     <Typography variant='body1' sx={{ width: "100%", textAlign: "center" }}>
                         Lorem ipsum dolor sit amet
@@ -135,37 +221,72 @@ function UserPage({ signInUser }) {
                 </CardContent>
             </Box >
 
-            <Box sx={{ width: isSmallScreen ? "100%" : "70%", zIndex: "50", height: isSmallScreen ? "auto" : 'inherit', position: "relative",  }} >
-                <Box sx={{ backgroundColor: '#E3ECF1', width: isSmallScreen ? '100%' : '94%', height: '100%', margin: isSmallScreen?"0":"0 3%", borderRadius: '16px', paddingBottom: "10px", marginTop: "-20px",paddingBottom:isSmallScreen?"100px":"0" }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', gap: '2%', borderBottom: '2px solid #396781', width: "94%", margin: "20px 3%", paddingTop: "20px", paddingBottom: "15px" }}>
-                        <Typography variant={isSmallScreen?"subtitle2":'h5'} sx={{ fontWeight: "bold", color: "primary.light", width: "29%", textAlign: "center", display:"flex", alignItems:"center", justifyContent:"center"}}>Account</Typography>
-                        <Typography variant={isSmallScreen?"subtitle2":'h5'} sx={{ fontWeight: "bold", color: "primary.light", width: "29%", textAlign: "center", display:"flex", alignItems:"center", justifyContent:"center" }}>Courses</Typography>
-                        <Typography variant={isSmallScreen?"subtitle2":'h5'} sx={{ fontWeight: "bold", color: "primary.light", width: "29%", textAlign: "center", display:"flex", alignItems:"center", justifyContent:"center" }}>Tutor Sessions</Typography>
-                    </Box>
-                    <Box sx={{ paddingTop: '50px', gap: '15px', width: "90%", margin: "5%", position: "relative" }}>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px', mb: '15px' }}>
-                            <UserTextFields label={"First name:"} setState={setFirstName} placeholder={`First Name: ${firstName}`} />
-                            <UserTextFields label={"Last Name:"} setState={setLastName} placeholder={`Last Name: ${lastName}`} />
+            <Box sx={{ width: isSmallScreen ? "100%" : "70%", zIndex: "50", height: isSmallScreen ? "auto" : 'inherit', position: "relative", }} >
+                <Box sx={{ backgroundColor: '#E3ECF1', width: isSmallScreen ? '100%' : '94%', height: '100%', margin: isSmallScreen ? "0" : "0 3%", borderRadius: '16px', paddingBottom: "10px", marginTop: "-20px", paddingBottom: isSmallScreen ? "100px" : "0" }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', gap: '2%', borderBottom: '2px solid rgba(57, 103, 128, 0.30)', width: "94%", height: "60px", margin: "20px 3%", }}>
+                        <Box sx={{ width: "29%", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+                            <Typography variant={isSmallScreen ? "subtitle2" : 'h5'} sx={{ fontWeight: "bold", padding: "0 15px", color: "primary.light", cursor: "pointer", borderBottom: `${accBorder}`, display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }} onClick={() => userNavigate("account")}>Account</Typography>
                         </Box>
-                        <Box sx={{ marginBottom: '15px' }}>
-                            <Box sx={{ marginTop: "10px" }}>
-                                <UserTextFields label={"Phone Number:"} setState={setPhoneNum} placeholder={`Phone Number: ${phoneNum}`} />
-                            </Box>
-                            <Box sx={{ marginTop: "20px" }}>
-                                <UserTextFields label={"Email Address:"} setState={setEmail} disabled={true} placeholder={email} />
-                            </Box>
+                        <Box sx={{ width: "29%", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+                            <Typography variant={isSmallScreen ? "subtitle2" : 'h5'} sx={{ fontWeight: "bold", padding: "0 15px", color: "primary.light", cursor: "pointer", borderBottom: `${couBorder}`, display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }} onClick={() => userNavigate("courses")}>Courses</Typography>
                         </Box>
-
-                        <Link href="reset" style={{ width: "100%", textAlign: "right", cursor: "pointer", fontSize: isSmallScreen ? "14px" : "16px", fontWeight: "400", }}>
-                            Reset Password
-                        </Link>
-
+                        <Box sx={{ width: "29%", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+                            <Typography variant={isSmallScreen ? "subtitle2" : 'h5'} sx={{ fontWeight: "bold", padding: "0 15px", color: "primary.light", cursor: "pointer", borderBottom: `${tutBorder}`, display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }} onClick={() => userNavigate("tutors")}>Tutor Sessions</Typography>
+                        </Box>
                     </Box>
-                    <Box sx={{ position: 'absolute', bottom: "10px", left: "5%", padding: '10px', }}>
-                        <SmallButton text={"UPDATE"} buttonFunction={handleUpdate} />
-                    </Box>
+                    {accStatus ?
+                        <>
+                            <Box sx={{ paddingTop: '50px', gap: '15px', width: "90%", margin: "5%", position: "relative" }}>
+                                <Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px', mb: '15px' }}>
+                                    <UserTextFields label={"First name:"} setState={setFirstName} placeholder={`First Name: ${firstName}`} />
+                                    <UserTextFields label={"Last Name:"} setState={setLastName} placeholder={`Last Name: ${lastName}`} />
+                                </Box>
+                                <Box sx={{ marginBottom: '15px' }}>
+                                    <Box sx={{ marginTop: "10px" }}>
+                                        <UserTextFields label={"Phone Number:"} setState={setPhoneNum} placeholder={`Phone Number: ${phoneNum}`} />
+                                    </Box>
+                                    <Box sx={{ marginTop: "20px" }}>
+                                        <UserTextFields label={"Email Address:"} setState={setEmail} disabled={true} placeholder={email} />
+                                    </Box>
+                                </Box>
+
+                                <Link href="reset" style={{ width: "100%", textAlign: "right", cursor: "pointer", fontSize: isSmallScreen ? "14px" : "16px", fontWeight: "400", }}>
+                                    Reset Password
+                                </Link>
+
+                            </Box>
+                            <Box sx={{ position: 'absolute', bottom: "10px", left: "5%", padding: '10px', }}>
+                                <SmallButton text={"UPDATE"} buttonFunction={handleUpdate} />
+                            </Box>
+                        </>
+                        : null
+                    }
+
+                    {couStatus ?
+                        <>
+                            <Box sx={{ paddingTop: '50px', gap: '15px', width: "90%", margin: "5%", position: "relative", display: "flex", flexDirection: isSmallScreen ? "column" : "row" }}>
+                                {userCoursesCards.map((course, index) => (
+                                    <Box key={index} sx={{ width: isSmallScreen ? "100%" : "33%", }}>
+                                        <UserCourseContCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.shortDescrip} image={course.cardImage} />
+                                    </Box>
+                                ))}
+
+                            </Box>
+                        </>
+                        : null
+                    }
                 </Box>
             </Box>
+
+            <div>
+
+                <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={open}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
+            </div>
 
         </Grid>
     )

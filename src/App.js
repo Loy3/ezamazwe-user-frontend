@@ -40,12 +40,15 @@ function App() {
     const checkAuth = (auth);
     // console.log(auth);
     const unsubscribe = checkAuth.onAuthStateChanged((user) => {
+      console.log(user);
       if (user !== null) {
-        // console.log(user.uid)
+        console.log("user.uid",user.uid)
         setUserId(user.uid);
         setUserMail(user.email);
 
         setUserPath(user.uid)
+      } else {
+        setSignIn(false);
       }
     });
     return () => unsubscribe();
@@ -93,12 +96,12 @@ function App() {
           <Route path='/screen' element={<ScreenView />} />
           <Route path='/courses' element={<CoursesPage />} />
           <Route path='/course' element={<ViewCoursePage />} />
-          <Route path='/courseview' element={!isSignedIn ? <Navigate to={""} /> : <CourseFullView />} />
-          <Route path='/user' element={!isSignedIn ? <Navigate to={""} /> : <User signInUser={signInUser} />} />
+          <Route path='/courseview' element={!isSignedIn ? <Navigate to="/" /> : <CourseFullView />} />
+          <Route path='/user' element={!isSignedIn ? <Navigate to="/" /> : <User signInUser={signInUser} />} />
           <Route path='/reset' element={<ResetPassword />} />
           <Route path='/forgot' element={<ForgotPassowrd />} />
           <Route path='' element={<LandingPage />} />
-          <Route path='/verification' element={<VerificationPage />} />
+          <Route path='/loader' element={<VerificationPage />} />
           <Route path='/verify-email' element={<VerifyEmail />} />
         </Routes>
       </BrowserRouter>

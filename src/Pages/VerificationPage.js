@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { CheckVerificationFunction } from '../Services/AuthService';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-
+import { Box, LinearProgress, Typography } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 const VerificationPage = ({ userId, userEmail }) => {
 
   const location = useLocation();
@@ -46,18 +47,31 @@ const VerificationPage = ({ userId, userEmail }) => {
 
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      {status ? (
-        <div>
-          <h3>{verificationStatus}</h3>
-        </div>
-      ) : (
-        <div>
-          <h3>Loading...</h3>
-        </div>
-      )}
-    </div>
+    // <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    //   {status ? (
+    //     <div>
+    //       <h3>{verificationStatus}</h3>
+    //     </div>
+    //   ) : (
+    //     <div>
+    //       <h3>Loading...</h3>
+    //     </div>
+    //   )}
+    // </div>
+
+    <>
+      <Box sx={{ height: "100vh", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        {/* <CircularProgress />
+      <LinearProgress /> */}
+        {status ?
+          <Typography variant='h5' sx={{color:"primary.light", fontWeight:"bold"}}>{verificationStatus}</Typography>
+          :
+          <div className='loader' />
+        }
+      </Box>
+    </>
   );
 };
 
 export default VerificationPage;
+

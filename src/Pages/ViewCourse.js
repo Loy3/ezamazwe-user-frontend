@@ -82,7 +82,7 @@ function ViewCourse({ course_data, docData }) {
             }
         } else {
             // Navigate to signin page
-            navigate('/');
+            navigate('/courses');
         }
     }
 

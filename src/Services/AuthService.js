@@ -66,12 +66,12 @@ export const CheckVerificationFunction = async (email) => {
         const response = await apiUrl.json();
 
         // Handle the response here
-        console.log('Server Verification Response:', response);
+        // console.log('Server Verification Response:', response);
 
         // Show a success message or perform additional actions based on the response
-        console.log(response.message);
+        // console.log(response.message);
         if (response.message) {
-            console.log('Email verification initiated successfully.');
+            // console.log('Email verification initiated successfully.');
             alert("Email verification initiated successfully.")
         } else {
             console.error('Email verification failed:', response.error);
@@ -216,7 +216,7 @@ export const ForgotPasswordFunction = async (email) => {
             });
         const response = await apiUrl.json();
 
-        alert("Email for password reset has been sent")
+        alert("Email for password change has been sent")
         // Handle the response here
         console.log('Server Response:', response);
     } catch (error) {
@@ -251,10 +251,14 @@ export const GetUserDataFunction = async (userId) => {
 };
 
 // Profile update function
-export const ProfileUpdateFunction = async (userId, firstName, lastName, userEmail, phoneNum, imageURL, role, subscription) => {
-    console.log("User id:", userId);
+export const ProfileUpdateFunction = async (userId, firstName, lastName, userEmail, phoneNum, imageURL, role, subscription,imageName) => {
+    // console.log("User id:", userId);
 
     try {
+        const userImage = {
+            imageURL: imageURL,
+            imageName: imageName
+        }
 
         const userInfo = {
             user_id: userId,
@@ -262,10 +266,11 @@ export const ProfileUpdateFunction = async (userId, firstName, lastName, userEma
             lastName: lastName,
             email: userEmail,
             phoneNum: phoneNum,
-            imageURL: imageURL,
+            image: userImage,
             role: role,
             subscription: subscription,
         };
+        // console.log(userInfo);
 
         await setDoc(doc(db, 'users', userId), userInfo);
 

@@ -78,7 +78,7 @@ export const ToUserButton = ({ buttonFunction, isSignedIn }) => {
 
     function handleNavigate() {
         if (!isSignedIn) {
-            alert("Please sign in");
+            alert("You need to sign in to access user page.");
             navigate("/signin")
         }
     }
@@ -155,6 +155,15 @@ export const HomeButtons = ({ text, buttonFunction }) => {
     return (
         <>
             <Button variant="contained" style={{ backgroundColor: "primary.light", width: isSmallScreen ? "70%" : "35%", height: "50px", borderRadius: 15, marginLeft: isSmallScreen ? "15%" : "0" }} onClick={() => buttonFunction()}>{text}</Button>
+        </>
+    )
+}
+
+export const SignOutBtn = ({ text, buttonFunction }) => {
+    const isSmallScreen = useMediaQuery("(max-width:600px)");
+    return (
+        <>
+            <button variant="contained" style={{ backgroundColor: "primary.light", width: isSmallScreen ? "70%" : "35%", height: "50px", borderRadius: 15, marginLeft: isSmallScreen ? "15%" : "0" }} onClick={() => buttonFunction()}>{text}</button>
         </>
     )
 }
