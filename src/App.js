@@ -85,7 +85,7 @@ function App() {
     // </div>
 
     <>
-      {/* <BrowserRouter>
+      <BrowserRouter>
         <Routes>
           <Route path='/signin' element={<SignIn />} />
           <Route path='/signup' element={<SignUp setToProfileStatus={setToProfileStatus} />} />
@@ -93,21 +93,22 @@ function App() {
           <Route path='/screen' element={<ScreenView />} />
           <Route path='/courses' element={<CoursesPage />} />
           <Route path='/course' element={<ViewCoursePage />} />
-          <Route path='/user' element={!isSignedIn ? <Navigate to={""} /> : <User signInUser={signInUser}/>} />
+          <Route path='/courseview' element={!isSignedIn ? <Navigate to={""} /> : <CourseFullView />} />
+          <Route path='/user' element={!isSignedIn ? <Navigate to={""} /> : <User signInUser={signInUser} />} />
           <Route path='/reset' element={<ResetPassword />} />
           <Route path='/forgot' element={<ForgotPassowrd />} />
           <Route path='' element={<LandingPage />} />
           <Route path='/verification' element={<VerificationPage />} />
           <Route path='/verify-email' element={<VerifyEmail />} />
         </Routes>
-      </BrowserRouter> */}
+      </BrowserRouter>
 
       {/* <CourseCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} video={video1} cardFunction={testing}/> */}
 
       {/* <CourseContCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} image={image1} cardFunction={testing}/> */}
 
       {/* <SearchBar/> */}
-      <CourseFullView/>
+
 
       {/*  */}
     </>

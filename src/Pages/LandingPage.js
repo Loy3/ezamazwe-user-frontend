@@ -5,7 +5,7 @@ import { NavBar } from "../Components/NavBar"
 import { HomeButtons } from "../Components/Buttons"
 import headerImage from "../Assets/Images/headerImage.jpg";
 import { SearchBar } from "../Components/SearchBar"
-
+import { useNavigate } from 'react-router-dom';
 import enrolledStuIcon from "../Assets/Icons/st.png";
 import onCoursesIcon from "../Assets/Icons/co.png";
 import tutorsIcon from "../Assets/Icons/tu.png";
@@ -34,9 +34,12 @@ import impactVid4 from "../Assets/Videos/4.mp4";
 import { useEffect, useMemo, useState } from "react"
 import { CourseContCard } from "../Components/Cards"
 const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis.";
+
+
+
 function LandingPage() {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
-
+    const navigate = useNavigate();
     const headCards = useMemo(() => {
         return [
             {
@@ -183,6 +186,10 @@ function LandingPage() {
         setViewCourses(displayArr);
     }
 
+    function toSignUp(){
+        navigate("/signup")
+    }
+
     return (
         <>
             {/* Header & Nav */}
@@ -202,7 +209,7 @@ function LandingPage() {
                                 <Typography variant="body2" sx={{ margin: "30px 10px", textAlign: isSmallScreen ? "center" : "left" }}>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas metus nulla, et tincidunt sapien faucibus quis. Proin accumsan, tortor a luctus euismod, ex orci sodales nunc.
                                 </Typography>
-                                <HomeButtons text={"Join"} buttonFunction={""} />
+                                <HomeButtons text={"Join"} buttonFunction={toSignUp} />
                             </Box>
                         </Box>
                         <Box sx={{ width: isSmallScreen ? "100%" : "50%", height: isSmallScreen ? "auto" : "inherit", display: isSmallScreen ? "none" : "flex", justifyContent: "center", alignItems: "center", position: "relative" }}>
@@ -307,7 +314,7 @@ function LandingPage() {
                                     tortor a luctus euismod, ex orci sodales nunc.
                                 </Typography>
                                 <Box sx={{ width: "100%", display: "flex", justifyContent: "start", alignItems: "center", marginTop: "15px" }}>
-                                    <HomeButtons text={"Join"} buttonFunction={""} />
+                                    <HomeButtons text={"Join"} buttonFunction={toSignUp} />
                                 </Box>
                             </Box>
 

@@ -111,6 +111,25 @@ export const ToSignInUserButton = ({ text, buttonFunction }) => {
     )
 }
 
+export const ToSignInUserButton2 = ({ text, buttonFunction }) => {
+    const isSmallScreen = useMediaQuery("(max-width:600px)");
+    const navigate = useNavigate();
+
+    function handleNavigate() {
+        navigate('/user');
+    }
+
+    return (
+        <>
+            <Button component="label" variant="contained" sx={{ marginLeft: "10px", width: "50px", height: "60px", borderRadius: "100%", backgroundColor: "primary.main", display: "flex", justifyContent: "center", alignItems: "center" }} onClick={handleNavigate}>
+                <Typography variant="h4" sx={{ fontWeight: "bold", color: "white" }}>{text}</Typography>
+            </Button>
+            {/* <VisuallyHiddenInput type="file" onChange={event => handleImage(event)} /> */}
+            {/*  */}
+        </>
+    )
+}
+
 export const FilterButton = ({ text, buttonFunction }) => {
 
     return (

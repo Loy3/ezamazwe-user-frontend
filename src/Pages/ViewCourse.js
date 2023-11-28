@@ -27,10 +27,10 @@ function ViewCourse({ course_data, docData }) {
     console.log("doc_data:", doc_data);
 
     const [courseId, setCourseId] = useState(courseData.id);
-    const [courseTitle, setCourseTitle] = useState(doc_data.courseName);
-    const [courseDescription, setCourseDescription] = useState(doc_data.courseShortDescription);
-    const [courseFullDescription, setCourseFullDescription] = useState(doc_data.courseDescription);
-    const [costPrice, setCostPrice] = useState(doc_data.coursePrice);
+    const [courseTitle, setCourseTitle] = useState(courseData.courseName);
+    const [courseDescription, setCourseDescription] = useState(courseData.courseShortDescription);
+    const [courseFullDescription, setCourseFullDescription] = useState(courseData.courseDescription);
+    const [costPrice, setCostPrice] = useState(courseData.coursePrice);
     const [video, setVideo] = useState(courseData.lessonUrl);
     const [userInfo, setUserInfo] = useState(null);
     const [userSubscription, setUserSubscription] = useState(false);
@@ -73,9 +73,9 @@ function ViewCourse({ course_data, docData }) {
 
         if (user) {
             if (costPrice === "Free") {
-                navigate('/coursefullview', { state: { courseData: courseData, doc_data: doc_data } });
+                navigate('/courseview', { state: { courseData: courseData, doc_data: doc_data } });
             } else if (costPrice === "Subscription" && userSubscription === true) {
-                navigate('/coursefullview', { state: { courseData: courseData } });
+                navigate('/courseview', { state: { courseData: courseData } });
             } else {
                 alert("Only subscribed users can access this course");
                 navigate('/courses');   // Navigate back to courses page
@@ -84,6 +84,10 @@ function ViewCourse({ course_data, docData }) {
             // Navigate to signin page
             navigate('/');
         }
+    }
+
+    function toFullView(){
+        navigate("/courseview")
     }
     return (
         <Grid sx={{ padding: isSmallScreen ? '0 20px' : '0 40px' }}>
@@ -102,7 +106,7 @@ function ViewCourse({ course_data, docData }) {
                         </Typography>
                         <Label children={"Free"} />
                     </CardContent>
-                    <Contentbutton text={"START"} />
+                    <Contentbutton text={"START"} buttonFunction={handleStartCourse}/>
                 </Box >
                 <Grid sx={{ paddingLeft: isSmallScreen ? '0' : '20px', paddingTop: '70px', width: isSmallScreen ? "100%" : "70%", paddingBottom: "20px" }}>
                     <Box sx={{ width: "90%", margin: "0 5%" }}>
