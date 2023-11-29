@@ -12,11 +12,32 @@ const ContactUs = () => {
     const [message, setMessage] = useState('');
 
 
+    // Validate email
+    const isEmailValid = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+
     const handleSendMessage = async () => {
 
         try {
-            await ContactUsFunction(firstName, lastName, email, subject, message);
-            alert("Message sent successfully.")
+
+            if (isEmailValid(email)) {
+                await ContactUsFunction(firstName, lastName, email, subject, message);
+                alert("Message sent successfully.");
+
+                // Reset field data to default values
+                setFirstName('');
+                setLastName('');
+                setEmail('');
+                setSubject('');
+                setMessage('');
+
+            } else {
+                console.log("Email is not valid!");
+                alert("Email is not valid. Please enter the correct email address!");
+            }
 
         } catch (error) {
 
@@ -28,7 +49,7 @@ const ContactUs = () => {
 
     return (
         <div>
-            <div style={{marginTop:'50px', marginBottom:'50px'}}>
+            <div style={{ marginTop: '50px', marginBottom: '50px' }}>
                 <h1>Contact Us</h1>
             </div>
             <h2>Send us a message</h2>
@@ -75,11 +96,11 @@ const ContactUs = () => {
             <button onClick={handleSendMessage}>Send</button>
             <br></br>
             <br></br>
-            <div  style={{ marginTop:'50px' }}>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14374.480891453777!2d28.175938168254948!3d-25.750069860776502!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e956213a2f4f16d%3A0x993da7df3774cd26!2sPretoria%20Central%2C%20Pretoria%2C%200002!5e0!3m2!1sen!2sza!4v1700819168974!5m2!1sen!2sza" width="600" height="450" style={{border:"0"}} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div style={{ marginTop: '50px' }}>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14374.480891453777!2d28.175938168254948!3d-25.750069860776502!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e956213a2f4f16d%3A0x993da7df3774cd26!2sPretoria%20Central%2C%20Pretoria%2C%200002!5e0!3m2!1sen!2sza!4v1700819168974!5m2!1sen!2sza" width="600" height="450" style={{ border: "0" }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     );
-} 
+}
 
 export default ContactUs;
