@@ -72,6 +72,15 @@ export const SmallButton = ({ text, buttonFunction }) => {
     )
 }
 
+export const SignOutButton = ({ text, buttonFunction }) => {
+    return (
+        <>
+            <Button variant="outlined" sx={{ marginTop: "5px", width: "150px", height: "50px", borderRadius: 50,border:"2px solid #FF6347", color:"#FF6347" }} onClick={() => buttonFunction()}>{text}</Button>
+        </>
+    )
+}
+
+
 export const ToUserButton = ({ buttonFunction, isSignedIn }) => {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
     const navigate = useNavigate();

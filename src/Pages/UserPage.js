@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button, { SmallButton, ToUserButton } from '../Components/Buttons';
+import Button, { SignOutButton, SmallButton, ToUserButton } from '../Components/Buttons';
 import Typography from '@mui/material/Typography';
 import parabola from '../Assets/Images/parabola.jpg';
 import SectionHeading from '../Components/SectionHeading';
@@ -192,7 +192,16 @@ function UserPage({ signInUser }) {
 
     }
 
-    
+    function signOut() {
+        auth.signOut().then(() => {
+         console.log("Success");
+        }).catch((error) => {
+            console.log(error.message);
+            navigate("/")
+        });
+
+        window.location.reload();
+    }
 
 
     return (
@@ -257,6 +266,9 @@ function UserPage({ signInUser }) {
                             </Box>
                             <Box sx={{ position: 'absolute', bottom: "10px", left: "5%", padding: '10px', }}>
                                 <SmallButton text={"UPDATE"} buttonFunction={handleUpdate} />
+                            </Box>
+                            <Box sx={{ position: 'absolute', bottom: "10px", right: "5%", padding: '10px', }}>
+                                <SignOutButton text={"Sign Out"} buttonFunction={signOut} />
                             </Box>
                         </>
                         : null

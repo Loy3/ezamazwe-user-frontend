@@ -98,7 +98,7 @@ export const ProfileSetupFunction = async (userId, firstName, lastName, userEmai
                 phoneNum: phoneNum,
                 image: result,
                 role: "user",
-                subscription: "unsuscribed",
+                subscription: "unsubscribed",
             });
             console.log('Profile setup successfully:', docRef);
             alert("Profile setup successfully");

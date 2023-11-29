@@ -33,7 +33,7 @@ function ViewCourse({ course_data, docData }) {
     const [costPrice, setCostPrice] = useState(courseData.coursePrice);
     const [video, setVideo] = useState(courseData.lessonUrl);
     const [userInfo, setUserInfo] = useState(null);
-    const [userSubscription, setUserSubscription] = useState(false);
+    const [userSubscription, setUserSubscription] = useState("");
     const [lessonName, setLessonName] = useState(courseData.lessonName);
     const videoRef = useRef(null);
 
@@ -54,7 +54,7 @@ function ViewCourse({ course_data, docData }) {
     useEffect(() => {
         // Check userSubscription once userInfo is available
         if (userInfo) {
-            setUserSubscription(userInfo.subscribed);
+            setUserSubscription(userInfo.subscription);
         }
     }, [userInfo]);
 
@@ -70,23 +70,43 @@ function ViewCourse({ course_data, docData }) {
 
 
     const handleStartCourse = () => {
-
+        console.log(costPrice);
         if (user) {
             if (costPrice === "Free") {
                 navigate('/courseview', { state: { courseData: courseData, doc_data: doc_data } });
-            } else if (costPrice === "Subscription" && userSubscription === true) {
-                navigate('/courseview', { state: { courseData: courseData } });
             } else {
-                alert("Only subscribed users can access this course");
-                navigate('/courses');   // Navigate back to courses page
+                if (costPrice === "Subscription" && userSubscription === "subscribed") {
+                    navigate('/courseview', { state: { courseData: courseData } });
+                } else {
+                    alert("Only subscribed users can access this course");
+                    navigate('/courses');   // Navigate back to courses page
+                }
             }
         } else {
             // Navigate to signin page
             navigate('/courses');
         }
+
+
+        // if (user) {
+        //     if (costPrice == "Free" || userSubscription == "subscribed") {
+        //         navigate('/courseview', {
+        //             state: {
+        //                 courseData: courseData,
+        //                 // doc_data: doc_data
+        //             }
+        //         });
+        //     } else {
+        //         alert("Only subscribed users can access this course");
+        //         navigate('/courses');   // Navigate back to courses page
+        //     }
+        // } else {
+        //     // Navigate to signin page
+        //     navigate('/signin');
+        // }
     }
 
-    function toFullView(){
+    function toFullView() {
         navigate("/courseview")
     }
     return (
@@ -95,7 +115,7 @@ function ViewCourse({ course_data, docData }) {
                 <Box sx={{ width: isSmallScreen ? '100%' : "30%", backgroundColor: '#E3ECF1', position: 'relative', paddingBottom: "20px", height: isSmallScreen ? "660px" : "800px", marginTop: isSmallScreen ? "-30vh" : "-60px", zIndex: "50", borderRadius: "20px" }}>
 
                     <img
-                        style={{ height: "50%", width: "100%", objectFit: "cover", borderTopRightRadius:"20px", borderTopLeftRadius:"20px"}}
+                        style={{ height: "50%", width: "100%", objectFit: "cover", borderTopRightRadius: "20px", borderTopLeftRadius: "20px" }}
                         src={parabola} alt='card' />
 
                     <CardContent sx={{ margin: '10px' }}>
@@ -106,7 +126,7 @@ function ViewCourse({ course_data, docData }) {
                         </Typography>
                         <Label children={"Free"} />
                     </CardContent>
-                    <Contentbutton text={"START"} buttonFunction={handleStartCourse}/>
+                    <Contentbutton text={"START"} buttonFunction={handleStartCourse} />
                 </Box >
                 <Grid sx={{ paddingLeft: isSmallScreen ? '0' : '20px', paddingTop: '70px', width: isSmallScreen ? "100%" : "70%", paddingBottom: "20px" }}>
                     <Box sx={{ width: "90%", margin: "0 5%" }}>
