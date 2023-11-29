@@ -98,6 +98,68 @@ export const fetchCourseDetailsFunction = async (subject, category, grade, subsc
 
 
 
+// Filter courses with subject, category, grade, subscription & return both course content and course details
+export const fetchCoursesFunction2 = async (subject, category, grade, subscription) => {
+    try {
+        // Step 1: Query to get the course document based on subject, category, and grade
+        const coursesQuery = query(collection(db, 'coursesCollection'),
+            where('courseCategory.subjectOrTopic', '==', subject),
+            where('courseCategory.categoryType', '==', category),
+            where('courseCategory.categoryGrade', '==', grade),
+            where('coursePrice', '==', subscription)
+        );
+        const coursesSnapshot = await getDocs(coursesQuery);
+
+        if (coursesSnapshot.empty) {
+            alert('No courses found for the subject:', subject);
+            return;
+        }
+
+        coursesSnapshot.forEach(item => console.log("Course:", item.data()));
+
+        // Use the first document
+        const courseDoc = coursesSnapshot.docs[0];
+        const courseId = courseDoc.id;
+
+        const filteredCourseDetails = coursesSnapshot.docs
+            .map((contentDoc) => ({
+                contentId: contentDoc.id,
+                ...contentDoc.data()
+            }));
+
+        console.log("Filtered course details:", filteredCourseDetails);
+        console.log("courseId:", courseId);
+
+        // Step 2: Query the courseContent subcollection for the selected course
+        const courseContentQuery = collectionGroup(db, 'courseContent');
+        const courseContentSnapshot = await getDocs(courseContentQuery);
+
+        courseContentSnapshot.forEach(item => console.log("Course content:", item.data()));
+
+        // Filter course content documents based on courseId
+        const filteredCourseContent = courseContentSnapshot.docs
+            // .filter((contentDoc) => contentDoc.data().courseId === courseId)
+            .map((contentDoc) => ({
+                contentId: contentDoc.id,
+                ...contentDoc.data()
+            }));
+
+        console.log("Filtered course content:", filteredCourseContent);
+
+        // Return an object with both snapshots
+        return {
+            filteredCourseDetails: filteredCourseDetails,
+            filteredCourseContent: filteredCourseContent
+        };
+
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+};
+//const { coursesSnapshot, filteredCourseContent } = await fetchCoursesFunction(subject, category, grade, subscription);
+
+
+
 
 // Fetch Courses function
 export const ViewCoursesFunction = async () => {

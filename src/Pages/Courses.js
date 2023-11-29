@@ -126,7 +126,7 @@ const Courses = () => {
         <div>
 
             <div style={{ marginTop: '50px' }}>
-                <button onClick={handleFilteredCourses}>Filter (3)</button>
+                <button onClick={handleFilteredCourses}>Filter (4)</button>
             </div>
 
             <div style={{ marginTop: '50px' }}>

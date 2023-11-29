@@ -20,10 +20,10 @@ const CourseView = ({ course_data, details }) => {
     const [courseTitle, setCourseTitle] = useState('');
     const [courseDescription, setCourseDescription] = useState('');
     const [courseFullDescription, setCourseFullDescription] = useState('');
-    const [costPrice, setCostPrice] = useState('');
+    const [costPrice, setCostPrice] = useState("");
     const [video, setVideo] = useState(courseData.lessonUrl);
     const [userInfo, setUserInfo] = useState(null);
-    const [userSubscription, setUserSubscription] = useState(false);
+    const [userSubscription, setUserSubscription] = useState('');
     const [lessonName, setLessonName] = useState(courseData.lessonName);
     const videoRef = useRef(null);
 
@@ -55,7 +55,7 @@ const CourseView = ({ course_data, details }) => {
     useEffect(() => {
         // Check userSubscription once userInfo is available
         if (userInfo) {
-            setUserSubscription(userInfo.subscribed);
+            setUserSubscription(userInfo.subscription);
         }
     }, [userInfo]);
 
@@ -71,17 +71,11 @@ const CourseView = ({ course_data, details }) => {
 
 
     const handleStartCourse = () => {
-        console.log("costPrice:", costPrice);
+        console.log("coursePrice:", costPrice);
 
         if (user) {
-            if (costPrice === "Free") {
-                navigate('/coursefullview', {
-                    state: {
-                        courseData: courseData,
-                        doc_data: doc_data
-                    }
-                });
-            } else if (costPrice === "Subscription" && userSubscription) {
+
+            if (costPrice == "Free" || userSubscription == "subscribed") {
                 navigate('/coursefullview', {
                     state: {
                         courseData: courseData,
@@ -92,6 +86,7 @@ const CourseView = ({ course_data, details }) => {
                 alert("Only subscribed users can access this course");
                 navigate('/courses');   // Navigate back to courses page
             }
+
         } else {
             // Navigate to signin page
             navigate('/signin');
