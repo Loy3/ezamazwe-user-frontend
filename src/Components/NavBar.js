@@ -30,7 +30,6 @@ export const NavBar = () => {
                 // console.log(user.uid)
                 setUserId(user.uid);
                 setUserMail(user.email);
-
                 setUserPath(user.uid)
             }
         });
@@ -81,8 +80,8 @@ export const NavBar = () => {
                 navigate("/");
                 break;
             case "about":
-                // navigate("");
-                console.log("About");
+                navigate("/about");
+                // console.log("About");
                 break;
             case "courses":
                 navigate("/courses");

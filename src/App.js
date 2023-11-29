@@ -30,6 +30,7 @@ import { auth, db } from './Services/firebaseConfig';
 import { collection, doc, getDoc, query } from 'firebase/firestore';
 import CourseFullView from './Pages/CourseFullView';
 import ContactUs from './Pages/ContactUs';
+import AboutUs from './Pages/AboutUs';
 function App() {
   const [isSignedIn, setSignIn] = useState(false);
   const [userId, setUserId] = useState("");
@@ -102,6 +103,7 @@ function App() {
           <Route path='/reset' element={<ResetPassword />} />
           <Route path='/forgot' element={<ForgotPassowrd />} />
           <Route path='/contact' element={<ContactUs />} />
+          <Route path='/about' element={<AboutUs />} />
           <Route path='' element={<LandingPage />} />
           <Route path='/loader' element={<VerificationPage />} />
           <Route path='/verify-email' element={<VerifyEmail />} />

@@ -126,7 +126,7 @@ function SignUp({ setToProfileStatus }) {
                             <Button text={"Sign Up"} buttonFunction={handleSignup} />
                             <Box sx={{ display: "flex", flexDirection: "row" }}>
                                 <Typography sx={{ fontSize: isSmallScreen ? "14px" : "16px" }}>Already have an account?</Typography>
-                                <Link href="/" sx={{ marginLeft: "5px", fontSize: isSmallScreen ? "14px" : "16px" }}> Sign In</Link>
+                                <Link href="signin" sx={{ marginLeft: "5px", fontSize: isSmallScreen ? "14px" : "16px" }}> Sign In</Link>
                             </Box>
                         </Box>
 

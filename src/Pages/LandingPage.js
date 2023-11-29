@@ -140,6 +140,7 @@ function LandingPage() {
     const [iebBorder, setIebBorder] = useState(withNoBorder);
     const [entBorder, setEntBorder] = useState(withNoBorder);
 
+
     useEffect(() => {
         let viewArr = [];
 

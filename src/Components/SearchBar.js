@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useAutocomplete } from '@mui/base/useAutocomplete';
 import { styled } from '@mui/system';
-
+import { ViewCoursesFunction } from '../Services/CourseService';
+import { useEffect, useMemo, useState } from "react"
 const Label = styled('label')({
     display: 'block',
 });
@@ -42,7 +43,10 @@ const Listbox = styled('ul')(({ theme }) => ({
     },
 }));
 
+
+
 export const SearchBar = () => {
+    const [searchBarTitles, setSearchBarTitles] = useState([]);
     const {
         getRootProps,
         getInputLabelProps,
@@ -52,9 +56,31 @@ export const SearchBar = () => {
         groupedOptions,
     } = useAutocomplete({
         id: 'use-autocomplete-demo',
-        options: courses,
+        options: searchBarTitles,
         getOptionLabel: (option) => option.title,
     });
+
+    useEffect(() => {
+        handleViewCourses()
+    }, [])
+    const handleViewCourses = async () => {
+        try {
+            const data = await ViewCoursesFunction();
+            let titles = [];
+            data.forEach(d => {
+                
+                const title = {
+                    title:d.courseName
+                };
+                titles.push(title);
+            });
+            // console.log("Courses data:", titles);
+            setSearchBarTitles(titles);
+        } catch (error) {
+            console.log("Error fetching data", error);
+        }
+    }
+
 
     return (
         <div style={{position:"relative"}}>

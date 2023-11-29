@@ -66,14 +66,15 @@ function ContactUs() {
           </Box>
 
 
-          {/* <Box
+          <Box
             sx={{
-              width: { xs: "425px", sm: "770px", md: "1000px", lg: "1350px", xl: "1750px" },
+              width: "100%",
               height: "100%",
               display: "flex",
               flexDirection: { xs: "column", sm: "column", md: "row", lg: "row", xl: "row" },
               marginTop: "50px",
-              marginLeft: { xs: "0px", sm: "0px", md: "20px", lg: "50px", xl: "70px" },
+              // marginLeft: { xs: "0px", sm: "0px", md: "20px", lg: "50px", xl: "70px" },
+              marginBottom:"50px"
             }}
           >
             <Box
@@ -122,7 +123,7 @@ function ContactUs() {
                 }}
               />
             </Box>
-          </Box> */}
+          </Box>
         </Box>
       </Box>
       <FooterComp />
