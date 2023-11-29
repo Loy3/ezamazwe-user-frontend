@@ -96,11 +96,11 @@ export const NavBar = () => {
         }
     }
     function signIn() {
-            navigate("/signin");
+        navigate("/signin");
     }
     function signOut() {
         auth.signOut().then(() => {
-         console.log("Success");
+            console.log("Success");
         }).catch((error) => {
             console.log(error.message);
             navigate("/")
@@ -151,7 +151,7 @@ export const NavBar = () => {
                         <Box sx={{ width: isSmallScreen ? "100%" : "20%", height: isSmallScreen ? "auto" : "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: isSmallScreen ? "50px" : "0", position: isSmallScreen ? "absolute" : "relative", bottom: isSmallScreen ? "50px" : "unset" }}>
                             {!isSignedIn ?
                                 <Box sx={{ display: "flex", flexDirection: "row", marginLeft: isSmallScreen ? "20px" : "0" }}>
-                                    <SmallButton text={"Sign In"} buttonFunction={signIn}/>
+                                    <SmallButton text={"Sign In"} buttonFunction={signIn} />
                                     <ToUserButton isSignedIn={isSignedIn} />
                                 </Box>
                                 :
@@ -171,7 +171,7 @@ export const NavBar = () => {
 
 
 
-export const CourseNavBar = ({courseName}) => {
+export const CourseNavBar = ({ courseName }) => {
     const navigate = useNavigate();
     const isSmallScreen = useMediaQuery("(max-width:600px)");
     const [navStatus, setNavStatus] = useState(false);
@@ -260,14 +260,14 @@ export const CourseNavBar = ({courseName}) => {
         <>
             {/* <div style={{ width: "100%", height: "100vh", backgroundColor: "gray" }}> */}
 
-            <Box sx={{ width: "100%", height: "90px", backgroundColor: "primary.light", position: isSmallScreen ? "fixed" : "relative", zIndex: isSmallScreen ? "80" : "0" }}>
-                <Box sx={{ width: "100%", height: isSmallScreen ? "100%" : "90px", display: "flex", flexDirection: isSmallScreen ? "column" : "row", position: "relative" }}>
-                    <Box sx={{ width: "40%", height: isSmallScreen ? "auto" : "100%",margin:"0 5%", display: "flex", justifyContent: "start", alignItems: "center" }}>
-                        <Typography variant="h5" sx={{color:"white", fontWeight:"bold"}}>{courseName}</Typography>
+            <Box sx={{ width: "100%", height: "90px", backgroundColor: "primary.light", position: "relative", zIndex: isSmallScreen ? "80" : "0" }}>
+                <Box sx={{ width: "100%", height: isSmallScreen ? "100%" : "90px", display: "flex", flexDirection: "row", position: "relative" }}>
+                    <Box sx={{ width: "40%", height: "100%", margin: "0 5%", display: "flex", justifyContent: "start", alignItems: "center"  }}>
+                        <Typography variant="h5" sx={{ color: "white", fontWeight: "bold" }}>{courseName}</Typography>
                     </Box>
 
-                    <Box sx={{ width:"40%", height: isSmallScreen ? "auto" : "100%",margin:"0 5%", display: "flex", justifyContent: "end", alignItems: "center", marginTop: isSmallScreen ? "50px" : "0", position: isSmallScreen ? "absolute" : "relative", bottom: isSmallScreen ? "50px" : "unset" }}>
-                        <Box sx={{ display: "flex", flexDirection: "row", marginLeft: isSmallScreen ? "20px" : "0", }}>
+                    <Box sx={{ width: "40%", height: "100%", margin: "0 5%", display: "flex", justifyContent: "end", alignItems: "center"}}>
+                        <Box sx={{ display: "flex", flexDirection: "row",  }}>
                             <ToSignInUserButton2 text={signInUser ? getFirstInit(signInUser.firstName) : getFirstInit("Ezamazwe")} />
                         </Box>
                     </Box>

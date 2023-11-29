@@ -37,7 +37,7 @@ function ContactUsCard({
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Box sx={{ marginTop:isSmallScreen?"50px": "130px" }}>
+      <Box sx={{ marginTop: isSmallScreen ? "50px" : "130px" }}>
         {/* <Typography
           sx={{
             color: "#396781",
@@ -66,16 +66,19 @@ function ContactUsCard({
         >
           {description}
         </Typography> */}
-         <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                            <SectionHeading children={header} />
-                        </Box>
-                        <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                            <SectionSubHeading children={description} />
-                        </Box>
+        <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <SectionHeading children={header} />
+        </Box>
+        <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+          {/* <SectionSubHeading children={description} />  */}
+          <Typography variant="subtitle1" sx={{ color: 'primary.light', fontWeight: "400", textAlign: "left" }}>
+            {description}
+          </Typography>
+        </Box>
       </Box>
       <Box sx={{ width: "94%", margin: "70px 3% 3% 3%" }}>
         <Box sx={{ display: "flex", flexDirection: "row", }}>
-          <Box sx={{ width: "48%", margin: "0 1%" }}>
+          <Box sx={{ width: "49%", margin: "0 1% 0 0" }}>
             <Typography
               variant="subtitle1"
               sx={{
@@ -108,7 +111,7 @@ function ContactUsCard({
               onChange={(e) => setFirstName(e.target.value)}
             />
           </Box>
-          <Box sx={{ width: "48%", margin: "0 1%" }}>
+          <Box sx={{ width: "49%", margin: "0 0 0 1%" }}>
             <Typography
               variant="subtitle1"
               sx={{

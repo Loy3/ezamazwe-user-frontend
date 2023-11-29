@@ -45,7 +45,7 @@ function ContactUs() {
 
           <Box sx={{ width: "94%", margin: "-100px 3% 30px 3%", display: "flex", flexDirection: isSmallScreen ? "column" : "row", }}>
             <Box sx={{ width: isSmallScreen ? "94%" : "30%", margin:isSmallScreen?"0 3%":"0" }}>
-              <SideCard children={""} header={"Company Name"} slogan={"Company slogan"} location={"Street Address 2012 City City Ci Zip code"} contact={"+012 000 0025"} email={"emailAddress@host.com"} />
+              <SideCard children={""} header={"Company Name"} slogan={"Company slogan"} location={"Street Address 2012 City City Ci Zip code"} contact={"+012 000 0025"} email={"emailAddress@ezamazwe.com"} />
             </Box>
             <Box sx={{ width: isSmallScreen ? "94%" : "70%", margin:isSmallScreen?"0 3%":"0" }}>
               <Box sx={{ width: "100%" }}>

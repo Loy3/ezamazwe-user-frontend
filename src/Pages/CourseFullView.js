@@ -67,9 +67,9 @@ function CourseFullView({ courseData }) {
           </Toolbar>
         </AppBar>
       </Box> */}
-            <CourseNavBar courseName={courseTitle}/>
+            <CourseNavBar courseName={courseTitle} />
             <Grid sx={{ display: 'flex', flexDirection: isSmallScreen ? 'column' : 'row', width: "100%" }}>
-                <Box sx={{ width: "75%", margin: "0", height: "70vh" }}>
+                <Box sx={{ width: isSmallScreen ? "100%" : "75%", margin: "0", height: isSmallScreen ? "50vh" : "70vh" }}>
                     <video style={{ width: "100%", height: "100%", objectFit: "cover" }} controls>
                         <source src={video1} type="video/mp4" />
                     </video>
@@ -160,13 +160,25 @@ function CourseFullView({ courseData }) {
                     <Label children={"Visit"} />
                 </Box>
                 <Box sx={{ display: "flex", flexDirection: "row" }}>
-                    <ArrowRightIcon />  <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} />
+                    <ArrowRightIcon />  
+                    {/* <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} /> */}
+                    <Typography variant="subtitle1" sx={{ color: 'primary.light', fontWeight: "400", textAlign: "left" }}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </Typography>
                 </Box>
                 <Box sx={{ display: "flex", flexDirection: "row" }}>
-                    <ArrowRightIcon />  <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} />
+                    <ArrowRightIcon />  
+                    {/* SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} /> */}
+                    <Typography variant="subtitle1" sx={{ color: 'primary.light', fontWeight: "400", textAlign: "left" }}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </Typography>
                 </Box>
                 <Box sx={{ display: "flex", flexDirection: "row" }}>
-                    <ArrowRightIcon />  <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} />
+                    <ArrowRightIcon />  
+                    {/* <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} /> */}
+                    <Typography variant="subtitle1" sx={{ color: 'primary.light', fontWeight: "400", textAlign: "left" }}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </Typography>
                 </Box>
                 <Box sx={{ marginTop: '50px', marginBottom: "10px" }} >
                     <Box sx={{ marginBottom: "10px" }}>
