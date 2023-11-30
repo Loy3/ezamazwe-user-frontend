@@ -5,6 +5,7 @@ import { isPasswordValid } from '../Services/AuthService';
 import { auth } from '../Services/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 
+
 const ResetPassword = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [password1, setPassword1] = useState('');

@@ -124,7 +124,6 @@ const Courses = () => {
 
     return (
         <div>
-
             <div style={{ marginTop: '50px' }}>
                 <button onClick={handleFilteredCourses}>Filter (4)</button>
             </div>

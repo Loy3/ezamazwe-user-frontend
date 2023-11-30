@@ -16,9 +16,12 @@ import { getAuth, reauthenticateWithCredential, EmailAuthProvider, updatePasswor
 export const UploadImageFunction = async (imageUpload) => {
 
     let imageURL = '';
+    let imageName = '';
 
     try {
-        const imageRef = ref(storage, `users/${imageUpload.name + v4()}`);
+        const uniqueIdentifier = v4();
+        const imageRef = ref(storage, `users/${imageUpload.name + uniqueIdentifier}`);
+        // const imageRef = ref(storage, `users/${imageUpload.name + v4()}`);
 
         // Upload image
         await uploadBytes(imageRef, imageUpload);
@@ -26,9 +29,14 @@ export const UploadImageFunction = async (imageUpload) => {
         // Get the image URL
         imageURL = await getDownloadURL(imageRef);
 
+        // Set the image name
+        imageName = `${imageUpload.name}${uniqueIdentifier}`;
+
         alert('Image has been uploaded.');
 
-        return imageURL;
+        // return imageURL;
+        // Return both imageURL and imageName
+        return { imageURL, imageName };
 
     } catch (error) {
         console.error("Error uploading image:", error);
@@ -83,7 +91,7 @@ export const CheckVerificationFunction = async (email) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: email  }),
+                body: JSON.stringify({ email: email }),
             });
         const response = await apiUrl.json();
 
@@ -124,8 +132,21 @@ export const SigninFunction = async (email, password) => {
 
 
 // Profile setup function
-export const ProfileSetupFunction = async (userId, firstName, lastName, userEmail, phoneNum, imageURL) => {
+export const ProfileSetupFunction = async (userId, firstName, lastName, userEmail, phoneNum, imageURL, imageName) => {
     console.log("User id:", userId);
+    console.log("Image name:", imageName);
+    console.log("Image url:", imageURL);
+
+    // Check if required variables are defined
+    if (!userId || !firstName || !lastName || !userEmail || !phoneNum || !imageURL || !imageName) {
+        console.error('Error: Missing required data for profile setup');
+        return; // Exit the function if any required data is missing
+    }
+
+    const image = {
+        imageName: imageName,
+        imageURL: imageURL,
+    }
 
     try {
         const docRef = await setDoc(doc(db, 'users', userId), {
@@ -134,7 +155,7 @@ export const ProfileSetupFunction = async (userId, firstName, lastName, userEmai
             lastName: lastName,
             email: userEmail,
             phoneNum: phoneNum,
-            imageURL: imageURL,
+            image: image,
             role: "user",
             subscription: false,
         });
@@ -143,7 +164,6 @@ export const ProfileSetupFunction = async (userId, firstName, lastName, userEmai
 
     } catch (error) {
         console.error('Error creating profile:', error.message);
-        alert("Error creating profile");
     }
 }
 
@@ -186,7 +206,7 @@ export const ProfileUpdateFunction = async (userId, firstName, lastName, userEma
             phoneNum: phoneNum,
             imageURL: imageURL,
             role: "user",
-            subscription: "unsuscribed",
+            subscription: "unsubscribed",
         };
 
         await setDoc(doc(db, 'users', userId), userInfo);
@@ -283,3 +303,25 @@ export const SignOutFunction = () => {
             alert("Error. Something went wrong.");
         });
 };
+
+// Update user subscription status
+export const UpdateUserSubscriptionFunction = async (userId, firstName, lastName, userEmail, phoneNum, imageURL, imageName) => {
+
+    const image = {
+        imageName: imageName,
+        imageURL: imageURL,
+    }
+
+    const userInfo = {
+        user_id: userId,
+        firstName: firstName,
+        lastName: lastName,
+        email: userEmail,
+        phoneNum: phoneNum,
+        image: image,
+        role: "user",
+        subscription: "subscribed",
+    };
+
+    await setDoc(doc(db, 'users', userId), userInfo);
+}

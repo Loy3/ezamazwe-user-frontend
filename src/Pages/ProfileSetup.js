@@ -19,6 +19,7 @@ const ProfileSetup = ({ user }) => {
   const [lastName, setLastName] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
   const [imageURL, setImageURL] = useState('');
+  const [imageName, setImageName] = useState('');
   const [imageUpload, setImageUpload] = useState(null);
   const [userId, setUserId] = useState(userData);
 
@@ -27,8 +28,10 @@ const ProfileSetup = ({ user }) => {
 
   const handleUploadImage = async () => {
     try {
-      const image_url = await UploadImageFunction(imageUpload);
-      setImageURL(image_url);
+      const {imageURL, imageName} = await UploadImageFunction(imageUpload);
+      setImageURL(imageURL);
+      setImageName(imageName);
+
     } catch (error) {
       console.error("Error in UploadImageFunction:", error);
     }
@@ -37,12 +40,12 @@ const ProfileSetup = ({ user }) => {
   const handleSignup = async () => {
     try {
       // Assuming other parameters are set or received
-      await ProfileSetupFunction(userId, firstName, lastName, userEmail, phoneNum, imageURL);
-      alert("Successfully created your profile");
-      nav('/homepage')
+      await ProfileSetupFunction(userId, firstName, lastName, userEmail, phoneNum, imageURL, imageName);
+      nav('/');
 
     } catch (error) {
       console.error('Error during profile setup:', error.message);
+      alert("Error creating profile");
       // Handle the error
     }
   };
