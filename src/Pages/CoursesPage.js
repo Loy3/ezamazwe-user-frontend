@@ -9,7 +9,7 @@ const paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliq
 export default function CoursesPage() {
     return (
         <>
-            <NavBar />
+           <NavBar location={"courses"}/>
             <HeaderComp text={"Courses"} paragraph={paragraph} />
             <Box sx={{
                 width: "100%", height: "auto", display: "flex", justifyContent: "center", alignItems: "center"

@@ -25,10 +25,11 @@ export const CourseCard = ({ courseName, courseType, shortDescrip, video, cardFu
                     <Box sx={{
                         width: isSmallScreen ? "90%" : "95%", height: "90%", position: "relative"
                     }}>
-                        <Box sx={{ position: "absolute", top: "0", right: "10px" }}>
-                            <Typography variant="h5" sx={{ color: "primary.light", fontWeight: "bold" }}>{courseType}</Typography>
-                        </Box>
+                        
                         <Typography variant="h5" sx={{ color: "primary.light", fontWeight: "bold" }}>{courseName}</Typography>
+                        <Box sx={{ position: isSmallScreen?"relative":"absolute", top: isSmallScreen?"unset":"0", right:  isSmallScreen?"unset": "10px" }}>
+                            <Typography variant={isSmallScreen?"h6":"h5"} sx={{ color: "primary.light", fontWeight: "bold" }}>{courseType}</Typography>
+                        </Box>
                         <Typography variant="body2" sx={{ width: isSmallScreen ? "100%" : "95%", marginTop: "20px" }} >
                             {shortDescrip}
                         </Typography>

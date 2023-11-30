@@ -27,6 +27,7 @@ function ContactUs() {
             }}
           />
         }
+         location={"contact"}
       />
       <Box sx={{ width: "100%" }}>
         <HeaderComp

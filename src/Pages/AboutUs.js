@@ -31,7 +31,7 @@ export default function AboutUs() {
     }
     return (
         <>
-            <NavBar />
+            <NavBar location={"about"}/>
             <HeaderComp text={"About Us"} paragraph={paragraph} />
             <Box sx={{
                 width: "100%", height: "auto", display: "flex", justifyContent: "center", alignItems: "center"
@@ -66,12 +66,11 @@ export default function AboutUs() {
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisqueconvallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl.
                                     </Typography>
                                 </Box>
-                                <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                    <Box sx={{ width: "80%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: "15px" }}>
+                                    <Box sx={{width:isSmallScreen?"70%":"35%" }}>
                                         <HomeButtons text={"Join"} buttonFunction={toSignUp} />
                                     </Box>
                                 </Box>
-
                             </Box>
                         </Box>
 

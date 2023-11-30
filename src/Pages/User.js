@@ -9,7 +9,7 @@ import UserPage from "./UserPage";
 export default function User({signInUser}) {
     return (
         <>
-            <NavBar />
+            <NavBar location={"user"}/>
             {/* <HeaderComp /> */}
             <HeaderSmallComp />
             <Box sx={{

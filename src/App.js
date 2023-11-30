@@ -95,7 +95,7 @@ function App() {
           <Route path='/signin' element={<SignIn />} />
           <Route path='/signup' element={<SignUp setToProfileStatus={setToProfileStatus} />} />
           <Route path='/profilesetup' element={toProfileStatus ? <SetUpProfile setToProfileStatus={setToProfileStatus} /> : <Navigate to="/signup" />} />
-          <Route path='/screen' element={<ScreenView />} />
+          {/* <Route path='/screen' element={<ScreenView />} /> */}
           <Route path='/courses' element={<CoursesPage />} />
           <Route path='/course' element={<ViewCoursePage />} />
           <Route path='/courseview' element={!isSignedIn ? <Navigate to="/" /> : <CourseFullView />} />

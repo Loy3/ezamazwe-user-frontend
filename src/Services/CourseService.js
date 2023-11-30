@@ -100,6 +100,24 @@ export const ViewCoursesFunction = async () => {
     }
 }
 
+export const SearchBarCoursesFunction = async () => {
+    try {
+        const querySnapshot = await getDocs(collection(db, "courses"));
+
+        const courses = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        // console.log("All courses data:", courses);
+
+        return courses;
+
+    } catch (error) {
+        console.log("Failed to fetch data", error);
+    }
+}
+
 // Filter category function
 export const FilterCategoryFunction = async (category) => {
     try {

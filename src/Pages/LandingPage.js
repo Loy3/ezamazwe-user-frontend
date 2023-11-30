@@ -187,14 +187,14 @@ function LandingPage() {
         setViewCourses(displayArr);
     }
 
-    function toSignUp(){
+    function toSignUp() {
         navigate("/signup")
     }
 
     return (
         <>
             {/* Header & Nav */}
-            <NavBar />
+            <NavBar location={"home"}/>
             <Box sx={{
                 width: "100%", height: "auto", backgroundColor: "rgba(198, 208, 214, 0.40)", display: "flex", justifyContent: "center", alignItems: "center"
             }}>
@@ -210,7 +210,11 @@ function LandingPage() {
                                 <Typography variant="body2" sx={{ margin: "30px 10px", textAlign: isSmallScreen ? "center" : "left" }}>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas metus nulla, et tincidunt sapien faucibus quis. Proin accumsan, tortor a luctus euismod, ex orci sodales nunc.
                                 </Typography>
-                                <HomeButtons text={"Join"} buttonFunction={toSignUp} />
+                                <Box sx={{ width: "100%", display: "flex", justifyContent: "start", alignItems: "center", marginTop: "15px" }}>
+                                    <Box sx={{width:isSmallScreen?"70%":"35%", marginLeft: isSmallScreen ? "15%" : "0" }}>
+                                        <HomeButtons text={"Join"} buttonFunction={toSignUp} />
+                                    </Box>
+                                </Box>
                             </Box>
                         </Box>
                         <Box sx={{ width: isSmallScreen ? "100%" : "50%", height: isSmallScreen ? "auto" : "inherit", display: isSmallScreen ? "none" : "flex", justifyContent: "center", alignItems: "center", position: "relative" }}>
@@ -315,7 +319,9 @@ function LandingPage() {
                                     tortor a luctus euismod, ex orci sodales nunc.
                                 </Typography>
                                 <Box sx={{ width: "100%", display: "flex", justifyContent: "start", alignItems: "center", marginTop: "15px" }}>
-                                    <HomeButtons text={"Join"} buttonFunction={toSignUp} />
+                                    <Box sx={{width:isSmallScreen?"70%":"35%", marginLeft: isSmallScreen ? "15%" : "0" }}>
+                                        <HomeButtons text={"Join"} buttonFunction={toSignUp} />
+                                    </Box>
                                 </Box>
                             </Box>
 

@@ -12,7 +12,7 @@ import { auth, db } from "../Services/firebaseConfig";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 
-export const NavBar = () => {
+export const NavBar = ({ location }) => {
     const navigate = useNavigate();
     const isSmallScreen = useMediaQuery("(max-width:600px)");
     const [navStatus, setNavStatus] = useState(false);
@@ -35,6 +35,67 @@ export const NavBar = () => {
         });
         return () => unsubscribe();
     }, []);
+
+    const [homeColor, setHomeColor] = useState("#396781");
+    const [aboutColor, setAboutColor] = useState("black");
+    const [coursesColor, setCoursesColor] = useState("black");
+    const [contactColor, setContactColor] = useState("black");
+    const [homeWeight, setHomeWeight] = useState("bold");
+    const [aboutWeight, setAboutWeight] = useState("normal");
+    const [coursesWeight, setCoursesWeight] = useState("normal");
+    const [contactWeight, setContactWeight] = useState("normal");
+
+    useEffect(() => {
+        switch (location) {
+            case "home":
+                // console.log("Home");
+                setHomeColor("#396781");
+                setAboutColor("black");
+                setCoursesColor("black");
+                setContactColor("black");
+
+                setHomeWeight("bold");
+                setAboutWeight("normal");
+                setCoursesWeight("normal");
+                setContactWeight("normal");
+                break;
+            case "about":
+                setHomeColor("black");
+                setAboutColor("#396781");
+                setCoursesColor("black");
+                setContactColor("black");
+
+                setHomeWeight("normal");
+                setAboutWeight("bold");
+                setCoursesWeight("normal");
+                setContactWeight("normal");
+                break;
+            case "courses":
+                setHomeColor("black");
+                setAboutColor("black");
+                setCoursesColor("#396781");
+                setContactColor("black");
+
+                setHomeWeight("normal");
+                setAboutWeight("normal");
+                setCoursesWeight("bold");
+                setContactWeight("normal");
+                break;
+            case "contact":
+                setHomeColor("black");
+                setAboutColor("black");
+                setCoursesColor("black");
+                setContactColor("#396781");
+
+                setHomeWeight("normal");
+                setAboutWeight("normal");
+                setCoursesWeight("normal");
+                setContactWeight("bold");
+                break;
+            default:
+                console.log("default");
+        }
+    }, [location])
 
     async function setUserPath(docId) {
         const docRef = doc(collection(db, "users"), docId);
@@ -108,6 +169,13 @@ export const NavBar = () => {
 
         window.location.reload();
     }
+
+    const handleEmailClick = (email) => {
+        const composeUrl = `https://mail.google.com/mail/u/${email}/#compose`;
+        // window.location.href = composeUrl;
+        window.open(composeUrl, '_blank');
+    };
+
     return (
         <>
             {/* <div style={{ width: "100%", height: "100vh", backgroundColor: "gray" }}> */}
@@ -124,7 +192,7 @@ export const NavBar = () => {
                         <Box sx={{ width: "100%", height: isSmallScreen ? "7vh" : "35px", backgroundColor: "primary.light", display: "flex", justifyContent: isSmallScreen ? "start" : "center", alignItems: isSmallScreen ? "start" : "center" }}>
                             <Box sx={{ display: "flex", flexDirection: "row", width: isSmallScreen ? "95%" : "90%", justifyContent: isSmallScreen ? "start" : "end", alignItems: isSmallScreen ? "start" : "center", marginLeft: isSmallScreen ? "20px" : "0", marginTop: isSmallScreen ? "10px" : "0" }}>
                                 <Box sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", }}>
-                                    <Typography sx={{ color: "white", marginRight: "5px", fontSize: "14px" }}>emailAddress@ezamazwe.com</Typography>
+                                    <Typography sx={{ color: "white", marginRight: "5px", fontSize: "14px" }} onClick={() => handleEmailClick("emailAddress@ezamazwe.com")}>emailAddress@ezamazwe.com</Typography>
                                     <Typography sx={{ color: "white", marginLeft: isSmallScreen ? "0" : "5px", fontSize: "14px" }}>+012 000 0000</Typography>
                                 </Box>
                                 <Box sx={{ display: "flex", flexDirection: "row", marginLeft: "10px" }}>
@@ -141,11 +209,11 @@ export const NavBar = () => {
                         </Box>
                         <Box sx={{ width: isSmallScreen ? "100%" : "60%", height: "100px", display: "flex", justifyContent: isSmallScreen ? "start" : "center", alignItems: "center", marginTop: isSmallScreen ? "50px" : "0" }}>
                             <Box sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row" }}>
-                                <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0" }} onClick={() => handleNavigation("home")}>Home</Link>
-                                <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0" }} onClick={() => handleNavigation("about")}>About Us</Link>
-                                <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0" }} onClick={() => handleNavigation("courses")}>Courses</Link>
-                                <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0" }} onClick={() => handleNavigation("tutors")}>Tutors</Link>
-                                <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0" }} onClick={() => handleNavigation("contact")}>Contact Us</Link>
+                                <Link sx={{ textDecoration: "none", padding: "0 10px", color: homeColor, cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0", fontWeight: homeWeight }} onClick={() => handleNavigation("home")}>Home</Link>
+                                <Link sx={{ textDecoration: "none", padding: "0 10px", color: aboutColor, cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0", fontWeight: aboutWeight }} onClick={() => handleNavigation("about")}>About Us</Link>
+                                <Link sx={{ textDecoration: "none", padding: "0 10px", color: coursesColor, cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0", fontWeight: coursesWeight }} onClick={() => handleNavigation("courses")}>Courses</Link>
+                                <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0", fontWeight: "normal" }} onClick={() => handleNavigation("tutors")}>Tutors</Link>
+                                <Link sx={{ textDecoration: "none", padding: "0 10px", color: contactColor, cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0", fontWeight: contactWeight }} onClick={() => handleNavigation("contact")}>Contact Us</Link>
                             </Box>
                         </Box>
                         <Box sx={{ width: isSmallScreen ? "100%" : "20%", height: isSmallScreen ? "auto" : "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: isSmallScreen ? "50px" : "0", position: isSmallScreen ? "absolute" : "relative", bottom: isSmallScreen ? "50px" : "unset" }}>
@@ -262,12 +330,12 @@ export const CourseNavBar = ({ courseName }) => {
 
             <Box sx={{ width: "100%", height: "90px", backgroundColor: "primary.light", position: "relative", zIndex: isSmallScreen ? "80" : "0" }}>
                 <Box sx={{ width: "100%", height: isSmallScreen ? "100%" : "90px", display: "flex", flexDirection: "row", position: "relative" }}>
-                    <Box sx={{ width: "40%", height: "100%", margin: "0 5%", display: "flex", justifyContent: "start", alignItems: "center"  }}>
+                    <Box sx={{ width: "40%", height: "100%", margin: "0 5%", display: "flex", justifyContent: "start", alignItems: "center" }}>
                         <Typography variant="h5" sx={{ color: "white", fontWeight: "bold" }}>{courseName}</Typography>
                     </Box>
 
-                    <Box sx={{ width: "40%", height: "100%", margin: "0 5%", display: "flex", justifyContent: "end", alignItems: "center"}}>
-                        <Box sx={{ display: "flex", flexDirection: "row",  }}>
+                    <Box sx={{ width: "40%", height: "100%", margin: "0 5%", display: "flex", justifyContent: "end", alignItems: "center" }}>
+                        <Box sx={{ display: "flex", flexDirection: "row", }}>
                             <ToSignInUserButton2 text={signInUser ? getFirstInit(signInUser.firstName) : getFirstInit("Ezamazwe")} />
                         </Box>
                     </Box>

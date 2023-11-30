@@ -17,7 +17,7 @@ const VisuallyHiddenInput = styled('input')({
 export default function Contentbutton({ text, buttonFunction }) {
     return (
         <>
-            <Button variant="contained" style={{ backgroundColor: "#396781", width: "94%",margin:"0 3%", borderRadius: 20 }} onClick={() => buttonFunction()}>{text}</Button>
+            <Button variant="contained" style={{ backgroundColor: "#396781", width: "94%", margin: "0 3%", borderRadius: "20px", height: "50px" }} onClick={() => buttonFunction()}>{text}</Button>
         </>
     )
 }

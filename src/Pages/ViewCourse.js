@@ -112,7 +112,7 @@ function ViewCourse({ course_data, docData }) {
     return (
         <Grid sx={{ padding: isSmallScreen ? '0 20px' : '0 40px' }}>
             <Grid sx={{ display: 'flex', flexDirection: isSmallScreen ? 'column' : 'row', }}>
-                <Box sx={{ width: isSmallScreen ? '100%' : "30%", backgroundColor: '#E3ECF1', position: 'relative', paddingBottom: "20px", height: isSmallScreen ? "660px" : "800px", marginTop: isSmallScreen ? "-30vh" : "-60px", zIndex: "50", borderRadius: "20px" }}>
+                <Box sx={{ width: isSmallScreen ? '100%' : "30%", backgroundColor: '#E3ECF1', position: 'relative', paddingBottom: "20px", height: isSmallScreen ? "660px" : "inherit", marginTop: isSmallScreen ? "-30vh" : "-60px", zIndex: "50", borderRadius: "20px" }}>
 
                     <img
                         style={{ height: "50%", width: "100%", objectFit: "cover", borderTopRightRadius: "20px", borderTopLeftRadius: "20px" }}
@@ -126,7 +126,9 @@ function ViewCourse({ course_data, docData }) {
                         </Typography>
                         <Label children={"Free"} />
                     </CardContent>
-                    <Contentbutton text={"START"} buttonFunction={handleStartCourse} />
+                    <Box sx={{position:"absolute", bottom:"10px", width:"100%"}}>
+                        <Contentbutton text={"START"} buttonFunction={handleStartCourse} />
+                    </Box>
                 </Box >
                 <Grid sx={{ paddingLeft: isSmallScreen ? '0' : '20px', paddingTop: '70px', width: isSmallScreen ? "100%" : "70%", paddingBottom: "20px" }}>
                     <Box sx={{ width: "90%", margin: "0 5%" }}>
@@ -152,9 +154,9 @@ function ViewCourse({ course_data, docData }) {
                             <Box sx={{ margin: "10px 0" }}>
                                 <ContCard lessonNumber={3} text={short} duration={"00:00"} />
                             </Box>
-                            <Box sx={{ margin: "10px 0" }}>
+                            {/* <Box sx={{ margin: "10px 0" }}>
                                 <ContCard lessonNumber={4} text={short} duration={"00:00"} />
-                            </Box>
+                            </Box> */}
                         </Box>
                     </Box>
                 </Grid>
@@ -168,7 +170,7 @@ function ViewCourse({ course_data, docData }) {
 
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl.
 
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl.
+                    {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl. */}
                 </Typography>
             </Box>
 

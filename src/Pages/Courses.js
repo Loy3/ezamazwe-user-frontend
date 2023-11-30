@@ -119,20 +119,35 @@ function Courses() {
     //     console.log(subCategories(rtnCategory.toLowerCase()))
     //   }
 
-    const subjects = (key, grade) => {
+    // const subjects = (key, grade) => {
 
-        let newGrade = grade.replace(/ /g, "_")
-        // console.log(newGrade);
-        if (categories[key] && categories[key].subjects && categories[key].subjects[grade]) {
-            return categories[key].subjects[grade];
-        }
-        return [];
-    };
+    //     let newGrade = grade.replace(/ /g, "_")
+    //     // console.log(newGrade);
+    //     if (categories[key] && categories[key].subjects && categories[key].subjects[grade]) {
+    //         return categories[key].subjects[grade];
+    //     }
+    //     return [];
+    // };
 
     //   console.log('subjects')
     //   if (categories) {
     //     console.log(subjects(rtnCategory.toLowerCase(), subCategory))
     //   }
+
+    const subjects = (key, grade) => {
+        const convertedGrade = grade.replace(" ", "_");
+        // console.log(convertedGrade);
+        if (categories[key] && categories[key].subjects && categories[key].subjects[convertedGrade]) {
+            // console.log(categories[key].subjects[convertedGrade]);
+            return categories[key].subjects[convertedGrade];
+        }
+        return [];
+    };
+
+    // console.log('subjects')
+    // if (categories) {
+    //     console.log(subjects(rtnCategory.toLowerCase(), subCategory))
+    // }
 
     // const navigate = useNavigate();
 
@@ -168,23 +183,6 @@ function Courses() {
         }
     }
 
-
-    function testing() {
-        // console.log(testingF);
-        // if (!testingF ) {
-        //   seter(true)
-        // }else{
-        //   seter(false)
-        // }
-
-        // if (!testingP ) {
-        //   seter2(true)
-        // }else{
-        //   seter2(false)
-        // }
-
-        console.log("Hello World!");
-    }
 
     function openMenu(type) {
         switch (type) {

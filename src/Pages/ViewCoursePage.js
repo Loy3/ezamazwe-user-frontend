@@ -9,7 +9,7 @@ import UserPage from "./UserPage";
 export default function ViewCoursePage() {
     return (
         <>
-            <NavBar />
+            <NavBar location={"courses"}/>
             {/* <HeaderComp /> */}
             <HeaderSmallComp />
             <Box sx={{

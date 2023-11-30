@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useAutocomplete } from '@mui/base/useAutocomplete';
 import { styled } from '@mui/system';
-import { ViewCoursesFunction } from '../Services/CourseService';
+import { SearchBarCoursesFunction } from '../Services/CourseService';
 import { useEffect, useMemo, useState } from "react"
 const Label = styled('label')({
     display: 'block',
@@ -65,7 +65,7 @@ export const SearchBar = () => {
     }, [])
     const handleViewCourses = async () => {
         try {
-            const data = await ViewCoursesFunction();
+            const data = await SearchBarCoursesFunction();
             let titles = [];
             data.forEach(d => {
                 

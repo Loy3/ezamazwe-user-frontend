@@ -128,7 +128,13 @@ export const UserTextFields = ({ label, errorStatus, errorMessage, setState, dis
                     },
                     "&:hover > .MuiOutlinedInput-notchedOutline": {
                         borderColor: "primary.main"
-                    }
+                    },
+                    '& .MuiOutlinedInput-root.Mui-disabled': {
+                        
+                          border: '3px solid blue !important',
+                        //   boxShadow: 'none'
+                        
+                      },
                 }} onChange={(e) => setState(e.target.value)} disabled={disabled} />
 
             </Box>
