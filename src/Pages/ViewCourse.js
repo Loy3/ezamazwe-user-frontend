@@ -126,7 +126,7 @@ function ViewCourse({ course_data, docData }) {
                         </Typography>
                         <Label children={"Free"} />
                     </CardContent>
-                    <Box sx={{position:"absolute", bottom:"10px", width:"100%"}}>
+                    <Box sx={{position:isSmallScreen?"relative":"absolute", bottom:"10px", width:"100%"}}>
                         <Contentbutton text={"START"} buttonFunction={handleStartCourse} />
                     </Box>
                 </Box >
