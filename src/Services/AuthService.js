@@ -163,7 +163,7 @@ export const ProfileSetupFunction = async (userId, firstName, lastName, userEmai
         alert("Profile setup successfully");
 
     } catch (error) {
-        console.error('Error creating profile:', error.message); 
+        console.error('Error creating profile:', error.message);
     }
 }
 
@@ -305,20 +305,31 @@ export const SignOutFunction = () => {
 };
 
 // Update user subscription status
-export const UpdateUserSubscriptionFunction = async (userId) => {
-    
-    const userRef = doc(db, 'users', userId);
+export const UpdateUserSubscriptionFunction = async (userId, subscription_end_date) => {
 
-    const updates = {
-        subscription: "unsubscribed",
-        subscriptionStartDate: "",
-        subscriptionEndDate: "",
-    };
+    const today = new Date();   // Get today's date
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so we add 1 and format to two digits
+    const day = String(today.getDate()).padStart(2, '0'); // Format day to two digits
 
-    try {
-        await updateDoc(userRef, updates);
-        console.log('User subscription updated successfully.');
-    } catch (error) {
-        console.error('Error updating user subscription:', error.message);
+    const currentDate = `${year}-${month}-${day}`;
+
+    // Compare dates and make all necessary changes
+    if (currentDate > subscription_end_date) {
+        const userRef = doc(db, 'users', userId);
+
+        const updates = {
+            subscription: "unsubscribed",
+            subscriptionStartDate: "",
+            subscriptionEndDate: "",
+        };
+
+        try {
+            await updateDoc(userRef, updates);
+            console.log('User subscription updated successfully.');
+        } catch (error) {
+            console.error('Error updating user subscription:', error.message);
+        }
     }
+
 };

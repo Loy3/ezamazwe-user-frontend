@@ -5,12 +5,17 @@ import { SigninFunction } from '../Services/AuthService';
 import { useNavigate } from 'react-router-dom';
 import env from 'react-dotenv';
 import { Link } from 'react-router-dom';
+import { GetUserDataFunction } from '../Services/AuthService';
+import { UpdateUserSubscriptionFunction } from '../Services/AuthService';
 
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [subscription_end_date, setSubscriptionEndDate] = useState('');
+  const [userId, setUserId] = useState('');
   const navigate = useNavigate();
+
 
   console.log(env);
   console.log({ env: window });
@@ -20,17 +25,46 @@ const SignIn = () => {
       console.log('User signed in:', user);
 
       const user_id = user.uid;
+      setUserId(userId);
       console.log('User id signed in:', user_id);
 
-      // navigate('/editprofile', { state: { user: user_id } });
+      handleGetUserData();    // Fetch user profile data
+      updateSubscriptionStatus();   // update subscription status
+
       navigate('/userpage');
-    } catch(error) {
+    } catch (error) {
       console.log("Unable to log in:", error);
-    } 
-    
+    }
+
   };
 
-  
+
+  const handleGetUserData = async () => {
+    try {
+      const user = await GetUserDataFunction(userId);
+
+      if (user) {
+        console.log("User data fetched on signin component", user);
+        setSubscriptionEndDate(user.subscriptionEndDate);
+      }
+
+    } catch (error) {
+      console.log("Error fetching data on signin component", error);
+    }
+  }
+
+  const updateSubscriptionStatus = async () => {
+    try {
+
+      await UpdateUserSubscriptionFunction(userId, subscription_end_date);
+
+    } catch (error) {
+
+      console.log("Error updating subscription status:", error);
+    }
+  }
+
+
   return (
     <div>
       <h2>Sign In</h2>

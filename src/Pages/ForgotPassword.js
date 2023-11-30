@@ -11,16 +11,26 @@ const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
 
+    // Validate email
+    const isEmailValid = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
 
     const handleForgotPassword = async () => {
 
-        try {
-            await ForgotPasswordFunction(email);
-            alert("Password updated successfully.")
-            navigate('/'); // Navigate to sign in page
-        } catch (error) {
-            console.log("Unable to update password:", error);
+        if (isEmailValid(email)) {
+            try {
+                await ForgotPasswordFunction(email);
+                navigate('/'); // Navigate to sign in page
+            } catch (error) {
+                console.log("Unable to update password:", error);
+            }
+        } else {
+            console.log("Email is not valid!");
+            alert("Email is not valid. Please enter the correct email address!");
         }
+
     };
 
 
