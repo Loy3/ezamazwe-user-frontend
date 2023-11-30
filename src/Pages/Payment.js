@@ -120,7 +120,6 @@ const Payment = ({firstName, lastName, phoneNum}) => {
                                 autoFocus
                                 sx={{ borderRadius: 10, width: '456px', height: '113px' }}
                             />
-                            <input type="hidden" name="item_name" value="Ezamazwe Paid Courses" />
                             <input type="hidden" name="email_address" value={email} />
                             <input type="hidden" name="name_first" value={fName} />
                             <input type="hidden" name="name_last" value={lName} />

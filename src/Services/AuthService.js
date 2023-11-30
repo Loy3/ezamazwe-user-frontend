@@ -1,7 +1,7 @@
 
 // Imports from the firebase config file
 import { db, auth, storage } from './firebaseConfig';
-import { addDoc, collection, doc, setDoc, getDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import {
     createUserWithEmailAndPassword, signOut as firebaseSignOut,
     signInWithEmailAndPassword,
@@ -157,13 +157,13 @@ export const ProfileSetupFunction = async (userId, firstName, lastName, userEmai
             phoneNum: phoneNum,
             image: image,
             role: "user",
-            subscription: false,
+            subscription: "unsubscribed",
         });
         console.log('Profile setup successfully:');
         alert("Profile setup successfully");
 
     } catch (error) {
-        console.error('Error creating profile:', error.message);
+        console.error('Error creating profile:', error.message); 
     }
 }
 
@@ -305,23 +305,20 @@ export const SignOutFunction = () => {
 };
 
 // Update user subscription status
-export const UpdateUserSubscriptionFunction = async (userId, firstName, lastName, userEmail, phoneNum, imageURL, imageName) => {
+export const UpdateUserSubscriptionFunction = async (userId) => {
+    
+    const userRef = doc(db, 'users', userId);
 
-    const image = {
-        imageName: imageName,
-        imageURL: imageURL,
-    }
-
-    const userInfo = {
-        user_id: userId,
-        firstName: firstName,
-        lastName: lastName,
-        email: userEmail,
-        phoneNum: phoneNum,
-        image: image,
-        role: "user",
-        subscription: "subscribed",
+    const updates = {
+        subscription: "unsubscribed",
+        subscriptionStartDate: "",
+        subscriptionEndDate: "",
     };
 
-    await setDoc(doc(db, 'users', userId), userInfo);
-}
+    try {
+        await updateDoc(userRef, updates);
+        console.log('User subscription updated successfully.');
+    } catch (error) {
+        console.error('Error updating user subscription:', error.message);
+    }
+};
