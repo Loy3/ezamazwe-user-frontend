@@ -13,20 +13,20 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [subscription_end_date, setSubscriptionEndDate] = useState('');
-  const [userId, setUserId] = useState('');
   const navigate = useNavigate();
-
+  let userId = '';
 
   console.log(env);
   console.log({ env: window });
+
   const handleSignIn = async () => {
     try {
       const user = await SigninFunction(email, password);
       console.log('User signed in:', user);
 
-      const user_id = user.uid;
-      setUserId(userId);
-      console.log('User id signed in:', user_id);
+      // const user_id = user.uid;
+      userId = user.uid;
+      console.log('User id signed in:', userId);
 
       handleGetUserData();    // Fetch user profile data
       updateSubscriptionStatus();   // update subscription status
@@ -40,6 +40,7 @@ const SignIn = () => {
 
 
   const handleGetUserData = async () => {
+    
     try {
       const user = await GetUserDataFunction(userId);
 
@@ -52,8 +53,11 @@ const SignIn = () => {
       console.log("Error fetching data on signin component", error);
     }
   }
+  
 
   const updateSubscriptionStatus = async () => {
+    console.log("Subscription end date:", subscription_end_date);
+
     try {
 
       await UpdateUserSubscriptionFunction(userId, subscription_end_date);

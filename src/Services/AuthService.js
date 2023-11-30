@@ -312,10 +312,14 @@ export const UpdateUserSubscriptionFunction = async (userId, subscription_end_da
     const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so we add 1 and format to two digits
     const day = String(today.getDate()).padStart(2, '0'); // Format day to two digits
 
-    const currentDate = `${year}-${month}-${day}`;
+    // const currentDate = `${year}-${month}-${day}`;
+    const currentDate = today.toISOString().split('T')[0];
+
+    console.log(currentDate)
+    console.log("subscription_end_date:", subscription_end_date);
 
     // Compare dates and make all necessary changes
-    if (currentDate > subscription_end_date) {
+    if (currentDate >= subscription_end_date) {
         const userRef = doc(db, 'users', userId);
 
         const updates = {
