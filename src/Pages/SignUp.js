@@ -112,7 +112,7 @@ function SignUp({ setToProfileStatus }) {
                         }}>
                             <Box style={{ paddingBottom: theme.spacing(isSmallScreen ? 3 : 4) }}>
                                 <SectionHeading children={"EZAMAZWE EDUTECH"} /></Box>
-                            <SectionSubHeading children={"Create you account"} />
+                            <SectionSubHeading children={"Create your account"} />
                         </div>
                         <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(isSmallScreen ? 4 : 3) }}>
                             <TextFields label={"Email Address:"} errorStatus={emailErr} errorMessage={emailErrMsg} setState={setEmail} />

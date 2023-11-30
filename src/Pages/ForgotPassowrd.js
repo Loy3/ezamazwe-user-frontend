@@ -18,19 +18,49 @@ function ForgotPassword() {
     const [email, setEmail] = useState("");
     const [emailErr, setEmailErr] = useState(false);
 
+    const [emailErrMsg, setEmailErrMsg] = useState("");
 
     const primaryMainColor = theme.palette.primary.main;
     const [open, setOpen] = React.useState(false);
+
+    const isEmailValid = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
     const handleForgotPassword = async () => {
         setOpen(true);
-        try {
-            await ForgotPasswordFunction(email);
-            // alert("You will recieve a reset password link in your email if provided email is recognized.")
+        if (email) {
+            if (isEmailValid(email)) {
+                try {
+                    await ForgotPasswordFunction(email);
+                    setEmailErr(false)
+                    setEmailErrMsg("");
+                    setOpen(false);
+                    navigate('/signin'); // Navigate to sign in page
+                } catch (error) {
+                    console.log("Unable to update password:", error);
+                    setOpen(false);
+                }
+            } else {
+                // console.log("Email is not valid!");
+                setEmailErr(true)
+                setEmailErrMsg("Email is not valid. Please enter the correct email address!");
+                setOpen(false);
+            }
+        } else {
+            setEmailErr(true)
+            setEmailErrMsg("Email address is required!");
             setOpen(false);
-            navigate('/signin'); // Navigate to sign in page
-        } catch (error) {
-            console.log("Unable to update password:", error);
         }
+        // try {
+        //     await ForgotPasswordFunction(email);
+        //     // alert("You will recieve a reset password link in your email if provided email is recognized.")
+        //     setOpen(false);
+        //     navigate('/signin'); // Navigate to sign in page
+        // } catch (error) {
+        //     console.log("Unable to update password:", error);
+        // }
     };
 
 
@@ -47,7 +77,7 @@ function ForgotPassword() {
                             <SectionSubHeading children={"Forgot Password"} />
                         </div>
                         <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(isSmallScreen ? 4 : 3) }}>
-                            <TextFields label={"Email Address:"} errorStatus={emailErr} errorMessage={"Field Required!"} setState={setEmail} />
+                            <TextFields label={"Email Address:"} errorStatus={emailErr} errorMessage={emailErrMsg} setState={setEmail} />
                         </Box>
                         <Box style={{ paddingTop: theme.spacing(4), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 15 }}>
                             <Button text={"Submit"} buttonFunction={handleForgotPassword} />
@@ -67,7 +97,7 @@ function ForgotPassword() {
                     <CircularProgress color="inherit" />
                 </Backdrop>
             </div>
-            </>
+        </>
     )
 }
 

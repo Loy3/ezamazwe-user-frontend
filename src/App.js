@@ -31,6 +31,7 @@ import { collection, doc, getDoc, query } from 'firebase/firestore';
 import CourseFullView from './Pages/CourseFullView';
 import ContactUs from './Pages/ContactUs';
 import AboutUs from './Pages/AboutUs';
+import Payment from './Pages/Payment';
 function App() {
   const [isSignedIn, setSignIn] = useState(false);
   const [userId, setUserId] = useState("");
@@ -95,7 +96,7 @@ function App() {
           <Route path='/signin' element={<SignIn />} />
           <Route path='/signup' element={<SignUp setToProfileStatus={setToProfileStatus} />} />
           <Route path='/profilesetup' element={toProfileStatus ? <SetUpProfile setToProfileStatus={setToProfileStatus} /> : <Navigate to="/signup" />} />
-          {/* <Route path='/screen' element={<ScreenView />} /> */}
+          <Route path='/screen' element={<ScreenView />} />
           <Route path='/courses' element={<CoursesPage />} />
           <Route path='/course' element={<ViewCoursePage />} />
           <Route path='/courseview' element={!isSignedIn ? <Navigate to="/" /> : <CourseFullView />} />
@@ -114,7 +115,7 @@ function App() {
 
       {/* <CourseContCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} image={image1} cardFunction={testing}/> */}
 
-      {/* <SearchBar/> */}
+      <Payment/>
 
 
       {/*  */}

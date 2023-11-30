@@ -24,10 +24,10 @@ export default function button({ text, buttonFunction }) {
     )
 }
 
-export function UserButton({ text, buttonFunction }) {
+export function UserButton({ text, buttonFunction, type }) {
     return (
         <>
-            <Button variant="contained" style={{ backgroundColor: "#1C3F53", width: "100%", borderRadius: 20 }} onClick={() => buttonFunction()}>{text}</Button>
+            <Button variant="contained" type={type} style={{ backgroundColor: "#1C3F53", width: "100%", borderRadius: 20 }} onClick={() => buttonFunction()}>{text}</Button>
         </>
     )
 }

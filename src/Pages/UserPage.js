@@ -25,6 +25,7 @@ import capsImg1 from "../Assets/Images/cardsImages/caps1.jpg";
 import entImg2 from "../Assets/Images/cardsImages/ent2.jpg";
 import iebImg3 from "../Assets/Images/cardsImages/ieb3.jpg";
 import { CourseContCard, UserCourseContCard } from '../Components/Cards';
+import { PaymentFunction } from '../Services/CourseService';
 const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis.";
 
 function UserPage({ signInUser }) {
@@ -192,9 +193,13 @@ function UserPage({ signInUser }) {
 
     }
 
+    async function becomeSubscribedUser() {
+        PaymentFunction(firstName, lastName, email, phoneNum);
+    }
+
     function signOut() {
         auth.signOut().then(() => {
-         console.log("Success");
+            console.log("Success");
         }).catch((error) => {
             console.log(error.message);
             navigate("/")
@@ -220,9 +225,24 @@ function UserPage({ signInUser }) {
                         Lorem ipsum dolor sit amet
                     </Typography>
                     <Box sx={{ marginTop: "80px" }}>
-                        <Box sx={{ margin: "10px 0", width: "100%" }}>
-                            <UserButton text={"SUBSCRIBE"} />
-                        </Box>
+                        <form action="https://ezamazwe-edutech-nodejs.onrender.com/payment" method="post">
+
+                            <input type="hidden" name="email_address" value={email} />
+                            <input type="hidden" name="name_first" value={firstName} />
+                            <input type="hidden" name="name_last" value={lastName} />
+                            <input type="hidden" name="cell_number" value={phoneNum} />
+                            <input type="hidden" name="Card Name" value={`${firstName} ${lastName}`} />
+
+                            <input type="hidden" name="Card Number" value={"0000000000000000000"} />
+                            <input type="hidden" name="Expiry Date" value={"05/28"} />
+                            <input type="hidden" name="Secure Code" value={"066"} />
+                            <input type="hidden" name="Amount" value={"300"} />
+
+                            <Box sx={{ margin: "10px 0", width: "100%" }}>
+                                <UserButton type={"submit"} text={"SUBSCRIBE"} buttonFunction={becomeSubscribedUser} />
+                            </Box>
+                        </form>
+
                         <Box sx={{ margin: "10px 0", width: "100%" }}>
                             <UserButton text={"BECOME A TUTOR"} />
                         </Box>
