@@ -33,6 +33,7 @@ import impactVid4 from "../Assets/Videos/4.mp4";
 
 import { useEffect, useMemo, useState } from "react"
 import { CourseContCard } from "../Components/Cards"
+import { auth } from "../Services/firebaseConfig";
 const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis.";
 
 
@@ -139,7 +140,7 @@ function LandingPage() {
     const [capsBorder, setCapsBorder] = useState(withBorder);
     const [iebBorder, setIebBorder] = useState(withNoBorder);
     const [entBorder, setEntBorder] = useState(withNoBorder);
-
+    const [join, setJoin] = useState(false);
 
     useEffect(() => {
         let viewArr = [];
@@ -187,8 +188,27 @@ function LandingPage() {
         setViewCourses(displayArr);
     }
 
+    useEffect(() => {
+        const checkAuth = (auth);
+        // console.log(auth);
+        const unsubscribe = checkAuth.onAuthStateChanged((user) => {
+            if (user !== null) {
+                setJoin(true)
+            } else {
+                setJoin(false);
+            }
+        });
+        return () => unsubscribe();
+    }, []);
+
     function toSignUp() {
-        navigate("/signup")
+        if (join) {
+            alert("You already have an account, checkout our courses.");
+            navigate("/courses")
+        } else {
+            alert("Lets create an account.");
+            navigate("/signup")
+        }
     }
 
     return (

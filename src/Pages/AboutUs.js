@@ -2,7 +2,7 @@ import { Box, Grid, useMediaQuery } from "@mui/material";
 import { FooterComp } from "../Components/Footer";
 import { HeaderComp, HeaderSmallComp } from "../Components/HeaderComp";
 import { NavBar } from "../Components/NavBar";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import image from "../Assets/Images/about.jpg";
 import Label from "../Components/Label";
 import Button, { HomeButtons } from "../Components/Buttons";
@@ -19,6 +19,9 @@ import instagram from "../Assets/Icons/instagram.png";
 import twitter from "../Assets/Icons/twitter.png";
 import headerImage from "../Assets/Images/2.jpg";
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from "@emotion/react";
+import { ViewMembersFunction } from "../Services/AuthService";
+import { auth } from "../Services/firebaseConfig";
 
 
 const paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas metus nulla."
@@ -26,12 +29,83 @@ const paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliq
 export default function AboutUs() {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
     const navigate = useNavigate();
+
+
+    const [join, setJoin] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [members, setMembers] = useState([]);
+    const [open, setOpen] = useState(false);
+    const theme = useTheme();
+
+
+    useEffect(() => {
+        const checkAuth = (auth);
+        // console.log(auth);
+        const unsubscribe = checkAuth.onAuthStateChanged((user) => {
+            if (user !== null) {
+                setJoin(true)
+            } else {
+                setJoin(false);
+            }
+        });
+        return () => unsubscribe();
+    }, []);
+
     function toSignUp() {
-        navigate("/signup")
+        if (join) {
+            alert("You already have an account, checkout our courses.");
+            navigate("/courses")
+        } else {
+            alert("Lets create an account.");
+            navigate("/signup")
+        }
     }
+
+    // useEffect(() => {
+    //     handleFetchMembers();
+    // }, []);
+
+    // const handleJoin = async () => {
+    //     try {
+    //         const user = await SignupFunction(email, password);
+    //         console.log('User data in signup component:', user);
+    //         const user_email = user.email;
+    //         const user_id = user.uid;
+    //         console.log('User id in signup component:', user_id);
+    //         console.log('User email in signup component:', user_email);
+
+    //         alert('User signed up');
+    //         handleClose();
+    //         navigate('/verification', { state: { userId: user_id, userEmail: user_email } });
+
+    //     } catch (error) {
+    //         console.error('Error occurred during signup:', error.message);
+    //     }
+    // }
+
+    // const handleFetchMembers = async () => {
+    //     try {
+    //         const data = await ViewMembersFunction();
+    //         setMembers(data);
+
+    //     } catch (error) {
+    //         console.log("Error occurred while fetching data:", error);
+    //     }
+    // }
+
+
+    // const handleOpen = () => {
+    //     setOpen(true);
+    // };
+
+    // const handleClose = () => {
+    //     setOpen(false);
+    // };
+
     return (
         <>
-            <NavBar location={"about"}/>
+            <NavBar location={"about"} />
             <HeaderComp text={"About Us"} paragraph={paragraph} />
             <Box sx={{
                 width: "100%", height: "auto", display: "flex", justifyContent: "center", alignItems: "center"
@@ -67,7 +141,7 @@ export default function AboutUs() {
                                     </Typography>
                                 </Box>
                                 <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: "15px" }}>
-                                    <Box sx={{width:isSmallScreen?"70%":"35%" }}>
+                                    <Box sx={{ width: isSmallScreen ? "70%" : "35%" }}>
                                         <HomeButtons text={"Join"} buttonFunction={toSignUp} />
                                     </Box>
                                 </Box>
@@ -322,7 +396,7 @@ export default function AboutUs() {
                         }}
                     >
                         <Box
-                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen?"10px 1%":"0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
+                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
                         >
                             <Box sx={{ height: "100%", width: isSmallScreen ? "100%" : "45%", display: "flex", justifyContent: isSmallScreen ? "center" : "unset" }}>
                                 <img
@@ -343,13 +417,13 @@ export default function AboutUs() {
                             <Box
                                 sx={{
                                     width: isSmallScreen ? "100%" : "55%",
-                                    margin:isSmallScreen ? "0 0 10px 0" : "0"
+                                    margin: isSmallScreen ? "0 0 10px 0" : "0"
                                 }}
                             >
                                 <Typography
                                     sx={{
                                         textAlign: "center",
-                                        marginTop: isSmallScreen ? "10px" :"33px",
+                                        marginTop: isSmallScreen ? "10px" : "33px",
                                         fontWeight: "bold",
                                         fontSize: "24px",
                                         lineHeight: "32.02px",
@@ -429,7 +503,7 @@ export default function AboutUs() {
                             </Box>
                         </Box>
                         <Box
-                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen?"10px 1%":"0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
+                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
                         >
                             <Box sx={{ height: "100%", width: isSmallScreen ? "100%" : "45%", display: "flex", justifyContent: isSmallScreen ? "center" : "unset" }}>
                                 <img
@@ -450,13 +524,13 @@ export default function AboutUs() {
                             <Box
                                 sx={{
                                     width: isSmallScreen ? "100%" : "55%",
-                                    margin:isSmallScreen ? "0 0 10px 0" : "0"
+                                    margin: isSmallScreen ? "0 0 10px 0" : "0"
                                 }}
                             >
                                 <Typography
                                     sx={{
                                         textAlign: "center",
-                                        marginTop: isSmallScreen ? "10px" :"33px",
+                                        marginTop: isSmallScreen ? "10px" : "33px",
                                         fontWeight: "bold",
                                         fontSize: "24px",
                                         lineHeight: "32.02px",
@@ -549,7 +623,7 @@ export default function AboutUs() {
                         }}
                     >
                         <Box
-                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen?"10px 1%":"0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
+                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
                         >
                             <Box sx={{ height: "100%", width: isSmallScreen ? "100%" : "45%", display: "flex", justifyContent: isSmallScreen ? "center" : "unset" }}>
                                 <img
@@ -570,13 +644,13 @@ export default function AboutUs() {
                             <Box
                                 sx={{
                                     width: isSmallScreen ? "100%" : "55%",
-                                    margin:isSmallScreen ? "0 0 10px 0" : "0"
+                                    margin: isSmallScreen ? "0 0 10px 0" : "0"
                                 }}
                             >
                                 <Typography
                                     sx={{
                                         textAlign: "center",
-                                        marginTop: isSmallScreen ? "10px" :"33px",
+                                        marginTop: isSmallScreen ? "10px" : "33px",
                                         fontWeight: "bold",
                                         fontSize: "24px",
                                         lineHeight: "32.02px",
@@ -656,7 +730,7 @@ export default function AboutUs() {
                             </Box>
                         </Box>
                         <Box
-                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen?"10px 1%":"0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
+                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
                         >
                             <Box sx={{ height: "100%", width: isSmallScreen ? "100%" : "45%", display: "flex", justifyContent: isSmallScreen ? "center" : "unset" }}>
                                 <img
@@ -677,13 +751,13 @@ export default function AboutUs() {
                             <Box
                                 sx={{
                                     width: isSmallScreen ? "100%" : "55%",
-                                    margin:isSmallScreen ? "0 0 10px 0" : "0"
+                                    margin: isSmallScreen ? "0 0 10px 0" : "0"
                                 }}
                             >
                                 <Typography
                                     sx={{
                                         textAlign: "center",
-                                        marginTop: isSmallScreen ? "10px" :"33px",
+                                        marginTop: isSmallScreen ? "10px" : "33px",
                                         fontWeight: "bold",
                                         fontSize: "24px",
                                         lineHeight: "32.02px",

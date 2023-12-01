@@ -1,7 +1,7 @@
 
 // Imports from the firebase config file
 import { db, auth, storage } from './firebaseConfig';
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 // import { addDoc, collection, doc, updateDoc, setDoc, getDoc } from "firebase/firestore";
 // import {
 //     createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification

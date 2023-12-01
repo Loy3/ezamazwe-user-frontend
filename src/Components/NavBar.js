@@ -22,6 +22,7 @@ export const NavBar = ({ location }) => {
     const [mypath, setPath] = useState("");
     const [signInStatus, setSignInStatus] = useState(false);
     const [signInUser, setSignInUser] = useState(null)
+   
     useEffect(() => {
         const checkAuth = (auth);
         // console.log(auth);
@@ -93,7 +94,15 @@ export const NavBar = ({ location }) => {
                 setContactWeight("bold");
                 break;
             default:
-                console.log("default");
+                setHomeColor("black");
+                setAboutColor("black");
+                setCoursesColor("black");
+                setContactColor("black");
+
+                setHomeWeight("normal");
+                setAboutWeight("normal");
+                setCoursesWeight("normal");
+                setContactWeight("normal");
         }
     }, [location])
 
