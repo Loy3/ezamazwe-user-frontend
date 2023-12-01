@@ -1,7 +1,7 @@
 
 // Imports from the firebase config file
 import { db, auth, storage } from './firebaseConfig';
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 // import { addDoc, collection, doc, updateDoc, setDoc, getDoc } from "firebase/firestore";
 // import {
 //     createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification
@@ -280,4 +280,38 @@ export const ProfileUpdateFunction = async (userId, firstName, lastName, userEma
     } catch (error) {
         console.error('Error updating profile:', error.message);
     }
+};
+
+// Update user subscription status
+export const UpdateUserSubscriptionFunction = async (userId, subscription_end_date) => {
+// console.log(userId);
+    const today = new Date();   // Get today's date
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so we add 1 and format to two digits
+    const day = String(today.getDate()).padStart(2, '0'); // Format day to two digits
+
+    // const currentDate = `${year}-${month}-${day}`;
+    const currentDate = today.toISOString().split('T')[0];
+
+    // console.log(currentDate)
+    // console.log("subscription_end_date:", subscription_end_date);
+
+    // Compare dates and make all necessary changes
+    if (currentDate >= subscription_end_date) {
+        const userRef = doc(db, 'users', userId);
+
+        const updates = {
+            subscription: "unsubscribed",
+            subscriptionStartDate: "",
+            subscriptionEndDate: "",
+        };
+
+        try {
+            await updateDoc(userRef, updates);
+            console.log('User subscription updated successfully.');
+        } catch (error) {
+            console.error('Error updating user subscription:', error.message);
+        }
+    }
+
 };

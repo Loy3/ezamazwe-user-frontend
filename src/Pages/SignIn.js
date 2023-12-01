@@ -6,7 +6,7 @@ import Button from '../Components/Buttons'
 import { TextFieldPassword } from '../Components/TextFields';
 import SectionHeading from '../Components/SectionHeading';
 import SectionSubHeading from '../Components/SectionSubHeading';
-import { SigninFunction } from '../Services/AuthService';
+import { GetUserDataFunction, SigninFunction, UpdateUserSubscriptionFunction } from '../Services/AuthService';
 import { theme } from '../Theme/theme';
 import { useNavigate } from "react-router-dom";
 
@@ -22,6 +22,9 @@ function SignIn() {
     const [emailErrMsg, setEmailErrMsg] = useState("");
     const [passwordErrMsg, setPasswordErrMsg] = useState("");
     const [open, setOpen] = React.useState(false);
+
+    const [subscription_end_date, setSubscriptionEndDate] = useState('');
+    let userId = '';
 
     const handleSignIn = async () => {
         setOpen(true);
@@ -46,19 +49,53 @@ function SignIn() {
 
             if (email && password) {
                 const user = await SigninFunction(email, password)
-                console.log('User signed in:', user);
+                // console.log('User signed in:', user);
                 setOpen(false);
                 if (user !== undefined) {
-                    setOpen(false);
-                    navigate("/")
+                    const user_id = user.uid;
+                    await handleGetUserData(user_id).then(() => {
+                        setOpen(false);
+                        navigate("/")
+                    })
                 }
             }
-
         } catch (error) {
             console.log("Unable to log in:", error);
         }
 
     };
+
+    const handleGetUserData = async (user_id) => {
+
+        try {
+            const user = await GetUserDataFunction(user_id);
+
+            if (user) {
+                // console.log("User data fetched on signin component", user);
+                setSubscriptionEndDate(user.subscriptionEndDate);
+                updateSubscriptionStatus(user_id, user.subscriptionEndDate);
+            }
+
+            // console.log("subscriptionEndDate:", subscription_end_date);
+
+        } catch (error) {
+            console.log("Error fetching data on signin component", error);
+        }
+    }
+
+
+    const updateSubscriptionStatus = async (user_id, subscription_end_dat) => {
+        // console.log("Subscription end date:", subscription_end_dat);
+
+        try {
+
+            await UpdateUserSubscriptionFunction(user_id, subscription_end_dat);
+
+        } catch (error) {
+
+            console.log("Error updating subscription status:", error);
+        }
+    }
 
     return (
         <>
