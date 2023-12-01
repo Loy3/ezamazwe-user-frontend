@@ -22,8 +22,12 @@ const ContactUs = () => {
     const handleSendMessage = async () => {
 
         try {
+            if (!firstName || !lastName || !email || !subject || !message) {
+                
+                return alert('Warning! All fields are required!');
 
-            if (isEmailValid(email)) {
+            } else if (isEmailValid(email)) {
+                
                 await ContactUsFunction(firstName, lastName, email, subject, message);
                 alert("Message sent successfully.");
 
