@@ -21,13 +21,45 @@ function ContactUsCard({
   const [subjects, setSubject] = useState('');
   const [message, setMessage] = useState('')
 
+  const isEmailValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+};
 
   const handleSendMessage = async () => {
     // console.log(firstName, lastName, emailA, subjects, message);
+    
     try {
-      await ContactUsFunction(firstName, lastName, emailA, subjects, message);
-      alert("Message sent successfully.")
 
+      try {
+        if (!firstName || !lastName || !email || !subjects || !message) {
+            
+            return alert('Warning! All fields are required!');
+
+        } else if (isEmailValid(emailA)) {
+               
+            await ContactUsFunction(firstName, lastName, emailA, subjects, message);
+            alert("Message sent successfully.");
+
+            // Reset field data to default values
+            setFirstName('');
+            setLastName('');
+            setEmail('');
+            setSubject('');
+            setMessage('');
+
+        } else {
+            console.log("Email is not valid!");
+            alert("Email is not valid. Please enter the correct email address!");
+        }
+
+    } catch (error) {
+
+        alert("Something went wrong. Please try again.");
+        console.log("Error sending message:", error);
+    }
+
+      
     } catch (error) {
 
       alert("Something went wrong. Please try again.");
