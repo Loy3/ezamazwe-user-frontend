@@ -115,7 +115,7 @@ function App() {
 
       {/* <CourseContCard courseName={"Course Name"} courseType={"Free"} shortDescrip={short} image={image1} cardFunction={testing}/> */}
 
-      <Payment/>
+      {/* <Payment/> */}
 
 
       {/*  */}
