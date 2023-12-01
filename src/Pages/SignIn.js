@@ -28,8 +28,10 @@ const SignIn = () => {
       userId = user.uid;
       console.log('User id signed in:', userId);
 
-      handleGetUserData();    // Fetch user profile data
-      updateSubscriptionStatus();   // update subscription status
+      await handleGetUserData().then(()=>{
+ 
+      })
+        // update subscription status
 
       navigate('/userpage');
     } catch (error) {
@@ -47,7 +49,10 @@ const SignIn = () => {
       if (user) {
         console.log("User data fetched on signin component", user);
         setSubscriptionEndDate(user.subscriptionEndDate);
+        updateSubscriptionStatus(user.subscriptionEndDate);
       }
+
+      console.log("subscriptionEndDate:", subscription_end_date);
 
     } catch (error) {
       console.log("Error fetching data on signin component", error);
@@ -55,12 +60,12 @@ const SignIn = () => {
   }
   
 
-  const updateSubscriptionStatus = async () => {
-    console.log("Subscription end date:", subscription_end_date);
+  const updateSubscriptionStatus = async (subscription_end_dat) => {
+    console.log("Subscription end date:", subscription_end_dat);
 
     try {
 
-      await UpdateUserSubscriptionFunction(userId, subscription_end_date);
+      await UpdateUserSubscriptionFunction(userId, subscription_end_dat);
 
     } catch (error) {
 
