@@ -3,11 +3,12 @@ import logo from "../Assets/Images/logo2.png";
 
 export const FooterComp = () => {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
+    const isMediumScreen = useMediaQuery("(max-width:800px)");
     return (
         <>
             <Box sx={{ width: "100%", height: "auto", padding: "50px 0", backgroundColor: "secondary.main", }}>
-                <Box sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: "100%" }}>
-                    <Box sx={{ width: isSmallScreen ? "100%" : "40%" }}>
+                <Box sx={{ display: "flex", flexDirection: isMediumScreen ? "column" : "row", width: "100%" }}>
+                    <Box sx={{ width: isMediumScreen ? "100%" : "40%" }}>
                         <Box sx={{ width: "90%", margin: "0 5%" }}>
                             <Typography variant="h6" sx={{ fontWeight: "bold", color: "primary.light" }}>For more Info:</Typography>
                             <Box sx={{ display: "flex", flexDirection: "row", marginTop: "30px" }}>
@@ -46,7 +47,7 @@ export const FooterComp = () => {
                         </Box>
 
                     </Box>
-                    <Box sx={{ width: isSmallScreen ? "100%" : "40%", marginTop: "50px" }}>
+                    <Box sx={{ width: isMediumScreen ? "100%" : "40%", marginTop: "50px" }}>
                         <Box sx={{ width: "90%", margin: "0 5%" }}>
                             <Typography variant="h6" sx={{ fontWeight: "bold", color: "primary.light" }}>Home</Typography>
                             <Typography variant="h6" sx={{ fontWeight: "bold", color: "primary.light" }}>About Us</Typography>
@@ -56,7 +57,7 @@ export const FooterComp = () => {
                         </Box>
                     </Box>
                     <Box sx={{ width: isSmallScreen ? "100%" : "20%" }}>
-                        <Box sx={{ width: "90%", margin: isSmallScreen ? "5% 3%" : "0 5%" }}>
+                        <Box sx={{ width: "90%", margin: isMediumScreen ? "5% 3%" : "0 5%" }}>
                             <img src={logo} style={{ width: "150px", }} />
                         </Box>
                     </Box>

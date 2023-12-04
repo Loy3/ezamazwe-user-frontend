@@ -26,6 +26,7 @@ function Courses() {
     const navigate = useNavigate();
 
     const isSmallScreen = useMediaQuery('(max-width:600px)');
+    const isMediumScreen = useMediaQuery("(max-width:800px)");
     // const [returnType, setReturnType] = useState('')
     const [filterCategories, setFilterCategories] = useState([])
     const [subCategory, setSubCategory] = useState('')
@@ -52,12 +53,12 @@ function Courses() {
 
     const [openMenuStatus, setOpenMenuStatus] = useState(false);
     useEffect(() => {
-        if (!isSmallScreen) {
+        if (!isMediumScreen) {
             setOpenMenuStatus(true)
         } else {
             setOpenMenuStatus(false)
         }
-    }, [isSmallScreen])
+    }, [isMediumScreen])
 
     useEffect(() => {
         if (rtnCategory) {
@@ -276,11 +277,11 @@ function Courses() {
     }
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: isSmallScreen ? 'column' : 'row', margin: '50px 2%', width: "96%" }}>
-            <Grid sx={{ width: isSmallScreen ? '100%' : '20%', margin: isSmallScreen ? "0 0 30px 0" : "0" }}>
+        <Box sx={{ display: 'flex', flexDirection: isMediumScreen ? 'column' : 'row', margin: '50px 2%', width: "96%" }}>
+            <Grid sx={{ width: isMediumScreen ? '100%' : '20%', margin: isMediumScreen ? "0 0 30px 0" : "0" }}>
 
                 <Box sx={{ justifyContent: 'flex-start', paddingTop: '20px', width: "96%", margin: "0 2%" }}>
-                    {isSmallScreen ?
+                    {isMediumScreen ?
                         <Box sx={{ width: "96%", margin: "0 2%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                             <Box sx={{ width: "80%" }}>
                                 <FilterButton text={"Filter"} buttonFunction={() => openMenu("open")} />
@@ -299,9 +300,9 @@ function Courses() {
         </Button> */}
                     {/* {console.log(filterCategories)} */}
                     {openMenuStatus ?
-                        <Box sx={{ width: "88%", padding: isSmallScreen ? "70px 5% 80px 5%" : "auto", backgroundColor: "white", marginBottom: isSmallScreen ? "50px" : "0", height: isSmallScreen ? "100%" : "auto", position: isSmallScreen ? "fixed" : "relative", zIndex: "70", top: isSmallScreen ? "0" : "unset", overflowY: isSmallScreen ? "scroll" : "unset" }}>
+                        <Box sx={{ width: "88%", padding: isMediumScreen ? "70px 5% 80px 5%" : "auto", backgroundColor: "white", marginBottom: isMediumScreen ? "50px" : "0", height: isMediumScreen ? "100%" : "auto", position: isMediumScreen ? "fixed" : "relative", zIndex: "70", top: isMediumScreen ? "0" : "unset", overflowY: isMediumScreen ? "scroll" : "unset" }}>
                             {/* <Box sx={{width:"30px", height:"30px", backgroundColor:"black", position:"absolute", top:"20px", right:"30px",zIndex:"70" }}></Box> */}
-                            {isSmallScreen ?
+                            {isMediumScreen ?
                                 <Button sx={{ textDecoration: "none", padding: "0 5px", color: "black", cursor: "pointer", position: "absolute", right: "5px", top: "20px", zIndex: "50" }} onClick={() => openMenu("close")}> <CancelIcon sx={{ color: "primary.light", width: "30px", height: "30px" }} /></Button>
                                 : null}
                             <Box sx={{ paddingTop: '20px' }}>
@@ -331,7 +332,7 @@ function Courses() {
 
                 </Box>
             </Grid>
-            <Grid sx={{ width: isSmallScreen ? '100%' : '80%', padding: '20px' }}>
+            <Grid sx={{ width: isMediumScreen ? '100%' : '80%', padding: '20px' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                     <Box>
                         <Typography variant='h4' sx={{ color: '#396781', fontWeight: 'bold' }}>

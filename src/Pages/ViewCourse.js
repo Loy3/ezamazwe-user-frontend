@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
 
 function ViewCourse({ course_data, docData }) {
     const isSmallScreen = useMediaQuery('(max-width:600px)');
+    const isMediumScreen = useMediaQuery("(max-width:800px)");
+    const isSecMediumScreen = useMediaQuery("(max-width:800px) and (min-width:600px)");
     const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 
     const location = useLocation();
@@ -110,12 +112,12 @@ function ViewCourse({ course_data, docData }) {
         navigate("/courseview")
     }
     return (
-        <Grid sx={{ padding: isSmallScreen ? '0 20px' : '0 40px' }}>
-            <Grid sx={{ display: 'flex', flexDirection: isSmallScreen ? 'column' : 'row', }}>
-                <Box sx={{ width: isSmallScreen ? '100%' : "30%", backgroundColor: '#E3ECF1', position: 'relative', paddingBottom: "20px", height: isSmallScreen ? "660px" : "inherit", marginTop: isSmallScreen ? "-30vh" : "-60px", zIndex: "50", borderRadius: "20px" }}>
+        <Grid sx={{ padding: isMediumScreen ? '0 20px' : '0 40px' }}>
+            <Grid sx={{ display: 'flex', flexDirection: isMediumScreen ? 'column' : 'row', }}>
+                <Box sx={{ width: isMediumScreen ? '100%' : "30%", backgroundColor: '#E3ECF1', position: 'relative', paddingBottom: "20px", height: isMediumScreen ? "660px" : "inherit", marginTop: isMediumScreen ? "-25vh" : "-60px", zIndex: "50", borderRadius: "20px" }}>
 
                     <img
-                        style={{ height: "50%", width: "100%", objectFit: "cover", borderTopRightRadius: "20px", borderTopLeftRadius: "20px" }}
+                        style={{ height: isSecMediumScreen?"58%":"50%", width: "100%", objectFit: "cover", borderTopRightRadius: "20px", borderTopLeftRadius: "20px" }}
                         src={parabola} alt='card' />
 
                     <CardContent sx={{ margin: '10px' }}>
@@ -126,11 +128,11 @@ function ViewCourse({ course_data, docData }) {
                         </Typography>
                         <Label children={"Free"} />
                     </CardContent>
-                    <Box sx={{position:isSmallScreen?"relative":"absolute", bottom:"10px", width:"100%"}}>
+                    <Box sx={{position:isMediumScreen?"relative":"absolute", bottom:"10px", width:"100%"}}>
                         <Contentbutton text={"START"} buttonFunction={handleStartCourse} />
                     </Box>
                 </Box >
-                <Grid sx={{ paddingLeft: isSmallScreen ? '0' : '20px', paddingTop: '70px', width: isSmallScreen ? "100%" : "70%", paddingBottom: "20px" }}>
+                <Grid sx={{ paddingLeft: isMediumScreen ? '0' : '20px', paddingTop: '70px', width: isMediumScreen ? "100%" : "70%", paddingBottom: "20px" }}>
                     <Box sx={{ width: "90%", margin: "0 5%" }}>
                         <Label children={"What you will learn?"} />
                         <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} />
