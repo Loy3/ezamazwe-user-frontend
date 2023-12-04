@@ -1,88 +1,68 @@
-import { Box, Button, Link, Typography, useMediaQuery } from "@mui/material";
+import { Box, Container, Typography, useMediaQuery } from "@mui/material"
 import logo from "../Assets/Images/logo2.png";
-import { Image } from "@mui/icons-material";
-import CancelIcon from '@mui/icons-material/Cancel';
-import MenuIcon from '@mui/icons-material/Menu';
-import { SmallButton, ToUserButton } from "./Buttons";
-import fbIcon from "../Assets/Icons/fb.png";
-import insIcon from "../Assets/Icons/ins.png";
-import twIcon from "../Assets/Icons/tw.png";
-import { useEffect, useState } from "react";
 
-export const NavBar = () => {
+export const FooterComp = () => {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
-    const [navStatus, setNavStatus] = useState(false);
-
-    useEffect(()=>{
-        if (!isSmallScreen) {
-            setNavStatus(true)
-        }else{
-            setNavStatus(false)
-        }
-    },[isSmallScreen])
-
-    function handleNav(type) {
-        switch (type) {
-            case "open":
-                setNavStatus(true)
-                break;
-            case "close":
-                setNavStatus(false);
-                console.log("Hello");
-                break;
-            default:
-        }
-    }
     return (
         <>
-            {/* <div style={{ width: "100%", height: "100vh", backgroundColor: "gray" }}> */}
-                {isSmallScreen && !navStatus ?
-                   <Box sx={{position:"absolute", zIndex:"60"}}> 
-                     <Button sx={{ textDecoration: "none", padding: "0 5px", color: "black", cursor: "pointer" }} onClick={() => handleNav("open")}> <MenuIcon sx={{ color: "#fff", width: "40px", height: "40px", marginLeft: "4%", marginTop: "4%" }} /></Button>
-                   </Box>
-                    :             
-                    <Box sx={{ width: isSmallScreen ? "100%" : "100%", height: isSmallScreen ? "100vh" : "120px", backgroundColor: "white", position: isSmallScreen?"fixed": "relative", zIndex: isSmallScreen?"80": "0"  }}>
-                        {isSmallScreen ?
-                            <Button sx={{ textDecoration: "none", padding: "0 5px", color: "black", cursor: "pointer", position: "absolute", right: "5px", top: "20px", zIndex:"50" }} onClick={() => handleNav("close")}> <CancelIcon sx={{ color: "primary.light", width: "30px", height: "30px" }} /></Button>
-                            : null}
-                        {isSmallScreen ? null :
-                            <Box sx={{ width: "100%", height: isSmallScreen ? "7vh" : "35px", backgroundColor: "primary.light", display: "flex", justifyContent: isSmallScreen ? "start" : "center", alignItems: isSmallScreen ? "start" : "center" }}>
-                                <Box sx={{ display: "flex", flexDirection: "row", width: isSmallScreen ? "95%" : "90%", justifyContent: isSmallScreen ? "start" : "end", alignItems: isSmallScreen ? "start" : "center", marginLeft: isSmallScreen ? "20px" : "0", marginTop: isSmallScreen ? "10px" : "0" }}>
-                                    <Box sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", }}>
-                                        <Typography sx={{ color: "white", marginRight: "5px", fontSize: "14px" }}>emailAddress@ezamazwe.com</Typography>
-                                        <Typography sx={{ color: "white", marginLeft: isSmallScreen ? "0" : "5px", fontSize: "14px" }}>+012 000 0000</Typography>
-                                    </Box>
-                                    <Box sx={{ display: "flex", flexDirection: "row", marginLeft: "10px" }}>
-                                        <Link href="https://www.facebook.com/" sx={{ textDecoration: "none", padding: "0 5px", color: "black", cursor: "pointer" }} target="_blank"><img src={fbIcon} alt="social" style={{ marginTop: "5px", width: "20px", height: "20px" }} /></Link>
-                                        <Link href="https://www.instagram.com/" sx={{ textDecoration: "none", padding: "0 5px", color: "black", cursor: "pointer" }} target="_blank"><img src={insIcon} alt="social" style={{ marginTop: "5px", width: "20px", height: "20px" }} /></Link>
-                                        <Link href="https://twitter.com/" sx={{ textDecoration: "none", padding: "0 5px", color: "black", cursor: "pointer" }} target="_blank"><img src={twIcon} alt="social" style={{ marginTop: "5px", width: "20px", height: "20px" }} /></Link>
-                                    </Box>
-                                </Box>
+            <Box sx={{ width: "100%", height: "auto", padding: "50px 0", backgroundColor: "secondary.main", }}>
+                <Box sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: "100%" }}>
+                    <Box sx={{ width: isSmallScreen ? "100%" : "40%" }}>
+                        <Box sx={{ width: "90%", margin: "0 5%" }}>
+                            <Typography variant="h6" sx={{ fontWeight: "bold", color: "primary.light" }}>For more Info:</Typography>
+                            <Box sx={{ display: "flex", flexDirection: "row", marginTop: "30px" }}>
+                                <Typography variant="subtitle1" sx={{ color: "primary.light", marginRight: "5px" }}>Call:</Typography>
+                                <Typography variant="subtitle1"> +27 84 762 4761 / +27 81 371 3520</Typography>
                             </Box>
-                        }
-                        <Box sx={{ width: "100%", height: isSmallScreen ? "100%" : "90px", display: "flex", flexDirection: isSmallScreen ? "column" : "row", position: "relative" }}>
-                            <Box sx={{ width: isSmallScreen ? "100%" : "20%", height: isSmallScreen ? "auto" : "100%", display: "flex", justifyContent: isSmallScreen ? "start" : "center", alignItems: "center" }}>
-                                <img src={logo} style={{ width: "150px", marginLeft: isSmallScreen ? "20px" : "0" }} />
+
+                            <Typography variant="subtitle1" sx={{ color: "primary.light", marginTop: "20px" }}>Visit:</Typography>
+                            <Box sx={{ display: "flex", flexDirection: "row", marginTop: "5px" }}>
+                                <Typography variant="subtitle1" sx={{ color: "primary.light", marginRight: "5px" }}>Head Office:</Typography>
+                                <Typography variant="subtitle1">107 Villa Dine,</Typography>
+
                             </Box>
-                            <Box sx={{ width: isSmallScreen ? "100%" : "60%", height: "100px", display: "flex", justifyContent: isSmallScreen ? "start" : "center", alignItems: "center", marginTop: isSmallScreen ? "50px" : "0" }}>
-                                <Box sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row" }}>
-                                    <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0" }}>Home</Link>
-                                    <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0" }}>About Us</Link>
-                                    <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0" }}>Courses</Link>
-                                    <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0" }}>Tutors</Link>
-                                    <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0" }}>Contact Us</Link>
-                                </Box>
+                            <Box>
+                                <Typography variant="subtitle1"> 550 Denmar pl, Garsfontein</Typography>
+                                <Typography variant="subtitle1">Pretoria East, 0042</Typography>
                             </Box>
-                            <Box sx={{ width: isSmallScreen ? "100%" : "20%", height: isSmallScreen ? "auto" : "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: isSmallScreen ? "50px" : "0", position: isSmallScreen ? "absolute" : "relative", bottom: isSmallScreen ? "50px" : "unset" }}>
-                                <Box sx={{ display: "flex", flexDirection: "row", marginLeft: isSmallScreen ? "20px" : "0" }}>
-                                    <SmallButton text={"Sign In"} />
-                                    <ToUserButton />
-                                </Box>
+
+                            <Box sx={{ display: "flex", flexDirection: "row", marginTop: "5px" }}>
+                                <Typography variant="subtitle1" sx={{ color: "primary.light", marginRight: "5px" }}>Main Campus:</Typography>
+                                <Typography variant="subtitle1">1482 Police Station street,</Typography>
+
+                            </Box>
+                            <Box>
+                                <Typography variant="subtitle1">Lenyenye-A, 0857</Typography>
+                            </Box>
+
+                            <Box sx={{ display: "flex", flexDirection: "row", marginTop: "5px" }}>
+                                <Typography variant="subtitle1" sx={{ color: "primary.light", marginRight: "5px" }}>Corporate Park:</Typography>
+                                <Typography variant="subtitle1"> 1482 Police Station Street</Typography>
+
+                            </Box>
+                            <Box>
+                                <Typography variant="subtitle1">Lenyenye-A, 0857</Typography>
                             </Box>
                         </Box>
+
                     </Box>
-                    }
-            {/* </div> */}
+                    <Box sx={{ width: isSmallScreen ? "100%" : "40%", marginTop: "50px" }}>
+                        <Box sx={{ width: "90%", margin: "0 5%" }}>
+                            <Typography variant="h6" sx={{ fontWeight: "bold", color: "primary.light" }}>Home</Typography>
+                            <Typography variant="h6" sx={{ fontWeight: "bold", color: "primary.light" }}>About Us</Typography>
+                            <Typography variant="h6" sx={{ fontWeight: "bold", color: "primary.light" }}>Courses</Typography>
+                            <Typography variant="h6" sx={{ fontWeight: "bold", color: "primary.light" }}>Tutors</Typography>
+                            <Typography variant="h6" sx={{ fontWeight: "bold", color: "primary.light" }}>Contact Us</Typography>
+                        </Box>
+                    </Box>
+                    <Box sx={{ width: isSmallScreen ? "100%" : "20%" }}>
+                        <Box sx={{ width: "90%", margin: isSmallScreen ? "5% 3%" : "0 5%" }}>
+                            <img src={logo} style={{ width: "150px", }} />
+                        </Box>
+                    </Box>
+                </Box>
+                <Box sx={{ width: "100%", height: "60px", backgroundColor: "primary.light", marginTop: "50px" }} />
+            </Box>
         </>
-    );
+    )
 }

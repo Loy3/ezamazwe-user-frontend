@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Paper from '@mui/material/Paper';
-import { Box, useMediaQuery} from '@mui/material';
+import { Box, useMediaQuery, Backdrop, CircularProgress } from '@mui/material';
 import Button from '../Components/Buttons'
 import SectionHeading from '../Components/SectionHeading';
 import SectionSubHeading from '../Components/SectionSubHeading';
@@ -27,14 +27,16 @@ function ResetPassword() {
 
     const [confrimPasswordErr, setConfrimPasswordErr] = useState(false);
     const [confrimPasswordErrMsg, setConfrimPasswordErrMsg] = useState("");
+    const [open, setOpen] = React.useState(false);
 
     const handleResetPassword = async () => {
-
+        setOpen(true);
         // Validate password complexity on the client side
 
         if (!currentPassword) {
             setOldPasswordErr(true);
             setOldPasswordErrMsg("*input is required.")
+            setOpen(false);
         } else {
             setOldPasswordErr(false);
             setOldPasswordErrMsg("")
@@ -43,6 +45,7 @@ function ResetPassword() {
         if (!newPassword) {
             setNewPasswordErr(true);
             setNewPasswordErrMsg("*input is required.")
+            setOpen(false);
         } else {
             setNewPasswordErr(false);
             setNewPasswordErrMsg("")
@@ -51,6 +54,7 @@ function ResetPassword() {
         if (!confirmPassword) {
             setConfrimPasswordErr(true);
             setConfrimPasswordErrMsg("*input is required.")
+            setOpen(false);
         } else {
             setConfrimPasswordErr(false);
             setConfrimPasswordErrMsg("")
@@ -62,6 +66,7 @@ function ResetPassword() {
                 // alert('Password does not meet complexity requirements.');
                 setNewPasswordErr(true);
                 setNewPasswordErrMsg(isPasswordValid(newPassword))
+                setOpen(false);
                 return;
             } else {
                 setNewPasswordErr(false);
@@ -73,6 +78,7 @@ function ResetPassword() {
                 setNewPasswordErrMsg("Passwords do not match")
                 setConfrimPasswordErr(true);
                 setConfrimPasswordErrMsg("Passwords do not match");
+                setOpen(false);
 
                 // ?alert('Passwords entered do not match. Re-enter passwords.');
                 return;
@@ -82,9 +88,10 @@ function ResetPassword() {
                 setConfrimPasswordErr(false);
                 setConfrimPasswordErrMsg("");
                 try {
-                    await ResetPasswordFunction(user, currentPassword, newPassword).then(()=>{
-                        navigate('');
-                    })                   
+                    await ResetPasswordFunction(user, currentPassword, newPassword).then(() => {
+                        setOpen(true);
+                        navigate('/signin');
+                    })
 
                 } catch (error) {
                     console.log("Error occured at reset password function:", error);
@@ -98,31 +105,42 @@ function ResetPassword() {
 
 
     return (
-        <div style={{ backgroundColor: '#B3B3B3', height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', }} >
-            <div style={{ maxWidth: '1440px', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-            <Paper elevation={3} style={{ padding: isSmallScreen ? "30px 20px" : '50px', width: isSmallScreen ? "85%" : '35%', height: 'auto', borderRadius: '10px' }}>
-                    <div style={{
-                        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 'fit-content',
-                    }}>
-                        <Box style={{ paddingBottom: theme.spacing(isSmallScreen ? 3 : 4) }}>
-                            <SectionHeading children={"EZAMAZWE EDUTECH"} /></Box>
+        <>
+            <div style={{ backgroundColor: '#B3B3B3', height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', }} >
+                <div style={{ maxWidth: '1440px', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                    <Paper elevation={3} style={{ padding: isSmallScreen ? "30px 20px" : '50px', width: isSmallScreen ? "85%" : '35%', height: 'auto', borderRadius: '10px' }}>
+                        <div style={{
+                            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 'fit-content',
+                        }}>
+                            <Box style={{ paddingBottom: theme.spacing(isSmallScreen ? 3 : 4) }}>
+                                <SectionHeading children={"EZAMAZWE EDUTECH"} /></Box>
                             <SectionSubHeading children={"Create you account"} />
-                    </div>
-                    <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
-                        <TextFieldPassword label={"Current Password:"} errorStatus={oldPasswordErr} errorMessage={oldPasswordErrMsg} setState={setCurrentPassword} />
-                    </Box>
-                    <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
-                        <TextFieldPassword label={"New Password:"} errorStatus={newPasswordErr} errorMessage={newPasswordErrMsg} setState={setNewPassword} />
-                    </Box>
-                    <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
-                        <TextFieldPassword label={"Confirm Password:"} errorStatus={confrimPasswordErr} errorMessage={confrimPasswordErrMsg} setState={setConfirmPassword} />
-                    </Box>
-                    <Box style={{ paddingTop: theme.spacing(4), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 15 }}>
-                        <Button text={"Reset"} buttonFunction={handleResetPassword} />
-                    </Box>
-                </Paper>
+                        </div>
+                        <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
+                            <TextFieldPassword label={"Current Password:"} errorStatus={oldPasswordErr} errorMessage={oldPasswordErrMsg} setState={setCurrentPassword} />
+                        </Box>
+                        <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
+                            <TextFieldPassword label={"New Password:"} errorStatus={newPasswordErr} errorMessage={newPasswordErrMsg} setState={setNewPassword} />
+                        </Box>
+                        <Box style={{ padding: theme.spacing(3), paddingTop: theme.spacing(3) }}>
+                            <TextFieldPassword label={"Confirm Password:"} errorStatus={confrimPasswordErr} errorMessage={confrimPasswordErrMsg} setState={setConfirmPassword} />
+                        </Box>
+                        <Box style={{ paddingTop: theme.spacing(4), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 15 }}>
+                            <Button text={"Reset"} buttonFunction={handleResetPassword} />
+                        </Box>
+                    </Paper>
+                </div>
             </div>
-        </div>
+            <div>
+
+                <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={open}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
+            </div>
+        </>
     )
 }
 

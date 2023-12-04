@@ -5,11 +5,10 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { useState } from "react";
-
-
 export const Accordians = ({ label, types, setReturnType, returnType }) => {
-    const [buttonAct, setButtonAct] = useState("0deg");
+    const [buttonAct, setButtonAct] = useState("180deg");
     // const [value, setValue] = useState('type');
     const [categoryStatus, setCategoryStatus] = useState(false);
     const handleChange = (event) => {
@@ -18,11 +17,11 @@ export const Accordians = ({ label, types, setReturnType, returnType }) => {
         setReturnType(event.target.value)
     };
     function handleButton() {
-        if (buttonAct === "0deg") {
-            setButtonAct("-90deg");
+        if (buttonAct === "180deg") {
+            setButtonAct("90deg");
             setCategoryStatus(true);
         } else {
-            setButtonAct("0deg");
+            setButtonAct("180deg");
             setCategoryStatus(false);
         }
     }
@@ -32,9 +31,9 @@ export const Accordians = ({ label, types, setReturnType, returnType }) => {
         <>
             <Box sx={{ width: "100%", backgroundColor: "white", borderTop: "2px solid #396781" }}>
                 <Box sx={{ display: "flex", flexDirection: "row" }}>
-                    <Typography sx={{ width: "40%", margin: "0 5%", height: "inherit", display: "flex", alignItems: "center", fontWeight: "bold", color: "primary.light" }}>{label}</Typography>
+                    <Typography variant="h6" sx={{ width: "40%", margin: "10px 5%", height: "inherit", display: "flex", alignItems: "center", fontWeight: "bold", color: "primary.light" }}>{label}</Typography>
                     <Box sx={{ width: "40%", margin: "0 5%", display: "flex", justifyContent: "end" }}>
-                        <IconButton aria-label="Category" onClick={handleButton}><ChevronLeftIcon sx={{ rotate: `${buttonAct}`, fontWeight: "bold", color: "primary.light" }} /></IconButton>
+                        <IconButton aria-label="Category" onClick={handleButton}><PlayArrowIcon sx={{ rotate: `${buttonAct}`, fontWeight: "bold", color: "primary.light", fontSize:"30px" }} /></IconButton>
                     </Box>
                 </Box>
 

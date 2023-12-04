@@ -6,7 +6,7 @@ const Label = ({ children }) => {
   return (
     <>
       {isSmallScreen ?
-        <Typography variant="h2" component="h4" sx={{ color: 'primary.light', fontWeight: "bold", lineHeight: "125%", letterSpacing: "0.25px",padding:"0px", margin:"0" }}>
+        <Typography variant="h5" component="h4" sx={{ color: 'primary.light', fontWeight: "bold", lineHeight: "125%", letterSpacing: "0.25px",padding:"0px", margin:"0" }}>
           {children}
         </Typography>
         :

@@ -19,7 +19,8 @@ export const theme = createTheme({
       },
       greys: {
         main: '#C6D0D6',
-        dark: '#B3B3B3'
+        dark: '#B3B3B3',
+        light:"rgba(198, 208, 214, 0.40)"
       },
       links: {
         main:  '#B8EFFF'

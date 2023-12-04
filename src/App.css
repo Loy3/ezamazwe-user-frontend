@@ -1,49 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;1,800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Playpen+Sans:wght@400;600;800&family=Poppins:wght@400;600;800&display=swap');
 
-*{
-  font-family: 'Poppins', sans-serif;
-}
-
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  * {
+    font-family: 'Lilita One', sans-serif;
+    font-family: 'Playpen Sans', cursive;
+    font-family: 'Poppins', sans-serif;
   }
 
-  to {
-    transform: rotate(360deg);
-  }
-}
 
+  /* HTML: <div class="loader"></div> */
+.loader {
+  --d:80px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  color: #396781;
+  box-shadow: 
+    calc(1*var(--d))      calc(0*var(--d))     0 0,
+    calc(0.707*var(--d))  calc(0.707*var(--d)) 0 2px,
+    calc(0*var(--d))      calc(1*var(--d))     0 4px,
+    calc(-0.707*var(--d)) calc(0.707*var(--d)) 0 6px,
+    calc(-1*var(--d))     calc(0*var(--d))     0 8px,
+    calc(-0.707*var(--d)) calc(-0.707*var(--d))0 10px,
+    calc(0*var(--d))      calc(-1*var(--d))    0 12px;
+  animation: l27 1s infinite steps(8);
+}
+@keyframes l27 {
+  100% {transform: rotate(1turn)}
+}
 
 
 .list {

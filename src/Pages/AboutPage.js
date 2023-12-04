@@ -6,7 +6,6 @@ import Button from "../Components/Buttons";
 import SectionSubHeading from "../Components/SectionSubHeading";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import LearningSupport from "../Assets/learning-support (1).png";
 import image3 from "../Assets/max-fisch.jpg";
@@ -18,16 +17,22 @@ import twitter from "../Assets/twitter.png";
 function AboutPage() {
   return (
     <>
-      <Grid sx={{ display: "flex", padding: "180px", flexDirection: "row" }}>
+      <Grid
+        sx={{
+          display: "flex",
+          flexDirection: ["column", "column", "row"],
+          padding: ["20px", "40px", "180px"],
+        }}
+      >
         <Box>
           <img
             src={image}
             alt="cover"
-            width={350}
+            width='80%'
             sx={{ borderRadius: "30px" }}
           />
         </Box>
-        <Box sx={{ marginLeft: "70px" }}>
+        <Box sx={{ marginBottom: ["20px", "20px", 0],paddingLeft:["20px", "40px", 0] }}>
           <Label children={"We are Company Name"} />
           <SectionSubHeading
             children={
@@ -35,19 +40,21 @@ function AboutPage() {
             }
             sx={{ marginBottom: "30px" }}
           />
-          <Typography variant="body1" paragraph sx={{ marginTop: "10px" }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-            convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla
-            massa turpis, elementum id maximus nec, pellentesque vel ante.
-            Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut
-            nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a
-            pellentesque nisl. Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit. Quisque convallis magna a tellus blandit, eu
-            bibendum enim venenatis. Nulla massa turpis, elementum id maximus
-            nec, pellentesque vel ante. Vestibulum dapibus enim neque, id
-            vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo
-            arcu. Suspendisse potenti. Nunc a pellentesque nisl.
-          </Typography>
+          
+            <Typography variant="body1" paragraph sx={{ marginTop: "10px",paddingLeft:'30px' }}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+              convallis magna a tellus blandit, eu bibendum enim venenatis.
+              Nulla massa turpis, elementum id maximus nec, pellentesque vel
+              ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis
+              ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti.
+              Nunc a pellentesque nisl. Lorem ipsum dolor sit amet, consectetur
+              adipiscing elit. Quisque convallis magna a tellus blandit, eu
+              bibendum enim venenatis. Nulla massa turpis, elementum id maximus
+              nec, pellentesque vel ante. Vestibulum dapibus enim neque, id
+              vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo
+              arcu. Suspendisse potenti. Nunc a pellentesque nisl.
+            </Typography>
+         
           <Box sx={{ width: "450px" }}>
             {" "}
             <Button text={"Join"} />
@@ -101,13 +108,13 @@ function AboutPage() {
                   borderRadius: "50%",
                   color: "white",
                   border: "3px solid white",
-                  margin: "auto", 
-                  marginBottom: "10px", 
-                  width:'170px',
-                  height:'130px',
+                  margin: "auto",
+                  marginBottom: "10px",
+                  width: "170px",
+                  height: "130px",
                 }}
               >
-                <img src={LearningSupport} alt="vector" width={100} sx={{}}/>
+                <img src={LearningSupport} alt="vector" width={100} sx={{}} />
               </Box>
 
               <Typography
@@ -145,18 +152,18 @@ function AboutPage() {
             }}
           >
             <CardContent>
-            <Box
+              <Box
                 sx={{
                   borderRadius: "50%",
                   color: "white",
                   border: "3px solid white",
-                  margin: "auto", 
-                  marginBottom: "10px", 
-                  width:'170px',
-                  height:'130px',
+                  margin: "auto",
+                  marginBottom: "10px",
+                  width: "170px",
+                  height: "130px",
                 }}
               >
-                <img src={LearningSupport} alt="vector" width={100} sx={{}}/>
+                <img src={LearningSupport} alt="vector" width={100} sx={{}} />
               </Box>
               <Typography
                 variant="h5"
@@ -193,18 +200,18 @@ function AboutPage() {
             }}
           >
             <CardContent>
-            <Box
+              <Box
                 sx={{
                   borderRadius: "50%",
                   color: "white",
                   border: "3px solid white",
-                  margin: "auto", 
-                  marginBottom: "10px", 
-                  width:'170px',
-                  height:'130px',
+                  margin: "auto",
+                  marginBottom: "10px",
+                  width: "170px",
+                  height: "130px",
                 }}
               >
-                <img src={LearningSupport} alt="vector" width={100} sx={{}}/>
+                <img src={LearningSupport} alt="vector" width={100} sx={{}} />
               </Box>
               <Typography
                 variant="h5"
