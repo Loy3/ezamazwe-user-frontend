@@ -13,6 +13,8 @@ import CardContent from '@mui/material/CardContent';
 import { SignupFunction } from '../Services/AuthService';
 import { useNavigate } from 'react-router-dom';
 import { ViewMembersFunction } from "../Services/CourseService";
+import { auth } from "../Services/firebaseConfig";
+
 
 const AboutUs = () => {
     const [email, setEmail] = useState('');
@@ -21,12 +23,15 @@ const AboutUs = () => {
     const [open, setOpen] = useState(false);
     const theme = useTheme();
     const navigate = useNavigate();
+    const user = auth.currentUser;
 
     useEffect(() => {
         handleFetchMembers();
     }, []);
 
+    
     const handleJoin = async () => {
+
         try {
             const user = await SignupFunction(email, password);
             console.log('User data in signup component:', user);
@@ -42,7 +47,9 @@ const AboutUs = () => {
         } catch (error) {
             console.error('Error occurred during signup:', error.message);
         }
+
     }
+
 
     const handleFetchMembers = async () => {
         try {
@@ -55,8 +62,13 @@ const AboutUs = () => {
     }
 
 
+    // Show signup form
     const handleOpen = () => {
-        setOpen(true);
+        if (user) {
+            alert("You already joined or signed up.");
+        } else {
+            setOpen(true);
+        }
     };
 
     const handleClose = () => {
@@ -169,7 +181,7 @@ const AboutUs = () => {
                             <Grid container>
                                 <Grid item xs>
                                     <Box sx={{ display: 'flex', justifyContent: 'center', mt: -1 }}>
-                                        <Link href="/" variant="body2">
+                                        <Link href="/signin" variant="body2">
                                             Already have account? Sign in
                                         </Link>
                                     </Box>
@@ -227,7 +239,7 @@ const AboutUs = () => {
                                 <div>
                                     <Card>
                                         <CardContent>
-                                            <img src={member.image} alt="image" style={{width:'150px', height:'150px'}} />
+                                            <img src={member.image} alt="image" style={{ width: '150px', height: '150px' }} />
                                             <Typography variant="h5" component="div">
                                                 Team Member
                                             </Typography>

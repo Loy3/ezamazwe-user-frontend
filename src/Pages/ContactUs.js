@@ -11,6 +11,18 @@ const ContactUs = () => {
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
 
+    const [firstNameErr, setFirstNameErr] = useState(false);
+    const [lastNameErr, setLastNameErr] = useState(false);
+    const [emailErr, setEmailErr] = useState(false);
+    const [subjectErr, setSubjectErr] = useState(false);
+    const [messageErr, setMessageErr] = useState(false);
+
+    const [firstNameErrMsg, setFirstNameErrMsg] = useState('');
+    const [lastNameErrMsg, setLastNameErrMsg] = useState('');
+    const [emailErrMsg, setEmailErrMsg] = useState('');
+    const [subjectErrMsg, setSubjectErrMsg] = useState('');
+    const [messageErrMsg, setMessageErrMsg] = useState('');
+
 
     // Validate email
     const isEmailValid = (email) => {
@@ -21,13 +33,10 @@ const ContactUs = () => {
 
     const handleSendMessage = async () => {
 
-        try {
-            if (!firstName || !lastName || !email || !subject || !message) {
-                
-                return alert('Warning! All fields are required!');
+        try { 
 
-            } else if (isEmailValid(email)) {
-                
+            if (isEmailValid(email) && firstName && lastName && email && subject && message) {
+
                 await ContactUsFunction(firstName, lastName, email, subject, message);
                 alert("Message sent successfully.");
 
@@ -39,9 +48,52 @@ const ContactUs = () => {
                 setMessage('');
 
             } else {
-                console.log("Email is not valid!");
-                alert("Email is not valid. Please enter the correct email address!");
+                if (!firstName) {
+                    setFirstNameErr(true);
+                    setFirstNameErrMsg("*input is required.");
+                } else {
+                    setFirstNameErr(false);
+                    setFirstNameErrMsg("");
+                }
+
+                if (!lastName) {
+                    setLastNameErr(true);
+                    setLastNameErrMsg("*input is required.");
+                } else {
+                    setLastNameErr(false);
+                    setLastNameErrMsg("");
+                }
+
+                if (!isEmailValid(email)) {
+                    setEmailErr(true);
+                    setEmailErrMsg("*Valid email address is required.");
+                } else {
+                    setEmailErr(false);
+                    setEmailErrMsg("");
+                }
+
+                if (!subject) {
+                    setSubjectErr(true);
+                    setSubjectErrMsg("*input is required.");
+                } else {
+                    setSubjectErr(false);
+                    setSubjectErrMsg("");
+                }
+
+                if (!message) {
+                    setMessageErr(true);
+                    setMessageErrMsg("*input is required.");
+                } else {
+                    setMessageErr(false);
+                    setMessageErrMsg("");
+                }
+
             }
+
+            // else {
+            //     console.log("Email is not valid!");
+            //     alert("Email is not valid. Please enter the correct email address!");
+            // }
 
         } catch (error) {
 
@@ -63,40 +115,51 @@ const ContactUs = () => {
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
             />
+            <p style={{ color: 'red' }}>{firstNameErrMsg}</p>
             <br></br>
             <br></br>
+
             <input
                 type="text"
                 placeholder="Last Name"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
             />
+            <p style={{ color: 'red' }}>{lastNameErrMsg}</p>
             <br></br>
             <br></br>
+
             <input
                 type="text"
                 placeholder="Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
+            <p style={{ color: 'red' }}>{emailErrMsg}</p>
             <br></br>
             <br></br>
+
             <input
                 type="text"
                 placeholder="Subject"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
             />
+            <p style={{ color: 'red' }}>{subjectErrMsg}</p>
             <br></br>
             <br></br>
+
             <textarea
                 type="text"
                 style={{ height: '100px' }}
                 placeholder="Message"
                 value={message}
-                onChange={(e) => setMessage(e.target.value)} />
+                onChange={(e) => setMessage(e.target.value)}
+            />
+            <p style={{ color: 'red' }}>{messageErrMsg}</p>
             <br></br>
             <br></br>
+
             <button onClick={handleSendMessage}>Send</button>
             <br></br>
             <br></br>
