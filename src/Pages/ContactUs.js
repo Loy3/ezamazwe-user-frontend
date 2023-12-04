@@ -1,173 +1,135 @@
-
-import React, { useState } from "react";
-import { ContactUsFunction } from "../Services/CourseService";
-
-
-const ContactUs = () => {
-
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [subject, setSubject] = useState('');
-    const [message, setMessage] = useState('');
-
-    const [firstNameErr, setFirstNameErr] = useState(false);
-    const [lastNameErr, setLastNameErr] = useState(false);
-    const [emailErr, setEmailErr] = useState(false);
-    const [subjectErr, setSubjectErr] = useState(false);
-    const [messageErr, setMessageErr] = useState(false);
-
-    const [firstNameErrMsg, setFirstNameErrMsg] = useState('');
-    const [lastNameErrMsg, setLastNameErrMsg] = useState('');
-    const [emailErrMsg, setEmailErrMsg] = useState('');
-    const [subjectErrMsg, setSubjectErrMsg] = useState('');
-    const [messageErrMsg, setMessageErrMsg] = useState('');
-
-
-    // Validate email
-    const isEmailValid = (email) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    };
-
-
-    const handleSendMessage = async () => {
-
-        try { 
-
-            if (isEmailValid(email) && firstName && lastName && email && subject && message) {
-
-                await ContactUsFunction(firstName, lastName, email, subject, message);
-                alert("Message sent successfully.");
-
-                // Reset field data to default values
-                setFirstName('');
-                setLastName('');
-                setEmail('');
-                setSubject('');
-                setMessage('');
-
-            } else {
-                if (!firstName) {
-                    setFirstNameErr(true);
-                    setFirstNameErrMsg("*input is required.");
-                } else {
-                    setFirstNameErr(false);
-                    setFirstNameErrMsg("");
-                }
-
-                if (!lastName) {
-                    setLastNameErr(true);
-                    setLastNameErrMsg("*input is required.");
-                } else {
-                    setLastNameErr(false);
-                    setLastNameErrMsg("");
-                }
-
-                if (!isEmailValid(email)) {
-                    setEmailErr(true);
-                    setEmailErrMsg("*Valid email address is required.");
-                } else {
-                    setEmailErr(false);
-                    setEmailErrMsg("");
-                }
-
-                if (!subject) {
-                    setSubjectErr(true);
-                    setSubjectErrMsg("*input is required.");
-                } else {
-                    setSubjectErr(false);
-                    setSubjectErrMsg("");
-                }
-
-                if (!message) {
-                    setMessageErr(true);
-                    setMessageErrMsg("*input is required.");
-                } else {
-                    setMessageErr(false);
-                    setMessageErrMsg("");
-                }
-
-            }
-
-            // else {
-            //     console.log("Email is not valid!");
-            //     alert("Email is not valid. Please enter the correct email address!");
-            // }
-
-        } catch (error) {
-
-            alert("Something went wrong. Please try again.");
-            console.log("Error sending message:", error);
+import React, { useEffect, useState } from "react";
+import { Box, Typography, useMediaQuery } from "@mui/material";
+import { NavBar } from "../Components/NavBar";
+import StopIcon from "@mui/icons-material/Stop";
+import { HeaderComp } from "../Components/HeaderComp";
+import ContactUsCard from "../Components/ContactUsCard";
+import { FooterComp } from "../Components/Footer"
+import SideCard from "../Components/SideCard";
+function ContactUs() {
+  const desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac.";
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
+  return (
+    <>
+      <NavBar
+        icon={
+          <StopIcon
+            sx={{
+              textDecoration: "none",
+              color: "#396781",
+              cursor: "pointer",
+              width: "20px",
+              height: "20px",
+              alignItems: "center",
+              justifyContent: "center",
+              top: "990px",
+              left: "742px",
+            }}
+          />
         }
-    }
+         location={"contact"}
+      />
+      <Box sx={{ width: "100%" }}>
+        <HeaderComp
+          text={"Contact Us"}
+          paragraph={
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas metus nulla."
+          }
+        />
+      </Box>
+      <Box sx={{
+        width: "100%", height: "auto", display: "flex", justifyContent: "center", alignItems: "center"
+      }}>
+        <Box sx={{
+          maxWidth: "1440px", width: "100%", height: "100%",
+        }}>
+
+          <Box sx={{ width: "94%", margin: "-100px 3% 30px 3%", display: "flex", flexDirection: isSmallScreen ? "column" : "row", }}>
+            <Box sx={{ width: isSmallScreen ? "94%" : "30%", margin:isSmallScreen?"0 3%":"0" }}>
+              <SideCard children={""} header={"Company Name"} slogan={"Company slogan"} location={"Street Address 2012 City City Ci Zip code"} contact={"+012 000 0025"} email={"emailAddress@ezamazwe.com"} />
+            </Box>
+            <Box sx={{ width: isSmallScreen ? "94%" : "70%", margin:isSmallScreen?"0 3%":"0" }}>
+              <Box sx={{ width: "100%" }}>
+                <ContactUsCard
+                  header={"Send us a message"}
+                  description={
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                  }
+                  name={"First Name:"}
+                  secondname={"Last Name:"}
+                  email={"Email Address:"}
+                  subject={"Subject:"}
+                  label={"Message:"}
+
+                />
+              </Box>
+            </Box>
+          </Box>
 
 
-    return (
-        <div>
-            <div style={{ marginTop: '50px', marginBottom: '50px' }}>
-                <h1>Contact Us</h1>
-            </div>
-            <h2>Send us a message</h2>
-            <input
-                type="text"
-                placeholder="First Name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-            />
-            <p style={{ color: 'red' }}>{firstNameErrMsg}</p>
-            <br></br>
-            <br></br>
-
-            <input
-                type="text"
-                placeholder="Last Name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-            />
-            <p style={{ color: 'red' }}>{lastNameErrMsg}</p>
-            <br></br>
-            <br></br>
-
-            <input
-                type="text"
-                placeholder="Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <p style={{ color: 'red' }}>{emailErrMsg}</p>
-            <br></br>
-            <br></br>
-
-            <input
-                type="text"
-                placeholder="Subject"
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-            />
-            <p style={{ color: 'red' }}>{subjectErrMsg}</p>
-            <br></br>
-            <br></br>
-
-            <textarea
-                type="text"
-                style={{ height: '100px' }}
-                placeholder="Message"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-            />
-            <p style={{ color: 'red' }}>{messageErrMsg}</p>
-            <br></br>
-            <br></br>
-
-            <button onClick={handleSendMessage}>Send</button>
-            <br></br>
-            <br></br>
-            <div style={{ marginTop: '50px' }}>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14374.480891453777!2d28.175938168254948!3d-25.750069860776502!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e956213a2f4f16d%3A0x993da7df3774cd26!2sPretoria%20Central%2C%20Pretoria%2C%200002!5e0!3m2!1sen!2sza!4v1700819168974!5m2!1sen!2sza" width="600" height="450" style={{ border: "0" }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </div>
-    );
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              flexDirection: { xs: "column", sm: "column", md: "row", lg: "row", xl: "row" },
+              marginTop: "50px",
+              // marginLeft: { xs: "0px", sm: "0px", md: "20px", lg: "50px", xl: "70px" },
+              marginBottom:"50px"
+            }}
+          >
+            <Box
+              sx={{
+                width: { xs: "425px", sm: "770px", md: "400px", lg: "680px", xl: "610px" },
+                marginLeft: {
+                  xs: "0px",
+                  sm: "0px",
+                  md: "0px",
+                  lg: "0px",
+                  xl: "0px",
+                },
+                height: "393px",
+                bgcolor: "#396781",
+                color: "white",
+              }}
+            >
+              <Typography
+                variant="body1"
+                sx={{
+                  fontFamily: "Poppins, sanserif",
+                  fontWeight: "400",
+                  fontSize: "16px",
+                  lineHeight: "24px",
+                  letterSpacing: "0.15px",
+                  alignItems: "center",
+                  textAlign: "center",
+                  justifyContent: "center",
+                  alignSelf: "center",
+                  width: { xs: "360px", sm: "500px", md: "350px", lg: "410px", xl: "410px" },
+                  height: "144px",
+                  marginTop: { xs: "25%", sm: "18%", md: "28%", lg: "28%", xl: "27%" },
+                  marginLeft: { xs: "20px", sm: "120px", md: "25px", lg: "20px", xl: "20px" },
+                }}
+              >
+                {desc}
+              </Typography>
+            </Box>
+            <Box sx={{ width: "100%" }}>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14372.641308820334!2d28.26240085!3d-25.7652674!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e956057c13cbcc9%3A0x265c611461e24f9!2sLynnwood%2C%20Pretoria%2C%200081!5e0!3m2!1sen!2sza!4v1701081112705!5m2!1sen!2sza"
+                width="100%"
+                height="393px"
+                style={{
+                  border: "0",
+                }}
+              />
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+      <FooterComp />
+    </>
+  );
 }
 
 export default ContactUs;

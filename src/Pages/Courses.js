@@ -1,56 +1,209 @@
-
-import React, { useState, useRef } from "react";
-import { ViewCoursesFunction } from "../Services/CourseService";
+import { Box, Button, Container, Grid, Typography } from '@mui/material'
+import React, { useState, useEffect, useRef } from 'react'
+import TuneIcon from '@mui/icons-material/Tune';
+import { Accordians } from '../Components/Accordians';
+import video1 from "../Assets/Videos/video1.mp4";
+import { CourseCard } from "../Components/Cards"
+import { useMediaQuery } from '@mui/material';
+import { FilterButton } from '../Components/Buttons';
 import { FilterCategoryFunction } from "../Services/CourseService";
 import { FilterTopicFunction } from "../Services/CourseService";
 import { FilterGradeFunction } from "../Services/CourseService";
 import { FilterSubscriptionFunction } from "../Services/CourseService";
-import { useNavigate } from "react-router-dom";
-import { fetchCoursesFunction } from "../Services/CourseService";
 import { fetchCourseDetailsFunction } from "../Services/CourseService";
+import { FilteredDocFunction, fetchCoursesFunction, getCategoryData } from '../Services/CourseService';
+import { ViewCoursesFunction } from "../Services/CourseService";
+import zIndex from '@mui/material/styles/zIndex';
+import { useNavigate } from 'react-router-dom';
+import CancelIcon from '@mui/icons-material/Cancel';
+const Category = ["CAP", "IEB", "Entrapreneur"]
+const Grades = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
+const Subjects = ["Language", "Accounting", "Economics", "History", "Life Science", "Maths", "Physical Science",]
+const Subscription = ["Free", "Subscribed"]
+const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis.";
 
+function Courses() {
+    const navigate = useNavigate();
 
-const Courses = () => {
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
+    // const [returnType, setReturnType] = useState('')
+    const [filterCategories, setFilterCategories] = useState([])
+    const [subCategory, setSubCategory] = useState('')
+    const [topicS, setTopicS] = useState('')
+    const [type, setType] = useState('')
+
+    // const [categoryStatus, setCategoryStatus] = useState('')
+    const [subCategoryStatus, setSubCategoryStatus] = useState(false);
+    const [topicSStatus, setTopicSStatus] = useState(false);
+    const [typeStatus, setTypeStatus] = useState(false);
+
+    const [rtnCategory, setRtnCategory] = useState('')
+    // const [rtnSubCategory, setRtnSubCategory] = useState("");
+    // const [rtnTopic, setRtnTopic] = useState("");
+    // const [rtnType, setRtnType] = useState("");
 
     const [courses, setCourses] = useState([]);
-    const [details, setDetails] = useState([]);
+    const [docData, setDocData] = useState([]);
     const [category, setCategory] = useState('');
     const [subject, setSubject] = useState('');
     const [grade, setGrade] = useState('');
     const [subscription, setSubscription] = useState('');
     const videoRef = useRef(null);
-    const navigate = useNavigate();
+
+    const [openMenuStatus, setOpenMenuStatus] = useState(false);
+    useEffect(() => {
+        if (!isSmallScreen) {
+            setOpenMenuStatus(true)
+        } else {
+            setOpenMenuStatus(false)
+        }
+    }, [isSmallScreen])
+
+    useEffect(() => {
+        if (rtnCategory) {
+            setSubCategoryStatus(true);
+        } else {
+            setSubCategoryStatus(false)
+        }
+    }, [rtnCategory])
+
+    useEffect(() => {
+        if (subCategory) {
+            setTopicSStatus(true);
+        } else {
+            setTopicSStatus(false)
+        }
+    }, [subCategory])
+
+    useEffect(() => {
+        if (topicS) {
+            setTypeStatus(true);
+        } else {
+            setTypeStatus(false)
+        }
+    }, [topicS])
+
+    const [categories, setCategories] = useState()
+
+    useEffect(() => {
+        const category = async () => {
+            await getCategoryData().then(data => {
+                const catNames = categoryNames(data)
+                // console.log(catNames);
+                let catArr = [];
+
+                catNames.map(value => {
+                    const entries = Object.entries(value)
+                    catArr.push(entries[0][1])
+                })
+                setFilterCategories(catArr)
+                setCategories(data);
+            })
+        }
+        category()
+    }, [])
+
+    const categoryNames = (types) => {
+        return Object.keys(types).map(key => {
+            return { [key]: types[key].name }
+
+        })
+    }
+
+    const subCategories = (key) => {
+        return categories[key]?.grades || [];
+    };
+
+    //     // console.log('grades')
+    //   if (categories) {
+    //     console.log(subCategories(rtnCategory.toLowerCase()))
+    //   }
+
+    // const subjects = (key, grade) => {
+
+    //     let newGrade = grade.replace(/ /g, "_")
+    //     // console.log(newGrade);
+    //     if (categories[key] && categories[key].subjects && categories[key].subjects[grade]) {
+    //         return categories[key].subjects[grade];
+    //     }
+    //     return [];
+    // };
+
+    //   console.log('subjects')
+    //   if (categories) {
+    //     console.log(subjects(rtnCategory.toLowerCase(), subCategory))
+    //   }
+
+    const subjects = (key, grade) => {
+        const convertedGrade = grade.replace(" ", "_");
+        // console.log(convertedGrade);
+        if (categories[key] && categories[key].subjects && categories[key].subjects[convertedGrade]) {
+            // console.log(categories[key].subjects[convertedGrade]);
+            return categories[key].subjects[convertedGrade];
+        }
+        return [];
+    };
+
+    // console.log('subjects')
+    // if (categories) {
+    //     console.log(subjects(rtnCategory.toLowerCase(), subCategory))
+    // }
+
+    // const navigate = useNavigate();
+
+    // useEffect(()=>{
+    //     handleFilteredCourses()
+    // },[])
 
 
     // View filtered courses
     const handleFilteredCourses = async () => {
         try {
-            const data = await fetchCoursesFunction(subject, category, grade, subscription);
+            const data = await fetchCoursesFunction(subject, category, grade);
             console.log("Courses filtered data:", data);
             setCourses(data);
 
-            handleFilteredCourseDetails();
+            handleFilteredDoc();
 
         } catch (error) {
             console.log("Error fetching data", error);
         }
     }
 
-    // View filtered courses
-    const handleFilteredCourseDetails = async () => {
+
+    // View filtered doc
+    const handleFilteredDoc = async () => {
         try {
-            const data = await fetchCourseDetailsFunction(subject, category, grade, subscription);
-            console.log("Course details:", data);
-            setDetails(data);
+            const data = await FilteredDocFunction(subject, category, grade);
+            // console.log("Filtered doc data:", data);
+            setDocData(data);
 
         } catch (error) {
-            console.log("Error fetching course details", error);
+            console.log("Error pulling filtered doc", error);
         }
     }
 
 
+    function openMenu(type) {
+        switch (type) {
+            case "open":
+                setOpenMenuStatus(true);
+                break;
+            case "close":
+                setOpenMenuStatus(false);
+                break;
+            default:
+        }
+    }
+
+    function viewCourse() {
+        navigate("/course")
+    }
 
     // View all courses
+    useEffect(() => {
+        handleViewCourses()
+    }, [])
     const handleViewCourses = async () => {
         try {
             const data = await ViewCoursesFunction();
@@ -82,7 +235,7 @@ const Courses = () => {
             setCourses(data);
 
         } catch (error) {
-            console.log("Error fetching data", error);
+            console.log("Error fetching data",);
         }
     }
 
@@ -93,7 +246,7 @@ const Courses = () => {
             setCourses(data);
 
         } catch (error) {
-            console.log("Error fetching data", error);
+            console.log("Error fetching data",);
         }
     }
 
@@ -104,119 +257,102 @@ const Courses = () => {
             setCourses(data);
 
         } catch (error) {
-            console.log("Error fetching data", error);
+            console.log("Error fetching data",);
         }
     }
 
-    // View selected course
     const handleViewCourse = (id) => {
         const [course_data] = courses.filter((course) => course.id === id);
-        const selectedDetails = details.filter((detail) => detail.courseId === id);
 
-        navigate('/courseview', {
-            state: {
-                course_data: course_data,
-                details: selectedDetails           // CourseTitle, CourseDescription, FREE/Subscription, 
-            }
-        });
+        navigate('/course', { state: { course_data: course_data, docData: docData } });
     }
 
+    if (filterCategories === null) {
+        return (
+            <>
+                <Typography variant='h5'>Loading...</Typography>
+            </>
+        )
+    }
 
     return (
-        <div>
-            <div style={{ marginTop: '50px' }}>
-                <button onClick={handleFilteredCourses}>Filter (4)</button>
-            </div>
+        <Box sx={{ display: 'flex', flexDirection: isSmallScreen ? 'column' : 'row', margin: '50px 2%', width: "96%" }}>
+            <Grid sx={{ width: isSmallScreen ? '100%' : '20%', margin: isSmallScreen ? "0 0 30px 0" : "0" }}>
 
-            <div style={{ marginTop: '50px' }}>
-                <button onClick={handleViewCourses}>All Courses</button>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'row', marginTop: '50px', marginLeft: '50px' }}>
-                <div>
-                    <div>
-                        <button onClick={handleCategoryFilter}>Filter</button>
-                        <input type="text"
-                            placeholder="Category"
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
-                        />
-                    </div>
-                    <br></br>
-                    <div>
-                        <button onClick={handleTopicFilter}>Filter</button>
-                        <input type="text"
-                            placeholder="Topic or Subject"
-                            value={subject}
-                            onChange={(e) => setSubject(e.target.value)}
-                        />
-                    </div>
-                    <br></br>
-                    <div>
-                        <button onClick={handleGradeFilter}>Filter</button>
-                        <input type="text"
-                            placeholder="Grade"
-                            value={grade}
-                            onChange={(e) => setGrade(e.target.value)}
-                        />
-                    </div>
-                    <br></br>
-                    <div>
-                        <button onClick={handleSubscriptionFilter}>Filter</button>
-                        <label>
-                            <input
-                                type="radio"
-                                value="Free"
-                                checked={subscription === 'Free'}
-                                onChange={(e) => setSubscription(e.target.value)}
-                            />
-                            Free
-                        </label>
-
-                        <label>
-                            <input
-                                type="radio"
-                                value="Subscription"
-                                checked={subscription === 'Subscription'}
-                                onChange={(e) => setSubscription(e.target.value)}
-                            />
-                            Subscription
-                        </label>
-                    </div>
-                </div>
-
-                <div style={{ marginLeft: '25px' }}>
-                    <div>
-                        <h3>{subject} Courses</h3>
-                    </div>
-                    {courses ? (
-                        <div>
-                            {courses.map((course) => (
-                                <div>
-                                    <h4>{course.lessonName} </h4>
-                                    <h5>Lesson Type: {course.lessonType}</h5>
-                                    <p>Lesson Url: {course.lessonUrl}</p>
-                                    <video ref={videoRef} width="400" height="300">
-                                        <source src={course.lessonUrl} type="video/mp4" />
-                                        Your browser does not support the video tag.
-                                    </video>
-                                    <p>{details.courseShortDescription}</p>
-                                    <button onClick={() => handleViewCourse(course.id)}>View Course</button>
-                                    <h3>____________________________________________________________________________________________</h3>
-                                </div>
-                            ))}
-                        </div>
-                    )
+                <Box sx={{ justifyContent: 'flex-start', paddingTop: '20px', width: "96%", margin: "0 2%" }}>
+                    {isSmallScreen ?
+                        <Box sx={{ width: "96%", margin: "0 2%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                            <Box sx={{ width: "80%" }}>
+                                <FilterButton text={"Filter"} buttonFunction={() => openMenu("open")} />
+                            </Box>
+                        </Box>
                         :
-                        (
-                            <div>
-                                <h3>No Courses found!</h3>
-                            </div>
-                        )}
-                </div>
-            </div>
-        </div>
-    );
+                        <Box sx={{ width: "96%", margin: "0 2%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                            <Box sx={{ width: "90%", marginLeft: "-30px" }}>
+                                <FilterButton text={"Filter"} />
+                            </Box>
+
+                        </Box>
+                    }
+                    {/* <Button variant="outlined" startIcon={<TuneIcon />} sx={{ width: "150px", border: "2px solid", fontWeight: "bold", borderRadius: "12px" }}>
+          Filter
+        </Button> */}
+                    {/* {console.log(filterCategories)} */}
+                    {openMenuStatus ?
+                        <Box sx={{ width: "88%", padding: isSmallScreen ? "70px 5% 80px 5%" : "auto", backgroundColor: "white", marginBottom: isSmallScreen ? "50px" : "0", height: isSmallScreen ? "100%" : "auto", position: isSmallScreen ? "fixed" : "relative", zIndex: "70", top: isSmallScreen ? "0" : "unset", overflowY: isSmallScreen ? "scroll" : "unset" }}>
+                            {/* <Box sx={{width:"30px", height:"30px", backgroundColor:"black", position:"absolute", top:"20px", right:"30px",zIndex:"70" }}></Box> */}
+                            {isSmallScreen ?
+                                <Button sx={{ textDecoration: "none", padding: "0 5px", color: "black", cursor: "pointer", position: "absolute", right: "5px", top: "20px", zIndex: "50" }} onClick={() => openMenu("close")}> <CancelIcon sx={{ color: "primary.light", width: "30px", height: "30px" }} /></Button>
+                                : null}
+                            <Box sx={{ paddingTop: '20px' }}>
+                                <Accordians label={'Category'} types={filterCategories} setReturnType={setRtnCategory} returnType={rtnCategory} />
+                            </Box>
+                            {subCategoryStatus ?
+                                <Box sx={{ paddingTop: '20px' }}>
+                                    <Accordians label={'SubCategories'} types={subCategories(rtnCategory.toLowerCase())} setReturnType={setSubCategory} returnType={subCategory} />
+                                </Box>
+                                : null
+                            }
+                            {topicSStatus ?
+                                <Box sx={{ paddingTop: '20px' }}>
+                                    <Accordians label={'Topics'} types={subjects(rtnCategory.toLowerCase(), subCategory)} setReturnType={setTopicS} returnType={topicS} />
+                                </Box>
+                                : null
+                            }
+                            {typeStatus ?
+                                <Box sx={{ paddingTop: '20px', paddingBottom: "60px" }}>
+                                    <Accordians label={'Subscription'} types={Subscription} setReturnType={setType} returnType={type} />
+                                </Box>
+                                : null
+                            }
+                        </Box>
+                        : null
+                    }
+
+                </Box>
+            </Grid>
+            <Grid sx={{ width: isSmallScreen ? '100%' : '80%', padding: '20px' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                    <Box>
+                        <Typography variant='h4' sx={{ color: '#396781', fontWeight: 'bold' }}>
+                            All Maths Courses
+                        </Typography>
+                        <Typography >
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        </Typography>
+                    </Box>
+                </Box>
+                <Box sx={{ flexDirection: 'column', padding: '20px' }}>
+                    {courses.map((course, index) => (
+                        <Box key={index} sx={{ margin: "20px 0" }}>
+                            <CourseCard courseName={course.courseName} courseType={course.coursePrice} shortDescrip={course.courseShortDescription} video={video1} cardFunction={() => handleViewCourse(course.id)} />
+                        </Box>
+                    ))}
+                </Box>
+                {/* <button onClick={handleViewCourses}>All Courses</button> */}
+            </Grid>
+        </Box>
+    )
 }
 
-export default Courses;
+export default Courses

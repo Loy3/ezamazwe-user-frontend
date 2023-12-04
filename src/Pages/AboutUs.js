@@ -1,278 +1,846 @@
-
-import React from "react";
-import { useState, useEffect } from "react";
-import Button from '@mui/material/Button';
-import { TextField, InputLabel, Link, Grid, Typography, Box } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import { useTheme } from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import { SignupFunction } from '../Services/AuthService';
+import { Box, Grid, useMediaQuery } from "@mui/material";
+import { FooterComp } from "../Components/Footer";
+import { HeaderComp, HeaderSmallComp } from "../Components/HeaderComp";
+import { NavBar } from "../Components/NavBar";
+import React, { useEffect, useState } from "react";
+import image from "../Assets/Images/about.jpg";
+import Label from "../Components/Label";
+import Button, { HomeButtons } from "../Components/Buttons";
+import SectionSubHeading from "../Components/SectionSubHeading";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import LearningSupport from "../Assets/Images/learning-support (1).png";
+import image3 from "../Assets/Images/max-fisch.jpg";
+import image4 from "../Assets/Images/pexels-pavel-danilyuk-8423893.jpg";
+import facebook from "../Assets/Icons/facebook.png";
+import instagram from "../Assets/Icons/instagram.png";
+import twitter from "../Assets/Icons/twitter.png";
+import headerImage from "../Assets/Images/2.jpg";
 import { useNavigate } from 'react-router-dom';
-import { ViewMembersFunction } from "../Services/CourseService";
+import { useTheme } from "@emotion/react";
+import { ViewMembersFunction } from "../Services/AuthService";
 import { auth } from "../Services/firebaseConfig";
 
 
-const AboutUs = () => {
+const paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas metus nulla."
+
+export default function AboutUs() {
+    const isSmallScreen = useMediaQuery("(max-width:600px)");
+    const navigate = useNavigate();
+
+
+    const [join, setJoin] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [members, setMembers] = useState([]);
     const [open, setOpen] = useState(false);
     const theme = useTheme();
-    const navigate = useNavigate();
-    const user = auth.currentUser;
+
 
     useEffect(() => {
-        handleFetchMembers();
+        const checkAuth = (auth);
+        // console.log(auth);
+        const unsubscribe = checkAuth.onAuthStateChanged((user) => {
+            if (user !== null) {
+                setJoin(true)
+            } else {
+                setJoin(false);
+            }
+        });
+        return () => unsubscribe();
     }, []);
 
-    
-    const handleJoin = async () => {
-
-        try {
-            const user = await SignupFunction(email, password);
-            console.log('User data in signup component:', user);
-            const user_email = user.email;
-            const user_id = user.uid;
-            console.log('User id in signup component:', user_id);
-            console.log('User email in signup component:', user_email);
-
-            alert('User signed up');
-            handleClose();
-            navigate('/verification', { state: { userId: user_id, userEmail: user_email } });
-
-        } catch (error) {
-            console.error('Error occurred during signup:', error.message);
-        }
-
-    }
-
-
-    const handleFetchMembers = async () => {
-        try {
-            const data = await ViewMembersFunction();
-            setMembers(data);
-
-        } catch (error) {
-            console.log("Error occurred while fetching data:", error);
-        }
-    }
-
-
-    // Show signup form
-    const handleOpen = () => {
-        if (user) {
-            alert("You already joined or signed up.");
+    function toSignUp() {
+        if (join) {
+            alert("You already have an account, checkout our courses.");
+            navigate("/courses")
         } else {
-            setOpen(true);
+            alert("Lets create an account.");
+            navigate("/signup")
         }
-    };
+    }
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    // useEffect(() => {
+    //     handleFetchMembers();
+    // }, []);
+
+    // const handleJoin = async () => {
+    //     try {
+    //         const user = await SignupFunction(email, password);
+    //         console.log('User data in signup component:', user);
+    //         const user_email = user.email;
+    //         const user_id = user.uid;
+    //         console.log('User id in signup component:', user_id);
+    //         console.log('User email in signup component:', user_email);
+
+    //         alert('User signed up');
+    //         handleClose();
+    //         navigate('/verification', { state: { userId: user_id, userEmail: user_email } });
+
+    //     } catch (error) {
+    //         console.error('Error occurred during signup:', error.message);
+    //     }
+    // }
+
+    // const handleFetchMembers = async () => {
+    //     try {
+    //         const data = await ViewMembersFunction();
+    //         setMembers(data);
+
+    //     } catch (error) {
+    //         console.log("Error occurred while fetching data:", error);
+    //     }
+    // }
+
+
+    // const handleOpen = () => {
+    //     setOpen(true);
+    // };
+
+    // const handleClose = () => {
+    //     setOpen(false);
+    // };
 
     return (
-        <div>
-            <h2>About Us</h2>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br></br>
-                Quisque convallis magna a tellus blandit.
-            </p>
-
-            <div>
-                <h2>We are Company Name</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <br></br>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br></br>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br></br>
-                    Quisque convallis magna a tellus blandit.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br></br>
-                    Quisque convallis magna a tellus blandit.
-                </p>
-            </div>
-
-            <div>
-                <Button variant="outlined" color="primary" onClick={handleOpen}>
-                    JOIN
-                </Button>
-                <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    sx={{
-                        borderRadius: '20px',
-                    }}
-                >
-                    <DialogTitle component='h1' variant='h4' sx={{ textAlign: 'center', mt: 3 }}>
-                        EZAMAZWE EDUTECH
-                    </DialogTitle>
-
-                    <DialogContent sx={{ height: '360px' }}>
-
-                        <Typography sx={{ textAlign: 'center', mt: 0, mb: 2, fontWeight: 400, fontSize: '20px', lineHeight: '30px' }}>
-                            Create your account
-                        </Typography>
-
-                        <Box sx={{ mt: 5 }}>
-                            <InputLabel htmlFor="my-input">Email address</InputLabel>
-                            <TextField
-                                onChange={(e) => setEmail(e.target.value)}
-                                value={email}
-                                id="outlined-basic"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
-                                sx={{ borderRadius: 10, width: '456px', height: '113px' }}
-                            />
-                            <Typography sx={{ mt: -7, color: 'red' }}>
-                                * email address is invalid
-                            </Typography>
+        <>
+            <NavBar location={"about"} />
+            <HeaderComp text={"About Us"} paragraph={paragraph} />
+            <Box sx={{
+                width: "100%", height: "auto", display: "flex", justifyContent: "center", alignItems: "center"
+            }}>
+                <Box sx={{
+                    maxWidth: "1440px", width: "100%", height: "100%",
+                    // backgroundColor: "black",
+                }}>
+                    <Box sx={{ display: "flex", margin: "50px 0", flexDirection: "row", width: "100%" }}>
+                        <Box sx={{ width: isSmallScreen ? "100%" : "35%", height: isSmallScreen ? "auto" : "inherit", display: isSmallScreen ? "none" : "flex", justifyContent: "center", alignItems: "center", position: "relative" }}>
+                            <Box sx={{ width: "90%", height: "auto", position: "relative" }}>
+                                <Box sx={{ height: isSmallScreen ? "350px" : "450px", width: isSmallScreen ? "300px" : "400px", opacity: "0.5", backgroundColor: "primary.light", borderRadius: "20px", zIndex: "10", marginLeft: isSmallScreen ? "30px" : "0", marginTop: "30px" }} />
+                                <img src={headerImage} alt="headerImage" style={{ height: isSmallScreen ? "350px" : "450px", width: isSmallScreen ? "300px" : "400px", objectFit: "cover", zIndex: "20", position: "absolute", top: "0", left: isSmallScreen ? "0" : "30px", borderRadius: "20px" }} />
+                            </Box>
                         </Box>
 
-                        <Box sx={{ mt: 5 }}>
-                            <InputLabel htmlFor="my-input">Your password</InputLabel>
-                            <TextField
-                                onChange={(e) => setPassword(e.target.value)}
-                                id="outlined-basic"
-                                value={password}
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password"
-                                type="password"
-                                autoComplete="current-password"
-                                sx={{ borderRadius: 20, width: '456px', height: '113px' }}
-                            />
-                            <Typography sx={{ mt: -7, color: 'red' }}>
-                                # email address is required
-                            </Typography>
+                        <Box sx={{ width: isSmallScreen ? "100%" : "65%", height: isSmallScreen ? "auto" : "480px", display: "flex", justifyContent: "center", alignItems: "center", }}>
+                            <Box sx={{ width: isSmallScreen ? "90%" : "80%", height: "auto" }}>
+                                <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                    <Label children={"We are Company Name"} />
+                                </Box>
+                                <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                    <SectionSubHeading
+                                        children={
+                                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                        }
+                                        sx={{ marginBottom: "30px" }}
+                                    />
+                                </Box>
+                                <Box sx={{ width: isSmallScreen ? "94%" : "100%", display: "flex", justifyContent: "center", alignItems: "center", margin: isSmallScreen ? "0 3%" : "0" }}>
+                                    <Typography variant="body1" paragraph sx={{ marginTop: "10px", textAlign: "center" }}>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisqueconvallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl.
+                                    </Typography>
+                                </Box>
+                                <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: "15px" }}>
+                                    <Box sx={{ width: isSmallScreen ? "70%" : "35%" }}>
+                                        <HomeButtons text={"Join"} buttonFunction={toSignUp} />
+                                    </Box>
+                                </Box>
+                            </Box>
                         </Box>
 
-                    </DialogContent>
+                    </Box>
+                </Box>
+            </Box>
+            <Box
+                sx={{ backgroundColor: "#C6D0D6", width: "100%", paddingTop: "50px", margin: "50px 0" }}
+            >
+                <Box sx={{
+                    width: "100%", height: "auto", display: "flex", justifyContent: "center", alignItems: "center",
+                }}>
+                    <Box sx={{
+                        maxWidth: "1440px", width: "100%", height: "100%",
+                        // backgroundColor: "black",
+                    }}>
+                        <Box
+                            sx={{
+                                width: "100%",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
+                            <Label children={"What We do?"} />
+                            <Box sx={{ width: isSmallScreen ? "90%" : "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <SectionSubHeading
+                                    children={
+                                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                    }
+                                    sx={{ marginBottom: "30px" }}
+                                />
+                            </Box>
+                        </Box>
 
-                    <DialogActions sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Box>
-                            <Button
-                                onClick={handleJoin}
-                                type="submit"
-                                fullWidth
-                                variant="contained"
+                        <Box
+                            sx={{
+                                display: "flex",
+                                // gap: "270px",
+                                margin: "40px 0",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                width: "100%",
+                                // backgroundColor:"yellow"
+                                flexDirection: isSmallScreen ? "column" : "row"
+                            }}
+                        >
+                            <Box
                                 sx={{
-                                    mt: 5, mb: 5,
-                                    borderRadius: 30,
-                                    backgroundColor: '#1C3F53',
-                                    width: '300px',     // Default width for larger screens
-                                    height: '55px',
-                                    [theme.breakpoints.down('sm')]: {
-                                        // Use 456px width on screens smaller or equal to 'sm' breakpoint
-                                        width: '456px',
-                                    },
+                                    width: isSmallScreen ? "90%" : "30%", margin: isSmallScreen ? "10px 5%" : "10px",
+                                    height: "300px",
+                                    backgroundColor: "#396781",
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    borderRadius: "20px",
                                 }}
                             >
-                                SIGN UP
-                            </Button>
-                            <Grid container>
-                                <Grid item xs>
-                                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: -1 }}>
-                                        <Link href="/signin" variant="body2">
-                                            Already have account? Sign in
-                                        </Link>
+                                <Box sx={{ width: "94%", margin: "5%" }}>
+                                    <Box
+                                        sx={{
+                                            borderRadius: "50%",
+                                            color: "white",
+                                            border: "3px solid white",
+                                            margin: "auto",
+                                            marginBottom: "10px",
+                                            width: '80px',
+                                            height: '80px',
+                                        }}
+                                    >
+                                        <img src={LearningSupport} alt="vector" style={{ width: "60px", height: "60px", margin: "10px" }} />
                                     </Box>
-                                </Grid>
-                            </Grid>
+
+                                    <Typography
+                                        variant="h5"
+                                        sx={{
+                                            color: "white",
+                                            fontWeight: "bold",
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        Service Title
+                                    </Typography>
+                                    <Typography
+                                        variant="body1"
+                                        sx={{
+                                            color: "white",
+                                            textAlign: "center",
+                                            width: "90%",
+                                            margin: "20px 5%"
+                                        }}
+                                    >
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
+                                        egestas metus nulla.
+                                    </Typography>
+                                </Box>
+                            </Box>
+                            <Box
+                                sx={{
+                                    width: isSmallScreen ? "90%" : "30%", margin: isSmallScreen ? "10px 5%" : "10px",
+                                    height: "300px",
+                                    backgroundColor: "#396781",
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    borderRadius: "20px",
+                                }}
+                            >
+                                <Box sx={{ width: "94%", margin: "5%" }}>
+                                    <Box
+                                        sx={{
+                                            borderRadius: "50%",
+                                            color: "white",
+                                            border: "3px solid white",
+                                            margin: "auto",
+                                            marginBottom: "10px",
+                                            width: '80px',
+                                            height: '80px',
+                                        }}
+                                    >
+                                        <img src={LearningSupport} alt="vector" style={{ width: "60px", height: "60px", margin: "10px" }} />
+                                    </Box>
+
+                                    <Typography
+                                        variant="h5"
+                                        sx={{
+                                            color: "white",
+                                            fontWeight: "bold",
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        Service Title
+                                    </Typography>
+                                    <Typography
+                                        variant="body1"
+                                        sx={{
+                                            color: "white",
+                                            textAlign: "center",
+                                            width: "90%",
+                                            margin: "20px 5%"
+                                        }}
+                                    >
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
+                                        egestas metus nulla.
+                                    </Typography>
+                                </Box>
+                            </Box>
+
+                            <Box
+                                sx={{
+                                    width: isSmallScreen ? "90%" : "30%", margin: isSmallScreen ? "10px 5%" : "10px",
+                                    height: "300px",
+                                    backgroundColor: "#396781",
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    borderRadius: "20px",
+                                }}
+                            >
+                                <Box sx={{ width: "94%", margin: "5%" }}>
+                                    <Box
+                                        sx={{
+                                            borderRadius: "50%",
+                                            color: "white",
+                                            border: "3px solid white",
+                                            margin: "auto",
+                                            marginBottom: "10px",
+                                            width: '80px',
+                                            height: '80px',
+                                        }}
+                                    >
+                                        <img src={LearningSupport} alt="vector" style={{ width: "60px", height: "60px", margin: "10px" }} />
+                                    </Box>
+
+                                    <Typography
+                                        variant="h5"
+                                        sx={{
+                                            color: "white",
+                                            fontWeight: "bold",
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        Service Title
+                                    </Typography>
+                                    <Typography
+                                        variant="body1"
+                                        sx={{
+                                            color: "white",
+                                            textAlign: "center",
+                                            width: "90%",
+                                            margin: "20px 5%"
+                                        }}
+                                    >
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
+                                        egestas metus nulla.
+                                    </Typography>
+                                </Box>
+                            </Box>
                         </Box>
-                    </DialogActions>
-                </Dialog>
-            </div>
+                    </Box>
+                </Box>
+            </Box>
 
-            <div>
-                <h2>What We Do</h2>
-                <br></br>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <br></br>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h5" component="div">
-                                Service Title
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h5" component="div">
-                                Service Title
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h5" component="div">
-                                Service Title
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </div>
+            <Box sx={{
+                width: "100%", height: "auto", display: "flex", justifyContent: "center", alignItems: "center", margin: "50px 0"
+            }}>
+                <Box sx={{
+                    maxWidth: "1440px", width: "100%", height: "100%",
+                    // backgroundColor: "black",
+                }}>
 
-                <div>
-                    <h2>Our Team</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    {members ? (
-                        <div>
-                            {members.map((member) => (
-                                <div>
-                                    <Card>
-                                        <CardContent>
-                                            <img src={member.image} alt="image" style={{ width: '150px', height: '150px' }} />
-                                            <Typography variant="h5" component="div">
-                                                Team Member
-                                            </Typography>
-                                            <Typography variant="body2" color="text.secondary">
-                                                {member.firstName} {member.lastName}
-                                            </Typography>
-                                            <Typography variant="body2" color="text.secondary">
-                                                Role: {member.role}
-                                            </Typography>
-                                            <Typography variant="body2" color="text.secondary">
-                                                {member.email}
-                                            </Typography>
-                                            <Typography variant="body2" color="text.secondary">
-                                                {member.phoneNumber}
-                                            </Typography>
-                                        </CardContent>
-                                    </Card>
-                                </div>
-                            ))}
-                        </div>
-                    )
-                        :
-                        (
-                            <div>
-                                <h3>Loading</h3>
-                            </div>
-                        )}
-                </div>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            paddingTop: "40px",
+                        }}
+                    >
+                        <Label children={"  Our Team"} />
+                        <Box sx={{ width: isSmallScreen ? "90%" : "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                            <SectionSubHeading
+                                children={
+                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                }
+                                sx={{ marginBottom: "30px" }}
+                            />
+                        </Box>
+                    </Box>
 
-            </div>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            width: "90%",
+                            margin: "0 5%",
+                            // height: "300px",
+                            // justifyContent: "space-between",
+                            // gap: "50px",
+                            marginTop: "50px",
+                            flexDirection: isSmallScreen ? "column" : "row"
+                        }}
+                    >
+                        <Box
+                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
+                        >
+                            <Box sx={{ height: "100%", width: isSmallScreen ? "100%" : "45%", display: "flex", justifyContent: isSmallScreen ? "center" : "unset" }}>
+                                <img
+                                    src={image3}
+                                    alt="vector"
 
-        </div>
-    );
+                                    style={{
+                                        objectFit: "cover",
+                                        borderRadius: isSmallScreen ? "100%" : "30px  0 0 30px",
+                                        width: isSmallScreen ? "150px" : "100%",
+                                        height: isSmallScreen ? "150px" : "100%",
+                                        margin: isSmallScreen ? "20px 0" : "0",
+                                        border: isSmallScreen ? "3px solid #396781" : "none",
+                                        padding: isSmallScreen ? "5px" : "0"
+                                    }}
+                                />
+                            </Box>
+                            <Box
+                                sx={{
+                                    width: isSmallScreen ? "100%" : "55%",
+                                    margin: isSmallScreen ? "0 0 10px 0" : "0"
+                                }}
+                            >
+                                <Typography
+                                    sx={{
+                                        textAlign: "center",
+                                        marginTop: isSmallScreen ? "10px" : "33px",
+                                        fontWeight: "bold",
+                                        fontSize: "24px",
+                                        lineHeight: "32.02px",
+                                        alignItems: "center",
+                                        color: "#396781",
+                                        width: "100%",
+                                    }}
+                                >
+                                    Team member
+                                </Typography>
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        color: "#747171",
+                                        fontWeight: "400",
+                                        fontSize: "20px",
+                                        lineHeight: "32px",
+                                        letterSpacing: "0.15",
+                                        textAlign: "center",
+                                        width: "100%",
+                                    }}
+                                >
+                                    Lorem ipsum dolor
+                                </Typography>
+
+                                <Box sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "10px" }}>
+                                    <Typography
+                                        variant="subtitle1"
+                                        sx={{
+                                            color: "#1C3F53",
+                                            fontWeight: "400",
+                                            fontSize: "16px",
+                                            lineHeight: "28px",
+                                            letterSpacing: "0.15",
+                                            textAlign: "center",
+                                            width: "80%",
+                                        }}
+                                    >
+                                        Lorem ipsum dolor sit amet, consectetur
+                                    </Typography>
+                                </Box>
+
+                                <Box
+                                    sx={{
+                                        display: "flex",
+
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        width: "100%",
+                                        marginTop: "40px",
+                                    }}
+                                >
+                                    <Box>
+                                        <img
+                                            src={facebook}
+                                            alt="vector"
+                                            width={"35px"}
+                                            height={"35px"}
+                                            style={{ margin: "0 10px" }}
+                                        />
+                                        <img
+                                            src={instagram}
+                                            alt="vector"
+                                            width={"35px"}
+                                            height={"35px"}
+                                            style={{ margin: "0 10px" }}
+                                        />
+                                        <img
+                                            src={twitter}
+                                            alt="vector"
+                                            width={"35px"}
+                                            height={"35px"}
+                                            style={{ margin: "0 10px" }}
+                                        />
+                                    </Box>
+                                </Box>
+                            </Box>
+                        </Box>
+                        <Box
+                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
+                        >
+                            <Box sx={{ height: "100%", width: isSmallScreen ? "100%" : "45%", display: "flex", justifyContent: isSmallScreen ? "center" : "unset" }}>
+                                <img
+                                    src={image4}
+                                    alt="vector"
+
+                                    style={{
+                                        objectFit: "cover",
+                                        borderRadius: isSmallScreen ? "100%" : "30px  0 0 30px",
+                                        width: isSmallScreen ? "150px" : "100%",
+                                        height: isSmallScreen ? "150px" : "100%",
+                                        margin: isSmallScreen ? "20px 0" : "0",
+                                        border: isSmallScreen ? "3px solid #396781" : "none",
+                                        padding: isSmallScreen ? "5px" : "0"
+                                    }}
+                                />
+                            </Box>
+                            <Box
+                                sx={{
+                                    width: isSmallScreen ? "100%" : "55%",
+                                    margin: isSmallScreen ? "0 0 10px 0" : "0"
+                                }}
+                            >
+                                <Typography
+                                    sx={{
+                                        textAlign: "center",
+                                        marginTop: isSmallScreen ? "10px" : "33px",
+                                        fontWeight: "bold",
+                                        fontSize: "24px",
+                                        lineHeight: "32.02px",
+                                        alignItems: "center",
+                                        color: "#396781",
+                                        width: "100%",
+                                    }}
+                                >
+                                    Team member
+                                </Typography>
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        color: "#747171",
+                                        fontWeight: "400",
+                                        fontSize: "20px",
+                                        lineHeight: "32px",
+                                        letterSpacing: "0.15",
+                                        textAlign: "center",
+                                        width: "100%",
+                                    }}
+                                >
+                                    Lorem ipsum dolor
+                                </Typography>
+
+                                <Box sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "10px" }}>
+                                    <Typography
+                                        variant="subtitle1"
+                                        sx={{
+                                            color: "#1C3F53",
+                                            fontWeight: "400",
+                                            fontSize: "16px",
+                                            lineHeight: "28px",
+                                            letterSpacing: "0.15",
+                                            textAlign: "center",
+                                            width: "80%",
+                                        }}
+                                    >
+                                        Lorem ipsum dolor sit amet, consectetur
+                                    </Typography>
+                                </Box>
+
+                                <Box
+                                    sx={{
+                                        display: "flex",
+
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        width: "100%",
+                                        marginTop: "40px",
+                                    }}
+                                >
+                                    <Box>
+                                        <img
+                                            src={facebook}
+                                            alt="vector"
+                                            width={"35px"}
+                                            height={"35px"}
+                                            style={{ margin: "0 10px" }}
+                                        />
+                                        <img
+                                            src={instagram}
+                                            alt="vector"
+                                            width={"35px"}
+                                            height={"35px"}
+                                            style={{ margin: "0 10px" }}
+                                        />
+                                        <img
+                                            src={twitter}
+                                            alt="vector"
+                                            width={"35px"}
+                                            height={"35px"}
+                                            style={{ margin: "0 10px" }}
+                                        />
+                                    </Box>
+                                </Box>
+                            </Box>
+                        </Box>
+                    </Box>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            width: "90%",
+                            margin: "0 5%",
+                            // height: "300px",
+                            // justifyContent: "space-between",
+                            // gap: "50px",
+                            marginTop: "50px",
+                            flexDirection: isSmallScreen ? "column" : "row"
+                        }}
+                    >
+                        <Box
+                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
+                        >
+                            <Box sx={{ height: "100%", width: isSmallScreen ? "100%" : "45%", display: "flex", justifyContent: isSmallScreen ? "center" : "unset" }}>
+                                <img
+                                    src={image4}
+                                    alt="vector"
+
+                                    style={{
+                                        objectFit: "cover",
+                                        borderRadius: isSmallScreen ? "100%" : "30px  0 0 30px",
+                                        width: isSmallScreen ? "150px" : "100%",
+                                        height: isSmallScreen ? "150px" : "100%",
+                                        margin: isSmallScreen ? "20px 0" : "0",
+                                        border: isSmallScreen ? "3px solid #396781" : "none",
+                                        padding: isSmallScreen ? "5px" : "0"
+                                    }}
+                                />
+                            </Box>
+                            <Box
+                                sx={{
+                                    width: isSmallScreen ? "100%" : "55%",
+                                    margin: isSmallScreen ? "0 0 10px 0" : "0"
+                                }}
+                            >
+                                <Typography
+                                    sx={{
+                                        textAlign: "center",
+                                        marginTop: isSmallScreen ? "10px" : "33px",
+                                        fontWeight: "bold",
+                                        fontSize: "24px",
+                                        lineHeight: "32.02px",
+                                        alignItems: "center",
+                                        color: "#396781",
+                                        width: "100%",
+                                    }}
+                                >
+                                    Team member
+                                </Typography>
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        color: "#747171",
+                                        fontWeight: "400",
+                                        fontSize: "20px",
+                                        lineHeight: "32px",
+                                        letterSpacing: "0.15",
+                                        textAlign: "center",
+                                        width: "100%",
+                                    }}
+                                >
+                                    Lorem ipsum dolor
+                                </Typography>
+
+                                <Box sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "10px" }}>
+                                    <Typography
+                                        variant="subtitle1"
+                                        sx={{
+                                            color: "#1C3F53",
+                                            fontWeight: "400",
+                                            fontSize: "16px",
+                                            lineHeight: "28px",
+                                            letterSpacing: "0.15",
+                                            textAlign: "center",
+                                            width: "80%",
+                                        }}
+                                    >
+                                        Lorem ipsum dolor sit amet, consectetur
+                                    </Typography>
+                                </Box>
+
+                                <Box
+                                    sx={{
+                                        display: "flex",
+
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        width: "100%",
+                                        marginTop: "40px",
+                                    }}
+                                >
+                                    <Box>
+                                        <img
+                                            src={facebook}
+                                            alt="vector"
+                                            width={"35px"}
+                                            height={"35px"}
+                                            style={{ margin: "0 10px" }}
+                                        />
+                                        <img
+                                            src={instagram}
+                                            alt="vector"
+                                            width={"35px"}
+                                            height={"35px"}
+                                            style={{ margin: "0 10px" }}
+                                        />
+                                        <img
+                                            src={twitter}
+                                            alt="vector"
+                                            width={"35px"}
+                                            height={"35px"}
+                                            style={{ margin: "0 10px" }}
+                                        />
+                                    </Box>
+                                </Box>
+                            </Box>
+                        </Box>
+                        <Box
+                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
+                        >
+                            <Box sx={{ height: "100%", width: isSmallScreen ? "100%" : "45%", display: "flex", justifyContent: isSmallScreen ? "center" : "unset" }}>
+                                <img
+                                    src={image3}
+                                    alt="vector"
+
+                                    style={{
+                                        objectFit: "cover",
+                                        borderRadius: isSmallScreen ? "100%" : "30px  0 0 30px",
+                                        width: isSmallScreen ? "150px" : "100%",
+                                        height: isSmallScreen ? "150px" : "100%",
+                                        margin: isSmallScreen ? "20px 0" : "0",
+                                        border: isSmallScreen ? "3px solid #396781" : "none",
+                                        padding: isSmallScreen ? "5px" : "0"
+                                    }}
+                                />
+                            </Box>
+                            <Box
+                                sx={{
+                                    width: isSmallScreen ? "100%" : "55%",
+                                    margin: isSmallScreen ? "0 0 10px 0" : "0"
+                                }}
+                            >
+                                <Typography
+                                    sx={{
+                                        textAlign: "center",
+                                        marginTop: isSmallScreen ? "10px" : "33px",
+                                        fontWeight: "bold",
+                                        fontSize: "24px",
+                                        lineHeight: "32.02px",
+                                        alignItems: "center",
+                                        color: "#396781",
+                                        width: "100%",
+                                    }}
+                                >
+                                    Team member
+                                </Typography>
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        color: "#747171",
+                                        fontWeight: "400",
+                                        fontSize: "20px",
+                                        lineHeight: "32px",
+                                        letterSpacing: "0.15",
+                                        textAlign: "center",
+                                        width: "100%",
+                                    }}
+                                >
+                                    Lorem ipsum dolor
+                                </Typography>
+
+                                <Box sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "10px" }}>
+                                    <Typography
+                                        variant="subtitle1"
+                                        sx={{
+                                            color: "#1C3F53",
+                                            fontWeight: "400",
+                                            fontSize: "16px",
+                                            lineHeight: "28px",
+                                            letterSpacing: "0.15",
+                                            textAlign: "center",
+                                            width: "80%",
+                                        }}
+                                    >
+                                        Lorem ipsum dolor sit amet, consectetur
+                                    </Typography>
+                                </Box>
+
+                                <Box
+                                    sx={{
+                                        display: "flex",
+
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        width: "100%",
+                                        marginTop: "40px",
+                                    }}
+                                >
+                                    <Box>
+                                        <img
+                                            src={facebook}
+                                            alt="vector"
+                                            width={"35px"}
+                                            height={"35px"}
+                                            style={{ margin: "0 10px" }}
+                                        />
+                                        <img
+                                            src={instagram}
+                                            alt="vector"
+                                            width={"35px"}
+                                            height={"35px"}
+                                            style={{ margin: "0 10px" }}
+                                        />
+                                        <img
+                                            src={twitter}
+                                            alt="vector"
+                                            width={"35px"}
+                                            height={"35px"}
+                                            style={{ margin: "0 10px" }}
+                                        />
+                                    </Box>
+                                </Box>
+                            </Box>
+                        </Box>
+                    </Box>
+                </Box>
+            </Box>
+
+            <FooterComp />
+        </>
+    )
 }
-
-export default AboutUs;

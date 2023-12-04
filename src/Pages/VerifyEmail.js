@@ -1,4 +1,4 @@
-
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useState, useEffect } from "react";
 // import { VerifyEmailFunction } from "../Services/AuthService";
@@ -15,12 +15,7 @@ const VerifyEmail = () => {
     const code = queryParameters.get("code");
     const email = queryParameters.get("email");
 
-    console.log(window.location.search);
-
-
     // http://localhost:3000/verify-email/?code=4e141e1fb78866b3174774388596bd6fd221b1ae84c1a15ac745a42cd43b7a0e&email=codewithmokone@gmail.com
-
-    // https://edutech-app-eecfd.web.app/verify-email/?code=bb753ab88ec8802687bb8d1ef2b33c4a316de605d56aaeeef3f99b328b7cda08&email=simonlephotojr@gmail.com
 
     useEffect(() => {
         handleEmailVerification();
@@ -29,8 +24,6 @@ const VerifyEmail = () => {
     }, []);
 
     const handleEmailVerification = async () => {
-        const user_email = "simonLephotoJR@gmail.com";
-        const user_code = "bb753ab88ec8802687bb8d1ef2b33c4a316de605d56aaeeef3f99b328b7cda08";
         try {
             const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/verify-email`,
                 {
@@ -43,16 +36,13 @@ const VerifyEmail = () => {
             const response = await apiUrl.json();
 
             // Handle the response here
-            if (response.error) {
-                setVerificationStatus("Error occurred while verifying email!", response.error);
-                console.log('Server Verification Response:', response.error);
-            } else {
-                setVerificationStatus('Email verified successfully!');
-                setStatus(true);
-            }
+            console.log('Server Verification Response:', response);
 
-            // Navigate to home page
-            navigate('/homepage');
+            setVerificationStatus('Email verified successfully!');
+            setStatus(true);
+
+            // Navigate to profile setup
+            navigate('/');
 
         } catch (error) {
 
@@ -62,19 +52,28 @@ const VerifyEmail = () => {
 
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            {status ? (
-                <div>
-                    <h3>{verificationStatus}</h3>
-                </div>
-            ) : (
-                <div>
-                    <h3>Verifying...</h3>
-                </div>
-            )}
-        </div>
+        // <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        //     {status ? (
+        //         <div>
+        //             <h3>{verificationStatus}</h3>
+        //         </div>
+        //     ) : (
+        //         <div>
+        //             <h3>Verifying...</h3>
+        //         </div>
+        //     )}
+        // </div>
+        <>
+            <Box sx={{ height: "100vh", width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              
+                {status ?
+                    <Typography variant='h5' sx={{ color: "primary.light", fontWeight: "bold" }}>{verificationStatus}</Typography>
+                    :
+                    <div className='loader' />
+                }
+            </Box>
+        </>
     );
 }
 
 export default VerifyEmail;
-

@@ -1,49 +1,41 @@
 
 // Imports from the firebase config file
 import { db, auth, storage } from './firebaseConfig';
-import { addDoc, collection, doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+// import { addDoc, collection, doc, updateDoc, setDoc, getDoc } from "firebase/firestore";
+// import {
+//     createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification
+// } from 'firebase/auth';
 import {
-    createUserWithEmailAndPassword, signOut as firebaseSignOut,
-    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword, signInWithEmailAndPassword
 } from 'firebase/auth';
-import { getStorage, ref, uploadBytes, list, getDownloadURL } from "firebase/storage";
-import { v4 } from "uuid";  //Import v4 from the uuid library and use it to randomise characters 
-import { getAuth, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
+// import { getStorage, ref, uploadBytes, list, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
+// import { getAuth, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
+import { reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
 
 
-
-// Upload image function
-export const UploadImageFunction = async (imageUpload) => {
-
-    let imageURL = '';
-    let imageName = '';
+// Sign in function
+export const SigninFunction = async (email, password) => {
 
     try {
-        const uniqueIdentifier = v4();
-        const imageRef = ref(storage, `users/${imageUpload.name + uniqueIdentifier}`);
-        // const imageRef = ref(storage, `users/${imageUpload.name + v4()}`);
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-        // Upload image
-        await uploadBytes(imageRef, imageUpload);
+        alert('Successfully logged in.')
 
-        // Get the image URL
-        imageURL = await getDownloadURL(imageRef);
+        const user = userCredential.user;
+        console.log("Successfully logged in.", user);
+        return user;
 
-        // Set the image name
-        imageName = `${imageUpload.name}${uniqueIdentifier}`;
+    } catch (error) {     //Handle login error
+        console.log("Failed to sign in:", error);
+        alert('Incorrect email address or password. Re-enter the email address and password.');
 
-        alert('Image has been uploaded.');
+    };
 
-        // return imageURL;
-        // Return both imageURL and imageName
-        return { imageURL, imageName };
-
-    } catch (error) {
-        console.error("Error uploading image:", error);
-        alert('Error uploading image!');
-        throw error; // Re-throw the error to propagate it if needed
-    }
 }
+
 
 // Sign up function
 export const SignupFunction = async (email, password) => {
@@ -51,27 +43,7 @@ export const SignupFunction = async (email, password) => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         console.log('User signed up:', user);
-
-        if (user) {
-            try {
-                const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/email-verification`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ email: user.email, uid: user.uid }),
-                    });
-                const response = await apiUrl.json();
-
-                // Handle the response here
-                console.log('Server Response:', response);
-
-            } catch (error) {
-                console.error('Error during email verification:', error);
-            }
-        }
-
+        alert('User signed up');
         return user; // Return the user data
 
     } catch (error) {
@@ -80,12 +52,10 @@ export const SignupFunction = async (email, password) => {
         throw new Error(error.message); // Throw an error to be caught by the calling component
     }
 };
-
-// Check verification function
 export const CheckVerificationFunction = async (email) => {
-
+    console.log(email);
     try {
-        const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/check-email-verification`,
+        const apiUrl = await fetch(`https://ezamazwe-edutech-nodejs.onrender.com/email-verification`,
             {
                 method: 'POST',
                 headers: {
@@ -96,130 +66,71 @@ export const CheckVerificationFunction = async (email) => {
         const response = await apiUrl.json();
 
         // Handle the response here
-        console.log('Server Verification Response:', response);
+        // console.log('Server Verification Response:', response);
 
         // Show a success message or perform additional actions based on the response
+        // console.log(response.message);
         if (response.message) {
-            console.log('Email for verification sent.');
-            alert("Email for verification sent.");
+            // console.log('Email verification initiated successfully.');
+            alert("Email verification initiated successfully.")
         } else {
-            console.error('Failed to send email for verification:', response.error);
-            alert('Unable to send verification email.');
+            console.error('Email verification failed:', response.error);
+            alert('Email verification failed.');
         }
 
     } catch (error) {
-        console.log("Error sending verification email:", error);
+        console.log("Error checking verification:", error);
     }
+
 }
-
-
-// Sign in function
-export const SigninFunction = async (email, password) => {
-
-    try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
-        alert('Successfully logged in.')
-        const user = userCredential.user;
-        console.log("Successfully logged in.", user);
-        return user; // Return the user data
-
-    } catch (error) {     //Handle login error
-        console.log("Failed to sign in:", error);
-        alert('Wrong username/password entered. Re-enter username and password.');
-    };
-}
-
 
 // Profile setup function
-export const ProfileSetupFunction = async (userId, firstName, lastName, userEmail, phoneNum, imageURL, imageName) => {
-    console.log("User id:", userId);
-    console.log("Image name:", imageName);
-    console.log("Image url:", imageURL);
-
-    // Check if required variables are defined
-    if (!userId || !firstName || !lastName || !userEmail || !phoneNum || !imageURL || !imageName) {
-        console.error('Error: Missing required data for profile setup');
-        return; // Exit the function if any required data is missing
-    }
-
-    const image = {
-        imageName: imageName,
-        imageURL: imageURL,
-    }
+export const ProfileSetupFunction = async (userId, firstName, lastName, userEmail, phoneNum, image) => {
+    // console.log("User id:", userId);
 
     try {
-        const docRef = await setDoc(doc(db, 'users', userId), {
-            user_id: userId,
-            firstName: firstName,
-            lastName: lastName,
-            email: userEmail,
-            phoneNum: phoneNum,
-            image: image,
-            role: "user",
-            subscription: "unsubscribed",
-        });
-        console.log('Profile setup successfully:');
-        alert("Profile setup successfully");
+        await UploadImageFunction(image).then(async (result) => {
+            const docRef = await setDoc(doc(db, 'users', userId), {
+                user_id: userId,
+                firstName: firstName,
+                lastName: lastName,
+                email: userEmail,
+                phoneNum: phoneNum,
+                image: result,
+                role: "user",
+                subscription: "unsubscribed",
+            });
+            console.log('Profile setup successfully:', docRef);
+            alert("Profile setup successfully");
+        })
 
     } catch (error) {
         console.error('Error creating profile:', error.message);
     }
 }
 
-
-// Profile view function
-export const GetUserDataFunction = async (userId) => {
-
-    let user = null;
-
+// Upload image function
+export const UploadImageFunction = async (imageUpload) => {
+    let imageURL = '';
+    let imageName = imageUpload.name + v4();
     try {
-        const docRef = doc(db, "users", userId);
-        const docSnap = await getDoc(docRef);
+        const imageRef = ref(storage, `users/${imageName}`);
+        await uploadBytes(imageRef, imageUpload);
+        imageURL = await getDownloadURL(imageRef);
+        alert('Image has been uploaded.');
 
-        if (docSnap.exists()) {
-            user = docSnap.data();
-            console.log("User data:", docSnap.data());
-        } else {
-            console.log('Error! User data not found.');
-        }
-
-        return user;
-
-    } catch (error) {
-        console.log('Failed to fetch user data', error);
-    }
-};
-
-
-// Profile update function
-export const ProfileUpdateFunction = async (userId, firstName, lastName, userEmail, phoneNum, imageURL) => {
-    console.log("User id:", userId);
-
-    try {
-
-        const userInfo = {
-            user_id: userId,
-            firstName: firstName,
-            lastName: lastName,
-            email: userEmail,
-            phoneNum: phoneNum,
+        const image = {
             imageURL: imageURL,
-            role: "user",
-            subscription: "unsubscribed",
-        };
-
-        await setDoc(doc(db, 'users', userId), userInfo);
-
-        console.log('Profile updated successfully:');
-        alert('Profile updated successfully');
-
+            imageName: imageName
+        }
+        return image;
     } catch (error) {
-        console.error('Error updating profile:', error.message);
+        console.error("Error uploading image:", error);
+        alert('Error uploading image!');
     }
-};
+}
 
-// Reset password function
+
 export const ResetPasswordFunction = async (user, currentPassword, newPassword) => {
     console.log("User currently logged in:", user);
 
@@ -252,24 +163,46 @@ export const ResetPasswordFunction = async (user, currentPassword, newPassword) 
 export const isPasswordValid = (newPassword) => {
 
     // Define password complexity rules
-    const minLength = 8;
-    const hasUppercase = /[A-Z]/.test(newPassword);
-    const hasLowercase = /[a-z]/.test(newPassword);
-    const hasNumber = /\d/.test(newPassword);
-    const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(newPassword);
+    // const minLength = 8;
+    // const hasUppercase = /[A-Z]/.test(newPassword);
+    // const hasLowercase = /[a-z]/.test(newPassword);
+    // const hasNumber = /\d/.test(newPassword);
+    // const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(newPassword);
 
-    // Check if the password meets all complexity rules
-    return (
-        newPassword.length >= minLength &&
-        hasUppercase &&
-        hasLowercase &&
-        hasNumber &&
-        hasSpecialCharacter
-    );
+    // return (
+    //     newPassword.length >= minLength &&
+    //     hasUppercase &&
+    //     hasLowercase &&
+    //     hasNumber &&
+    //     hasSpecialCharacter
+    // );
+    var message = "";
+    var lowerCase = /[a-z]/g;
+    var upperCase = /[A-Z]/g;
+    var numbers = /[0-9]/g;
+    var specialChar = /[!@#$%^&*]/g;
+
+    if (!newPassword.match(lowerCase)) {
+        message = "Password should contains at least 1 or more lowercase letter(s)!";
+    } else if (!newPassword.match(upperCase)) {
+        message = "Password should contain at least 1 or more uppercase letter(s)!";
+    } else if (!newPassword.match(numbers)) {
+        message = "Password should contains numbers also!";
+    } else if (newPassword.length < 8) {
+        message = "Password length should be more than 8.";
+    } else if (!newPassword.match(specialChar)) {
+        message = "Password should contain at least 1 special character (e.g. !@#$%^&*).";
+    } else {
+        message = "Password is strong!";
+    }
+
+    return message
+
 };
 
 // Forgot password function
 export const ForgotPasswordFunction = async (email) => {
+    // console.log("Forgot password", email);
     console.log("Forgot password", email);
     try {
         const url = 'https://edutech-app-eecfd.web.app/';
@@ -283,7 +216,7 @@ export const ForgotPasswordFunction = async (email) => {
             });
         const response = await apiUrl.json();
 
-        alert("Email for password reset has been sent")
+        alert("Email for password change has been sent")
         // Handle the response here
         console.log('Server Response:', response);
     } catch (error) {
@@ -291,22 +224,67 @@ export const ForgotPasswordFunction = async (email) => {
     }
 }
 
-export const SignOutFunction = () => {
 
-    firebaseSignOut(auth)
-        .then(() => {
-            console.log("User signed out");
-        })
-        .catch((error) => {
-            // An error occurred during sign-out.
-            console.error('Sign out error: ', error);
-            alert("Error. Something went wrong.");
-        });
+
+// Profile view function
+export const GetUserDataFunction = async (userId) => {
+
+    let user = null;
+
+    try {
+        const docRef = doc(db, "users", userId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            user = docSnap.data();
+            console.log("User data:", docSnap.data());
+        } else {
+            alert('Error', 'User data not found.');
+        }
+
+        return user;
+
+    } catch (error) {
+        console.log('Failed to fetch user data', error);
+        alert('Unable to fetch account information!');
+    }
+};
+
+// Profile update function
+export const ProfileUpdateFunction = async (userId, firstName, lastName, userEmail, phoneNum, imageURL, role, subscription,imageName) => {
+    // console.log("User id:", userId);
+
+    try {
+        const userImage = {
+            imageURL: imageURL,
+            imageName: imageName
+        }
+
+        const userInfo = {
+            user_id: userId,
+            firstName: firstName,
+            lastName: lastName,
+            email: userEmail,
+            phoneNum: phoneNum,
+            image: userImage,
+            role: role,
+            subscription: subscription,
+        };
+        // console.log(userInfo);
+
+        await setDoc(doc(db, 'users', userId), userInfo);
+
+        console.log('Profile updated successfully:');
+        alert('Profile updated successfully');
+
+    } catch (error) {
+        console.error('Error updating profile:', error.message);
+    }
 };
 
 // Update user subscription status
 export const UpdateUserSubscriptionFunction = async (userId, subscription_end_date) => {
-
+// console.log(userId);
     const today = new Date();   // Get today's date
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so we add 1 and format to two digits
@@ -315,8 +293,8 @@ export const UpdateUserSubscriptionFunction = async (userId, subscription_end_da
     // const currentDate = `${year}-${month}-${day}`;
     const currentDate = today.toISOString().split('T')[0];
 
-    console.log(currentDate)
-    console.log("subscription_end_date:", subscription_end_date);
+    // console.log(currentDate)
+    // console.log("subscription_end_date:", subscription_end_date);
 
     // Compare dates and make all necessary changes
     if (currentDate >= subscription_end_date) {

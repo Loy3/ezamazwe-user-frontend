@@ -15,10 +15,10 @@ import { auth } from "../Services/firebaseConfig";
 
 const Payment = ({firstName, lastName, phoneNum}) => {
 
-    const location = useLocation();
-    const fName = location.state.firstName;
-    const lName = location.state.lastName;
-    const phone = location.state.phoneNum;
+    // const location = useLocation();
+    const fName = "Loy";
+    const lName = "Netshiozwi";
+    const phone = "0897645312";
     
     console.log("lName:", lName);
     console.log("fName:", fName);
@@ -33,7 +33,7 @@ const Payment = ({firstName, lastName, phoneNum}) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [email, setEmail] = useState('');
     const theme = useTheme();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -43,7 +43,7 @@ const Payment = ({firstName, lastName, phoneNum}) => {
             setEmail(user.email);
         } else {
             // Navigate to sign in page
-            navigate('/');
+            // navigate('/');
         }
 
         handleOpen();
@@ -56,7 +56,7 @@ const Payment = ({firstName, lastName, phoneNum}) => {
 
     const handleCancel = () => {
         setOpen(false);
-        navigate('/userpage');
+        // navigate('/userpage');
     };
 
     const handlePay = async () => {
@@ -71,7 +71,7 @@ const Payment = ({firstName, lastName, phoneNum}) => {
 
             // Delay navigation by 5 seconds
             setTimeout(() => {
-                navigate('/userpage');
+                // navigate('/userpage');
             }, 5000);
 
         } catch (error) {
