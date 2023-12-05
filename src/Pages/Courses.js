@@ -83,6 +83,10 @@ function Courses() {
         }
     }, [topicS])
 
+    useEffect(()=>{
+        handleFilteredCourses();
+    },[]);
+
     const [categories, setCategories] = useState()
 
     useEffect(() => {

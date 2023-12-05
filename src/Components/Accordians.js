@@ -7,15 +7,18 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { useState } from "react";
+
 export const Accordians = ({ label, types, setReturnType, returnType }) => {
     const [buttonAct, setButtonAct] = useState("180deg");
     // const [value, setValue] = useState('type');
     const [categoryStatus, setCategoryStatus] = useState(false);
+    
     const handleChange = (event) => {
         // setValue(event.target.value);
         // console.log(event.target.value);
         setReturnType(event.target.value)
     };
+
     function handleButton() {
         if (buttonAct === "180deg") {
             setButtonAct("90deg");
@@ -51,8 +54,6 @@ export const Accordians = ({ label, types, setReturnType, returnType }) => {
                                 ))}
                             </RadioGroup>
                         </FormControl>
-
-
 
                     </Box>
                     : null

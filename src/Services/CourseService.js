@@ -4,15 +4,16 @@ import { db, auth } from './firebaseConfig';
 import { collection, collectionGroup, getDocs, query, where } from "firebase/firestore";
 
 
+
 // Filter courses with subject, category, grade
 export const fetchCoursesFunction = async (subject, category, grade) => {
 
     try {
         // Step 1: Query to get the course document based on subject, category and grade
-        const coursesQuery = query(collection(db, 'coursesCollection'),
-            where('courseCategory.subjectOrTopic', '==', subject),
-            where('courseCategory.categoryType', '==', category),
-            where('courseCategory.categoryGrade', '==', grade)
+        const coursesQuery = query(collection(db, 'courses'),
+            where('courseCategory', '==', category),
+            where('subject', '==', subject),
+            where('grade', '==', grade)
         );
         const coursesSnapshot = await getDocs(coursesQuery);
 
@@ -32,7 +33,7 @@ export const fetchCoursesFunction = async (subject, category, grade) => {
 
         // Step 2: Query the courseContent subcollection for the selected course
         let items = [];
-        const courseContentQuery = collectionGroup(db, 'courseContent');
+        const courseContentQuery = collectionGroup(db, 'lessons');
         const courseContentSnapshot = await getDocs(courseContentQuery);
 
         courseContentSnapshot.forEach(item => console.log("Course content:", item.data()))
@@ -54,14 +55,16 @@ export const fetchCoursesFunction = async (subject, category, grade) => {
     }
 };
 
+
+
 // Filtered document function
 export const FilteredDocFunction = async (subject, category, grade) => {
     try {
         // Step 1: Query to get the course document based on subject, category and grade
-        const coursesQuery = query(collection(db, 'coursesCollection'),
-            where('courseCategory.subjectOrTopic', '==', subject),
-            where('courseCategory.categoryType', '==', category),
-            where('courseCategory.categoryGrade', '==', grade)
+        const coursesQuery = query(collection(db, 'courses'),
+        where('courseCategory', '==', category),
+        where('subject', '==', subject),
+        where('grade', '==', grade)
         );
         const coursesSnapshot = await getDocs(coursesQuery);
 
@@ -84,7 +87,7 @@ export const FilteredDocFunction = async (subject, category, grade) => {
 // Fetch Courses function
 export const ViewCoursesFunction = async () => {
     try {
-        const querySnapshot = await getDocs(collection(db, "coursesCollection"));
+        const querySnapshot = await getDocs(collection(db, "courses"));
 
         const courses = querySnapshot.docs.map((doc) => ({
             id: doc.id,
@@ -122,10 +125,10 @@ export const SearchBarCoursesFunction = async () => {
 export const FilterCategoryFunction = async (category) => {
     try {
         // Reference to the collection
-        const coursesCollection = collection(db, 'coursesCollection');
+        const coursesCollection = collection(db, 'courses');
 
         // Create a query where 'mapField.nestedField' is equal to 'value2'
-        const queryData = query(coursesCollection, where('courseCategory.categoryType', '==', category));
+        const queryData = query(coursesCollection, where('courseCategory', '==', category));
         const querySnapshot = await getDocs(queryData);
         let items = [];
 
@@ -148,9 +151,9 @@ export const FilterTopicFunction = async (topic) => {
     try {
         // const queryData = query(collectionGroup(db, "courseCategory"), where("subjectOrTopic", "==", topic));
         // Reference to the collection
-        const coursesCollection = collection(db, 'coursesCollection');
+        const coursesCollection = collection(db, 'courses');
         // Create a query where 'mapField.nestedField' is equal to 'value2'
-        const queryData = query(coursesCollection, where('courseCategory.subjectOrTopic', '==', topic));
+        const queryData = query(coursesCollection, where('subject', '==', topic));
         const querySnapshot = await getDocs(queryData);
         let items = [];
 
@@ -173,7 +176,7 @@ export const FilterGradeFunction = async (grade) => {
     try {
 
         // Reference to the collection
-        const coursesCollection = collection(db, 'coursesCollection');
+        const coursesCollection = collection(db, 'courses');
         // Create a query where 'mapField.nestedField' is equal to 'value2'
         const queryData = query(coursesCollection, where('grade', '==', grade));
         const querySnapshot = await getDocs(queryData);
