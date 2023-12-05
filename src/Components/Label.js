@@ -10,7 +10,7 @@ const Label = ({ children }) => {
           {children}
         </Typography>
         :
-        <Typography variant="h4" component="h4" sx={{ color: 'primary.light', fontWeight: "bold", lineHeight: "125%", letterSpacing: "0.25px" }}>
+        <Typography variant="h4" component="h4" sx={{ color: 'primary.light', fontWeight: "bold", lineHeight: "125%", letterSpacing: "0.25px", textAlign:"center" }}>
           {children}
         </Typography>
       }
