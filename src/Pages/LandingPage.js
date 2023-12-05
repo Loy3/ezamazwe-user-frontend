@@ -40,6 +40,8 @@ const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam 
 
 function LandingPage() {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
+    const isMediumScreen = useMediaQuery("(max-width:800px)");
+    const isSecMediumScreen = useMediaQuery("(max-width:800px) and (min-width:600px)");
     const navigate = useNavigate();
     const headCards = useMemo(() => {
         return [
@@ -214,7 +216,7 @@ function LandingPage() {
     return (
         <>
             {/* Header & Nav */}
-            <NavBar location={"home"}/>
+            <NavBar location={"home"} />
             <Box sx={{
                 width: "100%", height: "auto", backgroundColor: "rgba(198, 208, 214, 0.40)", display: "flex", justifyContent: "center", alignItems: "center"
             }}>
@@ -222,22 +224,22 @@ function LandingPage() {
                     maxWidth: "1440px", width: "100%", height: "100%",
                     // backgroundColor: "black",
                 }}>
-                    <Box sx={{ width: "100%", height: "100%", display: "flex", flexDirection: isSmallScreen ? "column" : "row", marginTop: "70px" }}>
-                        <Box sx={{ width: isSmallScreen ? "100%" : "50%", height: isSmallScreen ? "auto" : "480px", display: "flex", justifyContent: isSmallScreen ? "center" : "end", alignItems: "center", }}>
-                            <Box sx={{ width: isSmallScreen ? "90%" : "80%", height: "auto" }}>
-                                <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{ color: "primary.light", fontWeight: "bold", textAlign: isSmallScreen ? "center" : "left" }}>Company Name</Typography>
-                                <Typography variant={isSmallScreen ? "h5" : "h4"} sx={{ color: "primary.light", fontWeight: "600", marginTop: "5px", textAlign: isSmallScreen ? "center" : "left" }}>Company Slogan</Typography>
-                                <Typography variant="body2" sx={{ margin: "30px 10px", textAlign: isSmallScreen ? "center" : "left" }}>
+                    <Box sx={{ width: "100%", height: "100%", display: "flex", flexDirection: isMediumScreen ? "column" : "row", marginTop: "70px" }}>
+                        <Box sx={{ width: isMediumScreen ? "100%" : "50%", height: isMediumScreen ? "auto" : "480px", display: "flex", justifyContent: isMediumScreen ? "center" : "end", alignItems: "center", }}>
+                            <Box sx={{ width: isMediumScreen ? "90%" : "80%", height: "auto" }}>
+                                <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{ color: "primary.light", fontWeight: "bold", textAlign: isMediumScreen ? "center" : "left" }}>Company Name</Typography>
+                                <Typography variant={isSmallScreen ? "h5" : "h4"} sx={{ color: "primary.light", fontWeight: "600", marginTop: "5px", textAlign: isMediumScreen ? "center" : "left" }}>Company Slogan</Typography>
+                                <Typography variant="body2" sx={{ margin: "30px 10px", textAlign: isMediumScreen ? "center" : "left" }}>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas metus nulla, et tincidunt sapien faucibus quis. Proin accumsan, tortor a luctus euismod, ex orci sodales nunc.
                                 </Typography>
-                                <Box sx={{ width: "100%", display: "flex", justifyContent: "start", alignItems: "center", marginTop: "15px" }}>
-                                    <Box sx={{width:isSmallScreen?"70%":"35%", marginLeft: isSmallScreen ? "15%" : "0" }}>
+                                <Box sx={{ width: "100%", display: "flex", justifyContent: isMediumScreen ? "center" : "start", alignItems: "center", marginTop: "15px" }}>
+                                    <Box sx={{ width: isSmallScreen ? "70%" : "35%", marginLeft: isSmallScreen ? "15%" : "0" }}>
                                         <HomeButtons text={"Join"} buttonFunction={toSignUp} />
                                     </Box>
                                 </Box>
                             </Box>
                         </Box>
-                        <Box sx={{ width: isSmallScreen ? "100%" : "50%", height: isSmallScreen ? "auto" : "inherit", display: isSmallScreen ? "none" : "flex", justifyContent: "center", alignItems: "center", position: "relative" }}>
+                        <Box sx={{ width: isMediumScreen ? "100%" : "50%", height: isSmallScreen ? "auto" : "inherit", display: isMediumScreen ? "none" : "flex", justifyContent: "center", alignItems: "center", position: "relative" }}>
                             <Box sx={{ width: "90%", height: "auto", position: "relative" }}>
 
                                 <Box sx={{ height: isSmallScreen ? "350px" : "450px", width: isSmallScreen ? "300px" : "400px", opacity: "0.5", backgroundColor: "primary.light", borderRadius: "20px", zIndex: "10", marginLeft: isSmallScreen ? "30px" : "80px", marginTop: "30px" }} />
@@ -255,17 +257,17 @@ function LandingPage() {
                             </Box>
                         </Box>
                     </Box>
-                    <Box sx={{ marginTop: isSmallScreen ? "50px" : "80px", marginBottom: "-30px", width: "100%", height: "80px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                        <Box sx={{ width: isSmallScreen ? "94%" : "960px", height: "inherit", display: "flex", flexDirection: "row" }}>
+                    <Box sx={{ marginTop: isMediumScreen ? "50px" : "80px", marginBottom: "-30px", width: "100%", height: "80px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <Box sx={{ width: isMediumScreen ? "94%" : "960px", height: "inherit", display: "flex", flexDirection: "row" }}>
                             {headCards.map((cont, index) => (
-                                <Box key={index} sx={{ width: isSmallScreen ? "30%" : "300px", height: isSmallScreen ? "90px" : "inherit", backgroundColor: "primary.light", margin: isSmallScreen ? "0 5px" : "0 10px", display: "flex", flexDirection: isSmallScreen ? "column" : "row", borderRadius: "20px" }}>
-                                    <Box sx={{ width: isSmallScreen ? "100%" : "25%", height: "inherit", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                        <img src={cont.iconN} alt="enrolled" style={{ width: isSmallScreen ? "30px" : "60px", height: isSmallScreen ? "30px" : "60px", paddingTop: isSmallScreen ? "5px" : "0" }} />
+                                <Box key={index} sx={{ width: isMediumScreen ? "30%" : "300px", height: isMediumScreen ? "90px" : "inherit", backgroundColor: "primary.light", margin: isMediumScreen ? "0 5px" : "0 10px", display: "flex", flexDirection: isMediumScreen ? "column" : "row", borderRadius: "20px" }}>
+                                    <Box sx={{ width: isMediumScreen ? "100%" : "25%", height: "inherit", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                        <img src={cont.iconN} alt="enrolled" style={{ width: isMediumScreen ? "30px" : "60px", height: isMediumScreen ? "30px" : "60px", paddingTop: isMediumScreen ? "5px" : "0" }} />
                                     </Box>
-                                    <Box sx={{ width: isSmallScreen ? "100%" : "75%", display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: isSmallScreen ? "5px" : "0" }}>
+                                    <Box sx={{ width: isMediumScreen ? "100%" : "75%", display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: isMediumScreen ? "5px" : "0" }}>
                                         <Box>
-                                            <Typography variant={isSmallScreen ? "body2" : "subtitle1"} sx={{ width: "100%", textAlign: "center", color: "white", fontSize: isSmallScreen ? "11px" : "16px", marginTop: isSmallScreen ? "5px" : "0" }}>{cont.title}</Typography>
-                                            <Typography variant={isSmallScreen ? "h6" : "h4"} sx={{ width: "100%", textAlign: "center", color: "white", fontWeight: "bold" }}>{`${addSpace(cont.numberC)}+`}</Typography>
+                                            <Typography variant={isMediumScreen ? "body2" : "subtitle1"} sx={{ width: "100%", textAlign: "center", color: "white", fontSize: isMediumScreen ? "11px" : "16px", marginTop: isMediumScreen ? "5px" : "0" }}>{cont.title}</Typography>
+                                            <Typography variant={isMediumScreen ? "h6" : "h4"} sx={{ width: "100%", textAlign: "center", color: "white", fontWeight: "bold" }}>{`${addSpace(cont.numberC)}+`}</Typography>
                                         </Box>
                                     </Box>
                                 </Box>
@@ -306,12 +308,28 @@ function LandingPage() {
                     </Box>
 
                     <Box sx={{ widtt: "100%", display: "flex", justifyContent: "center", marginTop: "70px" }}>
-                        <Box sx={{ width: "90%", display: "flex", flexDirection: isSmallScreen ? "column" : "row" }}>
-                            {viewCourses.map((course, index) => (
-                                <Box key={index} sx={{ width: isSmallScreen ? "100%" : "31%", margin: isSmallScreen ? "10px 0" : "10px" }}>
-                                    <CourseContCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.shortDescrip} image={course.cardImage} />
-                                </Box>
-                            ))}
+                        <Box sx={{ width: "90%", display: "flex", flexDirection: isSmallScreen ? "column" : "row", flexWrap: "wrap" }}>
+                            {isSecMediumScreen ?
+                                <>
+                                    {
+                                        viewCourses.map((course, index) => (
+                                            <Box key={index} sx={{ width: "47%", margin: isSmallScreen ? "10px 0" : "10px" }}>
+                                                <CourseContCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.shortDescrip} image={course.cardImage} />
+                                            </Box>
+                                        ))
+                                    }
+                                </>
+                                :
+                                <>
+                                    {
+                                        viewCourses.map((course, index) => (
+                                            <Box key={index} sx={{ width: isSmallScreen ? "100%" : "31%", margin: isSmallScreen ? "10px 0" : "10px" }}>
+                                                <CourseContCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.shortDescrip} image={course.cardImage} />
+                                            </Box>
+                                        ))
+                                    }
+                                </>
+                            }
                         </Box>
                     </Box>
 
@@ -325,21 +343,21 @@ function LandingPage() {
                     maxWidth: "1440px", width: "100%", height: "100%",
                     // backgroundColor: "black",
                 }}>
-                    <Box sx={{ width: "100%", display: "flex", flexDirection: isSmallScreen ? "column" : "row" }}>
-                        <Box sx={{ width: isSmallScreen ? "94%" : "50%", height: isSmallScreen ? "250px" : "500px", display: "flex", justifyContent: "center", alignItems: "center", margin: isSmallScreen ? "3%" : "0" }}>
-                            <img src={tutorImage} alt="tutor" style={{ width: isSmallScreen ? "100%" : "400px", height: isSmallScreen ? "100%" : "400px", objectFit: "cover", boxShadow: "0px 2px 20px 2px #1C3F53" }} />
+                    <Box sx={{ width: "100%", display: "flex", flexDirection: isMediumScreen ? "column" : "row" }}>
+                        <Box sx={{ width: isMediumScreen ? "94%" : "50%", height: isMediumScreen ? "400px" : "500px", display: "flex", justifyContent: "center", alignItems: "center", margin:  "3%" }}>
+                            <img src={tutorImage} alt="tutor" style={{ width: isMediumScreen ? "100%" : "400px", height: isMediumScreen ? "100%" : "400px", objectFit: "cover", boxShadow: "0px 2px 20px 2px #1C3F53" }} />
                         </Box>
-                        <Box sx={{ width: isSmallScreen ? "100%" : "50%", height: "inherit", display: "flex", justifyContent: isSmallScreen ? "center" : "start", alignItems: "center", marginTop: isSmallScreen ? "30px" : "0" }}>
+                        <Box sx={{ width: isMediumScreen ? "100%" : "50%", height: "inherit", display: "flex", justifyContent: isMediumScreen ? "center" : "start", alignItems: "center", marginTop: isMediumScreen ? "30px" : "0" }}>
                             <Box sx={{ width: "100%", height: "auto", }}>
-                                <Box sx={{ width: "100%", display: "flex", justifyContent: isSmallScreen ? "center" : "start", alignItems: "center" }}>
+                                <Box sx={{ width: "100%", display: "flex", justifyContent: isMediumScreen ? "center" : "start", alignItems: "center" }}>
                                     <SectionHeading children={"Become a Tutor"} />
                                 </Box>
-                                <Typography variant="body1" sx={{ width: "80%", marginTop: "15px", textAlign: isSmallScreen ? "center" : "left", marginLeft: isSmallScreen ? "10%" : "0" }}>
+                                <Typography variant="body1" sx={{ width: "80%", marginTop: "15px", textAlign: isMediumScreen ? "center" : "left", marginLeft: isMediumScreen ? "10%" : "0" }}>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas metus nulla, et tincidunt sapien faucibus quis. Proin accumsan,
                                     tortor a luctus euismod, ex orci sodales nunc.
                                 </Typography>
-                                <Box sx={{ width: "100%", display: "flex", justifyContent: "start", alignItems: "center", marginTop: "15px" }}>
-                                    <Box sx={{width:isSmallScreen?"70%":"35%", marginLeft: isSmallScreen ? "15%" : "0" }}>
+                                <Box sx={{ width: "100%", display: "flex", justifyContent:isMediumScreen? "center": "start", alignItems: "center", marginTop: "15px" }}>
+                                    <Box sx={{ width: isSmallScreen ? "70%" : "35%", marginLeft:  "0" }}>
                                         <HomeButtons text={"Join"} buttonFunction={toSignUp} />
                                     </Box>
                                 </Box>
@@ -388,7 +406,8 @@ function LandingPage() {
                                 />
                             </video> */}
 
-                            {impactVideos.map((vid, index) => (
+                           <>
+                           {impactVideos.map((vid, index) => (
                                 <Box key={index} sx={{ width: isSmallScreen ? "94%" : "24%", height: "30vh", margin: isSmallScreen ? "10px 3%" : "10px 0.5%" }}>
                                     <video
                                         controls
@@ -400,9 +419,10 @@ function LandingPage() {
                                     </video>
                                 </Box>
                             ))}
+                           </>
 
 
-                            {/* <video
+                            {/* <video flexWrap: "wrap"
                         muted
                         style={{ width: "100%", height: "100%", objectFit: "cover" }}>
                         <source

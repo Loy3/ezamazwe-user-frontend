@@ -28,7 +28,6 @@ const paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliq
 
 export default function AboutUs() {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
-    const isMediumScreen = useMediaQuery("(max-width:768px)");
     const navigate = useNavigate();
 
 
@@ -115,7 +114,7 @@ export default function AboutUs() {
                     maxWidth: "1440px", width: "100%", height: "100%"
                     // backgroundColor: "black",
                 }}>
-                    <Box sx={{ display: "flex", margin: "50px 0", flexDirection: "row", width: "100%",gap:"100px",height:"fit-content" }}>
+                    <Box sx={{ display: "flex", margin: "50px 0", flexDirection: "row", width: "100%" }}>
                         <Box sx={{ width: isSmallScreen ? "100%" : "35%", height: isSmallScreen ? "auto" : "inherit", display: isSmallScreen ? "none" : "flex", justifyContent: "center", alignItems: "center", position: "relative" }}>
                             <Box sx={{ width: "90%", height: "auto", position: "relative" }}>
                                 <Box sx={{ height: isMediumScreen ? "350px" : "450px", width: isMediumScreen ? "300px" : "400px", opacity: "0.5", backgroundColor: "primary.light", borderRadius: "20px", zIndex: "10", marginLeft: isSmallScreen ? "30px" : "0", marginTop: "30px" }} />
@@ -123,7 +122,7 @@ export default function AboutUs() {
                             </Box>
                         </Box>
 
-                        <Box sx={{ width: isSmallScreen ? "100%" : "65%", height: isSmallScreen ? "auto" : "fit-content", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <Box sx={{ width: isSmallScreen ? "100%" : "65%", height: isSmallScreen ? "auto" : "480px", display: "flex", justifyContent: "center", alignItems: "center", }}>
                             <Box sx={{ width: isSmallScreen ? "90%" : "80%", height: "auto" }}>
                                 <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                     <Label children={"We are Company Name"} />
@@ -397,34 +396,34 @@ export default function AboutUs() {
                         }}
                     >
                         <Box
-                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
+                            sx={{ display: "flex", flexDirection: isMediumScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isMediumScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
                         >
-                            <Box sx={{ height: "100%", width: isSmallScreen ? "100%" : "45%", display: "flex", justifyContent: isSmallScreen ? "center" : "unset" }}>
+                            <Box sx={{ height: "100%", width: isMediumScreen ? "100%" : "45%", display: "flex", justifyContent: isMediumScreen ? "center" : "unset" }}>
                                 <img
-                                    src={image3}
+                                    src={image4}
                                     alt="vector"
 
                                     style={{
                                         objectFit: "cover",
-                                        borderRadius: isSmallScreen ? "100%" : "30px  0 0 30px",
-                                        width: isSmallScreen ? "150px" : "100%",
-                                        height: isSmallScreen ? "150px" : "100%",
-                                        margin: isSmallScreen ? "20px 0" : "0",
-                                        border: isSmallScreen ? "3px solid #396781" : "none",
-                                        padding: isSmallScreen ? "5px" : "0"
+                                        borderRadius: isMediumScreen ? "100%" : "30px  0 0 30px",
+                                        width: isMediumScreen ? "150px" : "100%",
+                                        height: isMediumScreen ? "150px" : "100%",
+                                        margin: isMediumScreen ? "20px 0" : "0",
+                                        border: isMediumScreen ? "3px solid #396781" : "none",
+                                        padding: isMediumScreen ? "5px" : "0"
                                     }}
                                 />
                             </Box>
                             <Box
                                 sx={{
-                                    width: isSmallScreen ? "100%" : "55%",
-                                    margin: isSmallScreen ? "0 0 10px 0" : "0"
+                                    width: isMediumScreen ? "100%" : "55%",
+                                    margin: isMediumScreen ? "0 0 10px 0" : "0"
                                 }}
                             >
                                 <Typography
                                     sx={{
                                         textAlign: "center",
-                                        marginTop: isSmallScreen ? "10px" : "33px",
+                                        marginTop: isMediumScreen ? "10px" : "33px",
                                         fontWeight: "bold",
                                         fontSize: "24px",
                                         lineHeight: "32.02px",
@@ -503,34 +502,34 @@ export default function AboutUs() {
                             </Box>
                         </Box>
                         <Box
-                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
+                            sx={{ display: "flex", flexDirection: isMediumScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isMediumScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
                         >
-                            <Box sx={{ height: "100%", width: isSmallScreen ? "100%" : "45%", display: "flex", justifyContent: isSmallScreen ? "center" : "unset" }}>
+                            <Box sx={{ height: "100%", width: isMediumScreen ? "100%" : "45%", display: "flex", justifyContent: isMediumScreen ? "center" : "unset" }}>
                                 <img
-                                    src={image4}
+                                    src={image3}
                                     alt="vector"
 
                                     style={{
                                         objectFit: "cover",
-                                        borderRadius: isSmallScreen ? "100%" : "30px  0 0 30px",
-                                        width: isSmallScreen ? "150px" : "100%",
-                                        height: isSmallScreen ? "150px" : "100%",
-                                        margin: isSmallScreen ? "20px 0" : "0",
-                                        border: isSmallScreen ? "3px solid #396781" : "none",
-                                        padding: isSmallScreen ? "5px" : "0"
+                                        borderRadius: isMediumScreen ? "100%" : "30px  0 0 30px",
+                                        width: isMediumScreen ? "150px" : "100%",
+                                        height: isMediumScreen ? "150px" : "100%",
+                                        margin: isMediumScreen ? "20px 0" : "0",
+                                        border: isMediumScreen ? "3px solid #396781" : "none",
+                                        padding: isMediumScreen ? "5px" : "0"
                                     }}
                                 />
                             </Box>
                             <Box
                                 sx={{
-                                    width: isSmallScreen ? "100%" : "55%",
-                                    margin: isSmallScreen ? "0 0 10px 0" : "0"
+                                    width: isMediumScreen ? "100%" : "55%",
+                                    margin: isMediumScreen ? "0 0 10px 0" : "0"
                                 }}
                             >
                                 <Typography
                                     sx={{
                                         textAlign: "center",
-                                        marginTop: isSmallScreen ? "10px" : "33px",
+                                        marginTop: isMediumScreen ? "10px" : "33px",
                                         fontWeight: "bold",
                                         fontSize: "24px",
                                         lineHeight: "32.02px",
@@ -623,34 +622,34 @@ export default function AboutUs() {
                         }}
                     >
                         <Box
-                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
+                            sx={{ display: "flex", flexDirection: isMediumScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isMediumScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
                         >
-                            <Box sx={{ height: "100%", width: isSmallScreen ? "100%" : "45%", display: "flex", justifyContent: isSmallScreen ? "center" : "unset" }}>
+                            <Box sx={{ height: "100%", width: isMediumScreen ? "100%" : "45%", display: "flex", justifyContent: isMediumScreen ? "center" : "unset" }}>
                                 <img
-                                    src={image4}
+                                    src={image3}
                                     alt="vector"
 
                                     style={{
                                         objectFit: "cover",
-                                        borderRadius: isSmallScreen ? "100%" : "30px  0 0 30px",
-                                        width: isSmallScreen ? "150px" : "100%",
-                                        height: isSmallScreen ? "150px" : "100%",
-                                        margin: isSmallScreen ? "20px 0" : "0",
-                                        border: isSmallScreen ? "3px solid #396781" : "none",
-                                        padding: isSmallScreen ? "5px" : "0"
+                                        borderRadius: isMediumScreen ? "100%" : "30px  0 0 30px",
+                                        width: isMediumScreen ? "150px" : "100%",
+                                        height: isMediumScreen ? "150px" : "100%",
+                                        margin: isMediumScreen ? "20px 0" : "0",
+                                        border: isMediumScreen ? "3px solid #396781" : "none",
+                                        padding: isMediumScreen ? "5px" : "0"
                                     }}
                                 />
                             </Box>
                             <Box
                                 sx={{
-                                    width: isSmallScreen ? "100%" : "55%",
-                                    margin: isSmallScreen ? "0 0 10px 0" : "0"
+                                    width: isMediumScreen ? "100%" : "55%",
+                                    margin: isMediumScreen ? "0 0 10px 0" : "0"
                                 }}
                             >
                                 <Typography
                                     sx={{
                                         textAlign: "center",
-                                        marginTop: isSmallScreen ? "10px" : "33px",
+                                        marginTop: isMediumScreen ? "10px" : "33px",
                                         fontWeight: "bold",
                                         fontSize: "24px",
                                         lineHeight: "32.02px",
@@ -730,34 +729,34 @@ export default function AboutUs() {
                             </Box>
                         </Box>
                         <Box
-                            sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isSmallScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
+                            sx={{ display: "flex", flexDirection: isMediumScreen ? "column" : "row", width: isSmallScreen ? "100%" : "49%", margin: isSmallScreen ? "10px 1%" : "0 1%", height: isMediumScreen ? "auto" : "300px", backgroundColor: "#E3ECF1", borderRadius: "30px", }}
                         >
-                            <Box sx={{ height: "100%", width: isSmallScreen ? "100%" : "45%", display: "flex", justifyContent: isSmallScreen ? "center" : "unset" }}>
+                            <Box sx={{ height: "100%", width: isMediumScreen ? "100%" : "45%", display: "flex", justifyContent: isMediumScreen ? "center" : "unset" }}>
                                 <img
-                                    src={image3}
+                                    src={image4}
                                     alt="vector"
 
                                     style={{
                                         objectFit: "cover",
-                                        borderRadius: isSmallScreen ? "100%" : "30px  0 0 30px",
-                                        width: isSmallScreen ? "150px" : "100%",
-                                        height: isSmallScreen ? "150px" : "100%",
-                                        margin: isSmallScreen ? "20px 0" : "0",
-                                        border: isSmallScreen ? "3px solid #396781" : "none",
-                                        padding: isSmallScreen ? "5px" : "0"
+                                        borderRadius: isMediumScreen ? "100%" : "30px  0 0 30px",
+                                        width: isMediumScreen ? "150px" : "100%",
+                                        height: isMediumScreen ? "150px" : "100%",
+                                        margin: isMediumScreen ? "20px 0" : "0",
+                                        border: isMediumScreen ? "3px solid #396781" : "none",
+                                        padding: isMediumScreen ? "5px" : "0"
                                     }}
                                 />
                             </Box>
                             <Box
                                 sx={{
-                                    width: isSmallScreen ? "100%" : "55%",
-                                    margin: isSmallScreen ? "0 0 10px 0" : "0"
+                                    width: isMediumScreen ? "100%" : "55%",
+                                    margin: isMediumScreen ? "0 0 10px 0" : "0"
                                 }}
                             >
                                 <Typography
                                     sx={{
                                         textAlign: "center",
-                                        marginTop: isSmallScreen ? "10px" : "33px",
+                                        marginTop: isMediumScreen ? "10px" : "33px",
                                         fontWeight: "bold",
                                         fontSize: "24px",
                                         lineHeight: "32.02px",

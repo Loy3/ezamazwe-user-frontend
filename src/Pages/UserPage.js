@@ -30,7 +30,7 @@ const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam 
 
 function UserPage({ signInUser }) {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
-
+    const isMediumScreen = useMediaQuery("(max-width:800px)");
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
 
@@ -214,7 +214,7 @@ function UserPage({ signInUser }) {
             <Box sx={{ width: isSmallScreen ? '100%' : "30%", height: "700px", backgroundColor: '#E3ECF1', position: 'relative', paddingBottom: "10px", borderRadius: '20px', marginBottom: isSmallScreen ? "30px" : "0" }}>
 
                 <img
-                    style={{ height: "60%", width: "100%", objectFit: "cover", borderTopLeftRadius: "20px", borderTopRightRadius: "20px" }}
+                    style={{ height: isMediumScreen ? "55%" : "60%", width: "100%", objectFit: "cover", borderTopLeftRadius: "20px", borderTopRightRadius: "20px" }}
                     src={imageURL} alt='card' />
 
                 <CardContent sx={{ margin: '10px', position: "relative", height: "40%" }}>
@@ -251,16 +251,16 @@ function UserPage({ signInUser }) {
             </Box >
 
             <Box sx={{ width: isSmallScreen ? "100%" : "70%", zIndex: "50", height: isSmallScreen ? "auto" : 'inherit', position: "relative", }} >
-                <Box sx={{ backgroundColor: '#E3ECF1', width: isSmallScreen ? '100%' : '94%', height: '100%', margin: isSmallScreen ? "0" : "0 3%", borderRadius: '16px', paddingBottom: "10px", marginTop: "-20px", paddingBottom: isSmallScreen ? "100px" : "0" }}>
+                <Box sx={{ backgroundColor: '#E3ECF1', width: isSmallScreen ? '100%' : '97%', height: '100%', margin: isSmallScreen ? "0" : "0 0 0 3%", borderRadius: '16px', paddingBottom: "10px", marginTop: "-20px", paddingBottom: isSmallScreen ? "100px" : "0" }}>
                     <Box sx={{ display: 'flex', flexDirection: 'row', gap: '2%', borderBottom: '2px solid rgba(57, 103, 128, 0.30)', width: "94%", height: "60px", margin: "20px 3%", }}>
                         <Box sx={{ width: "29%", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
-                            <Typography variant={isSmallScreen ? "subtitle2" : 'h5'} sx={{ fontWeight: "bold", padding: "0 15px", color: "primary.light", cursor: "pointer", borderBottom: `${accBorder}`, display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }} onClick={() => userNavigate("account")}>Account</Typography>
+                            <Typography variant={isMediumScreen ? "subtitle2" : 'h5'} sx={{ fontWeight: "bold", padding: "0 15px", color: "primary.light", cursor: "pointer", borderBottom: `${accBorder}`, display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }} onClick={() => userNavigate("account")}>Account</Typography>
                         </Box>
                         <Box sx={{ width: "29%", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
-                            <Typography variant={isSmallScreen ? "subtitle2" : 'h5'} sx={{ fontWeight: "bold", padding: "0 15px", color: "primary.light", cursor: "pointer", borderBottom: `${couBorder}`, display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }} onClick={() => userNavigate("courses")}>Courses</Typography>
+                            <Typography variant={isMediumScreen ? "subtitle2" : 'h5'} sx={{ fontWeight: "bold", padding: "0 15px", color: "primary.light", cursor: "pointer", borderBottom: `${couBorder}`, display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }} onClick={() => userNavigate("courses")}>Courses</Typography>
                         </Box>
                         <Box sx={{ width: "29%", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
-                            <Typography variant={isSmallScreen ? "subtitle2" : 'h5'} sx={{ fontWeight: "bold", padding: "0 15px", color: "primary.light", cursor: "pointer", borderBottom: `${tutBorder}`, display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }} onClick={() => userNavigate("tutors")}>Tutor Sessions</Typography>
+                            <Typography variant={isMediumScreen ? "subtitle2" : 'h5'} sx={{ fontWeight: "bold", padding: "0 15px", color: "primary.light", cursor: "pointer", borderBottom: `${tutBorder}`, display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }} onClick={() => userNavigate("tutors")}>Tutor Sessions</Typography>
                         </Box>
                     </Box>
                     {accStatus ?
