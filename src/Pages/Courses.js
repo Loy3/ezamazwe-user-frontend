@@ -12,7 +12,7 @@ import { FilteredDocFunction } from "../Services/CourseService";
 
 const Courses = () => {
 
-    const [courses, setCourses] = useState([]);
+    const [courses, setCourses] = useState({});
     const [docData, setDocData] = useState([]);
     const [category, setCategory] = useState('');
     const [subject, setSubject] = useState('');
@@ -29,7 +29,7 @@ const Courses = () => {
             console.log("Courses filtered data:", data);
             setCourses(data);
 
-            handleFilteredDoc();
+            // handleFilteredDoc();
 
         } catch (error) {
             console.log("Error fetching data", error);
@@ -169,18 +169,31 @@ const Courses = () => {
                     <div>
                         <h3>{subject} Courses</h3>
                     </div>
-                    {courses ? (
+                    {courses && courses.filteredCourseContent ? (
                         <div>
-                            {courses.map((course) => (
+                            {courses.filteredCourseContent.map((content) => (
                                 <div>
-                                    <h4>{course.lessonName} </h4>
-                                    <h5>Lesson Type: {course.lessonType}</h5>
-                                    <p>Lesson Url: {course.lessonUrl}</p>
-                                    <video ref={videoRef} width="400" height="300">
-                                        <source src={course.lessonUrl} type="video/mp4" />
-                                        Your browser does not support the video tag.
-                                    </video>
-                                    <button onClick={() => handleViewCourse(course.id)}>View Course</button>
+                                    <h4>{content.lessonName} </h4>
+                                    <div>
+                                        {courses.topicsData.map((topic) => (
+                                            <div>
+                                                <p>Video Name: {topic.videoName}</p>
+                                                <video ref={videoRef} controls width="400" height="300">
+                                                    <source src={topic.video} type="video/mp4" />
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div>
+                                        {courses.filteredDocContent.map((course) => (
+                                            <div>
+                                                <h5>Course Type: {course.courseType}</h5>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <button onClick={() => handleViewCourse(courses.id)}>View Course</button>
                                     <h3>____________________________________________________________________________________________</h3>
                                 </div>
                             ))}
