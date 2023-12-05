@@ -24,7 +24,8 @@ function App() {
       <Router>
           <Routes>
             {/* Client routes */}
-            <Route path="/" element={<SignIn />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/profilesetup" element={<ProfileSetup />} />
             <Route path="/editprofile" element={<EditProfile />} />
@@ -32,7 +33,6 @@ function App() {
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/verification" element={<VerificationPage />} />
             <Route path="/verifyemail" element={<VerifyEmail />} />
-            <Route path="/homepage" element={<HomePage />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/coursefullview" element={<CourseFullView />} />
             <Route path="/courseview" element={<CourseView />} />
