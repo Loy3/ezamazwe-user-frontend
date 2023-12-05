@@ -60,7 +60,7 @@ function ContactUs() {
                   secondname={"Last Name:"}
                   email={"Email Address:"}
                   subject={"Subject:"}
-                  label={"Label"}
+                  label={"Message"}
 
                 />
               </Box>
