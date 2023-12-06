@@ -115,15 +115,17 @@ export default function AboutUs() {
                     maxWidth: "1440px", width: "100%", height: "100%",
                  
                 }}>
-                    <Grid  container spacing={2} sx={{ display: "flex", margin: "50px 0", flexDirection: "row", width: "100%" }}>
-                        <Grid item xs={12} sm={3} sx={{ width: isSmallScreen ? "100%" : "35%", height: isSmallScreen ? "auto" : "inherit", display: isMediumScreen ? "none" : "flex", justifyContent: "center", alignItems: "center", position: "relative"}} >
-                            <Box sx={{ width: "90%", height: "auto", position: "relative" }}>
-                                <Box sx={{ height: isSmallScreen ? "350px" : "450px", width: isSmallScreen ? "300px" : "400px", opacity: "0.5", backgroundColor: "primary.light", borderRadius: "20px", zIndex: "10", marginLeft: isSmallScreen ? "30px" : "0", marginTop: "30px" }} />
-                                <img src={headerImage} alt="headerImage" style={{ height: isSmallScreen ? "350px" : "450px", width: isSmallScreen ? "300px" : "400px", objectFit: "cover", zIndex: "20", position: "absolute", top: "0", left: isSmallScreen ? "0" : "30px", borderRadius: "20px" }} />
+                    <Grid  sx={{ display: "flex", margin: "50px 0", flexDirection: "row", width: "100%", padding:'10px' }}>
+                        <Grid item xs={12} sm={3} sx={{ width: isSmallScreen ? "100%" : "35%", height: isSmallScreen ? "auto" : "inherit", display: isMediumScreen ? "none" : "flex", justifyContent: "center", alignItems: "center", position: "relative",marginLeft:'20px',paddingLeft: isSmallScreen ?'0px' : '30px'}} >
+                            <Box sx={{ width: "50%", marginRight:'260px'}}>
+                            <Box sx={{ width: "110%", height: "auto", position: "relative",}}>
+                                <Box sx={{ height: isSmallScreen ? "350px" : "450px", width: isSmallScreen ? "300px" : "400px", opacity: "0.5", backgroundColor: "primary.light", borderRadius: "20px", zIndex: "10", marginLeft: isSmallScreen ? "30px" : "0", marginTop: "0px" }} />
+                                <img src={headerImage} alt="headerImage" style={{ height: isSmallScreen ? "320px" : "420px", width: isSmallScreen ? "300px" : "400px", objectFit: "cover", zIndex: "20", position: "absolute", top: "0", left: isSmallScreen ? "0" : "30px", borderRadius: "20px" }} />
+                            </Box>
                             </Box>
                         </Grid>
 
-                        <Grid item xs={12} sm={8} sx={{ width: isMediumScreen ? "100%" : "65%", height: isMediumScreen ? "auto" : "480px", display: "flex", justifyContent: "center", alignItems: "center", }} >
+                        <Grid  sx={{ width: isMediumScreen ? "100%" : "65%", height: isMediumScreen ? "auto" : "480px", display: "flex", justifyContent: "center", alignItems: "center", }} >
                             <Box   sx={{ width: isMediumScreen ? "90%" : "80%", height: "auto" }}>
                                 <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                     <Label children={"We are Company Name"} />
