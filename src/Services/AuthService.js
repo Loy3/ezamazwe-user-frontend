@@ -90,6 +90,7 @@ export const ProfileSetupFunction = async (userId, firstName, lastName, userEmai
 
     try {
         await UploadImageFunction(image).then(async (result) => {
+            // console.log("sssssss",result);
             const docRef = await setDoc(doc(db, 'users', userId), {
                 user_id: userId,
                 firstName: firstName,

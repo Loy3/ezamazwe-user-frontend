@@ -4,6 +4,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import TuneIcon from '@mui/icons-material/Tune';
 import { useNavigate } from 'react-router-dom';
+import { auth } from "../Services/firebaseConfig";
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
@@ -75,7 +76,7 @@ export const SmallButton = ({ text, buttonFunction }) => {
 export const SignOutButton = ({ text, buttonFunction }) => {
     return (
         <>
-            <Button variant="outlined" sx={{ marginTop: "5px", width: "150px", height: "50px", borderRadius: 50,border:"2px solid #FF6347", color:"#FF6347" }} onClick={() => buttonFunction()}>{text}</Button>
+            <Button variant="outlined" sx={{ marginTop: "5px", width: "150px", height: "50px", borderRadius: 50, border: "2px solid #FF6347", color: "#FF6347" }} onClick={() => buttonFunction()}>{text}</Button>
         </>
     )
 }
@@ -106,7 +107,13 @@ export const ToSignInUserButton = ({ text, buttonFunction }) => {
     const navigate = useNavigate();
 
     function handleNavigate() {
-        navigate('/user');
+        const user = auth.currentUser;
+        console.log("User", user);
+        if (user.emailVerified === true) {
+            navigate('/user');
+        } else {
+            alert("You need to verify your email to continue. Please check your emails.")
+        }
     }
 
     return (

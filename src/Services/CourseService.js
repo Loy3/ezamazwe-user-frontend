@@ -40,7 +40,6 @@ export const fetchCoursesFunction = async (subject, category, grade) => {
 
         // Filter course content documents based on courseId
         const filteredCourseContent = courseContentSnapshot.docs
-            // .filter((contentDoc) => contentDoc.data().courseId === courseId)
             .map((contentDoc) => ({
                 contentId: contentDoc.id,
                 ...contentDoc.data()
