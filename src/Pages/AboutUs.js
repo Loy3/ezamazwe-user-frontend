@@ -29,6 +29,7 @@ const paragraph = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliq
 export default function AboutUs() {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
     const isMediumScreen = useMediaQuery("(max-width:800px)");
+    const isMedToLaScreen = useMediaQuery("(max-width:1024px) and (min-width:800px)");
     const navigate = useNavigate();
 
 
@@ -117,9 +118,9 @@ export default function AboutUs() {
                 }}>
                     <Box sx={{ display: "flex", margin: "50px 0", flexDirection: "row", width: "100%" }}>
                         <Box sx={{ width: isSmallScreen ? "100%" : "35%", height: isSmallScreen ? "auto" : "inherit", display: isMediumScreen ? "none" : "flex", justifyContent: "center", alignItems: "center", position: "relative" }}>
-                            <Box sx={{ width: "90%", height: "auto", position: "relative" }}>
-                                <Box sx={{ height: isSmallScreen ? "350px" : "450px", width: isSmallScreen ? "300px" : "400px", opacity: "0.5", backgroundColor: "primary.light", borderRadius: "20px", zIndex: "10", marginLeft: isSmallScreen ? "30px" : "0", marginTop: "30px" }} />
-                                <img src={headerImage} alt="headerImage" style={{ height: isSmallScreen ? "350px" : "450px", width: isSmallScreen ? "300px" : "400px", objectFit: "cover", zIndex: "20", position: "absolute", top: "0", left: isSmallScreen ? "0" : "30px", borderRadius: "20px" }} />
+                            <Box sx={{ width: isMedToLaScreen ? "80%" : "90%", height: "auto", position: "relative" }}>
+                                <Box sx={{ height: isMedToLaScreen ? "350px" : "450px", width: isMedToLaScreen ? "300px" : "400px", opacity: "0.5", backgroundColor: "primary.light", borderRadius: "20px", zIndex: "10", marginLeft: isMedToLaScreen ? "15px" : "0", marginTop: isMedToLaScreen ? "25px" : "30px" }} />
+                                <img src={headerImage} alt="headerImage" style={{ height: isMedToLaScreen ? "350px" : "450px", width: isMedToLaScreen ? "300px" : "400px", objectFit: "cover", zIndex: "20", position: "absolute", top: "0", left: "30px", borderRadius: "20px" }} />
                             </Box>
                         </Box>
 
@@ -129,15 +130,12 @@ export default function AboutUs() {
                                     <Label children={"We are Company Name"} />
                                 </Box>
                                 <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                    <SectionSubHeading
-                                        children={
-                                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                                        }
-                                        sx={{ marginBottom: "30px" }}
-                                    />
+                                    <Typography variant="subtitle1" sx={{ color: 'primary.light', fontWeight: "400", textAlign: "center" }}>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </Typography>
                                 </Box>
                                 <Box sx={{ width: isSmallScreen ? "94%" : "100%", display: "flex", justifyContent: "center", alignItems: "center", margin: isSmallScreen ? "0 3%" : "0" }}>
-                                    <Typography variant="body1" paragraph sx={{ marginTop: "10px", textAlign: "center" }}>
+                                    <Typography variant={isMediumScreen ? "body2" : "body1"} paragraph sx={{ marginTop: "10px", textAlign: "center" }}>
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisqueconvallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl.
                                     </Typography>
                                 </Box>

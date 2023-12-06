@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 export const NavBar = ({ location }) => {
     const navigate = useNavigate();
     const isSmallScreen = useMediaQuery("(max-width:800px)");
+    const isMedToLaScreen = useMediaQuery("(max-width:1024px) and (min-width:800px)");
     const [navStatus, setNavStatus] = useState(false);
     const [isSignedIn, setSignIn] = useState(false);
     const [userId, setUserId] = useState("");
@@ -22,7 +23,7 @@ export const NavBar = ({ location }) => {
     const [mypath, setPath] = useState("");
     const [signInStatus, setSignInStatus] = useState(false);
     const [signInUser, setSignInUser] = useState(null)
-   
+
     useEffect(() => {
         const checkAuth = (auth);
         // console.log(auth);
@@ -213,9 +214,15 @@ export const NavBar = ({ location }) => {
                         </Box>
                     }
                     <Box sx={{ width: "100%", height: isSmallScreen ? "100%" : "90px", display: "flex", flexDirection: isSmallScreen ? "column" : "row", position: "relative" }}>
-                        <Box sx={{ width: isSmallScreen ? "100%" : "20%", height: isSmallScreen ? "auto" : "100%", display: "flex", justifyContent: isSmallScreen ? "start" : "center", alignItems: "center" }}>
-                            <img src={logo} style={{ width: "150px", marginLeft: isSmallScreen ? "20px" : "0" }} />
-                        </Box>
+                        {isMedToLaScreen ?
+                            <Box sx={{ width: "18%", height: isSmallScreen ? "auto" : "100%", display: "flex", justifyContent: isSmallScreen ? "start" : "center", alignItems: "center" }}>
+                                <img src={logo} style={{ width: "150px", marginLeft: isSmallScreen ? "20px" : "0" }} />
+                            </Box>
+                            :
+                            <Box sx={{ width: isSmallScreen ? "100%" : "20%", height: isSmallScreen ? "auto" : "100%", display: "flex", justifyContent: isSmallScreen ? "start" : "center", alignItems: "center" }}>
+                                <img src={logo} style={{ width: "150px", marginLeft: isSmallScreen ? "20px" : "0" }} />
+                            </Box>
+                        }
                         <Box sx={{ width: isSmallScreen ? "100%" : "60%", height: "100px", display: "flex", justifyContent: isSmallScreen ? "start" : "center", alignItems: "center", marginTop: isSmallScreen ? "50px" : "0" }}>
                             <Box sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row" }}>
                                 <Link sx={{ textDecoration: "none", padding: "0 10px", color: homeColor, cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0", fontWeight: homeWeight }} onClick={() => handleNavigation("home")}>Home</Link>
@@ -225,6 +232,7 @@ export const NavBar = ({ location }) => {
                                 <Link sx={{ textDecoration: "none", padding: "0 10px", color: contactColor, cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0", fontWeight: contactWeight }} onClick={() => handleNavigation("contact")}>Contact Us</Link>
                             </Box>
                         </Box>
+                        
                         <Box sx={{ width: isSmallScreen ? "100%" : "20%", height: isSmallScreen ? "auto" : "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: isSmallScreen ? "50px" : "0", position: isSmallScreen ? "absolute" : "relative", bottom: isSmallScreen ? "50px" : "unset" }}>
                             {!isSignedIn ?
                                 <Box sx={{ display: "flex", flexDirection: "row", marginLeft: isSmallScreen ? "20px" : "0" }}>

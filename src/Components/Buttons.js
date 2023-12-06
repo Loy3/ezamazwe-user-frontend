@@ -67,7 +67,7 @@ export const ImageButton = ({ handleImage, imageSrc }) => {
 export const SmallButton = ({ text, buttonFunction }) => {
     return (
         <>
-            <Button variant="contained" sx={{ marginTop: "5px", backgroundColor: "primary.light", width: "150px", height: "50px", borderRadius: 50 }} onClick={() => buttonFunction()}>{text}</Button>
+            <Button variant="contained" sx={{ marginTop: "2px", backgroundColor: "primary.light", width: "150px", height: "56px", borderRadius: 50 }} onClick={() => buttonFunction()}>{text}</Button>
         </>
     )
 }

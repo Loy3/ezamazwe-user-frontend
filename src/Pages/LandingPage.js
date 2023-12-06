@@ -41,6 +41,7 @@ const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam 
 function LandingPage() {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
     const isMediumScreen = useMediaQuery("(max-width:800px)");
+    const isMedToLaScreen = useMediaQuery("(max-width:1024px) and (min-width:800px)");
     const isSecMediumScreen = useMediaQuery("(max-width:800px) and (min-width:600px)");
     const navigate = useNavigate();
     const headCards = useMemo(() => {
@@ -227,8 +228,8 @@ function LandingPage() {
                     <Box sx={{ width: "100%", height: "100%", display: "flex", flexDirection: isMediumScreen ? "column" : "row", marginTop: "70px" }}>
                         <Box sx={{ width: isMediumScreen ? "100%" : "50%", height: isMediumScreen ? "auto" : "480px", display: "flex", justifyContent: isMediumScreen ? "center" : "end", alignItems: "center", }}>
                             <Box sx={{ width: isMediumScreen ? "90%" : "80%", height: "auto" }}>
-                                <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{ color: "primary.light", fontWeight: "bold", textAlign: isMediumScreen ? "center" : "left" }}>Company Name</Typography>
-                                <Typography variant={isSmallScreen ? "h5" : "h4"} sx={{ color: "primary.light", fontWeight: "600", marginTop: "5px", textAlign: isMediumScreen ? "center" : "left" }}>Company Slogan</Typography>
+                                <Typography variant={isSmallScreen ? "h4" : "h3"} sx={{ color: "primary.light", fontWeight: "bold", textAlign: isMediumScreen ? "center" : "left" }}>Ezamazwe Edutech </Typography>
+                                <Typography variant={isSmallScreen ? "h5" : "h4"} sx={{ color: "primary.light", fontWeight: "600", marginTop: "5px", textAlign: isMediumScreen ? "center" : "left" }}>Center for Innovation</Typography>
                                 <Typography variant="body2" sx={{ margin: "30px 10px", textAlign: isMediumScreen ? "center" : "left" }}>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas metus nulla, et tincidunt sapien faucibus quis. Proin accumsan, tortor a luctus euismod, ex orci sodales nunc.
                                 </Typography>
@@ -242,8 +243,8 @@ function LandingPage() {
                         <Box sx={{ width: isMediumScreen ? "100%" : "50%", height: isSmallScreen ? "auto" : "inherit", display: isMediumScreen ? "none" : "flex", justifyContent: "center", alignItems: "center", position: "relative" }}>
                             <Box sx={{ width: "90%", height: "auto", position: "relative" }}>
 
-                                <Box sx={{ height: isSmallScreen ? "350px" : "450px", width: isSmallScreen ? "300px" : "400px", opacity: "0.5", backgroundColor: "primary.light", borderRadius: "20px", zIndex: "10", marginLeft: isSmallScreen ? "30px" : "80px", marginTop: "30px" }} />
-                                <img src={headerImage} alt="headerImage" style={{ height: isSmallScreen ? "350px" : "450px", width: isSmallScreen ? "300px" : "400px", objectFit: "cover", zIndex: "20", position: "absolute", top: "0", left: isSmallScreen ? "0" : "50px", borderRadius: "20px" }} />
+                                <Box sx={{ height: isMedToLaScreen ? "350px" : "450px", width: isMedToLaScreen ? "300px" : "400px", opacity: "0.5", backgroundColor: "primary.light", borderRadius: "20px", zIndex: "10", marginLeft: isMedToLaScreen ? "40px" : "80px", marginTop: isMedToLaScreen ? "60px" : "30px" }} />
+                                <img src={headerImage} alt="headerImage" style={{ height: isMedToLaScreen ? "350px" : "450px", width: isMedToLaScreen ? "300px" : "400px", objectFit: "cover", zIndex: "20", position: "absolute", top:isMedToLaScreen ? "20px" : "0", left: isMedToLaScreen ? "20px" : "50px", borderRadius: "20px" }} />
                             </Box>
                         </Box>
                     </Box>
