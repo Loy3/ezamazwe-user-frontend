@@ -64,7 +64,7 @@ function UserPage({ signInUser }) {
     const handleGetUserData = async () => {
         try {
             const user = signInUser;
-            console.log("User data fetched on EditProfile component", user);
+            // console.log("User data fetched on EditProfile component", user);
             setFirstName(user.firstName);
             setLastName(user.lastName);
             setEmail(user.email);

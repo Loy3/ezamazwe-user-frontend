@@ -4,6 +4,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import TuneIcon from '@mui/icons-material/Tune';
 import { useNavigate } from 'react-router-dom';
+import { auth } from "../Services/firebaseConfig";
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
@@ -101,12 +102,37 @@ export const ToUserButton = ({ buttonFunction, isSignedIn }) => {
     )
 }
 
+// export const ToSignInUserButton = ({ text, buttonFunction }) => {
+//     const isSmallScreen = useMediaQuery("(max-width:600px)");
+//     const navigate = useNavigate();
+
+//     function handleNavigate() {
+//         navigate('/user');
+//     }
+
+//     return (
+//         <>
+//             <Button component="label" variant="contained" sx={{ marginLeft: "10px", width: "50px", height: "60px", borderRadius: "100%", backgroundColor: "primary.light", display: "flex", justifyContent: "center", alignItems: "center" }} onClick={handleNavigate}>
+//                 <Typography variant="h4" sx={{ fontWeight: "bold", color: "white" }}>{text}</Typography>
+//             </Button>
+//             {/* <VisuallyHiddenInput type="file" onChange={event => handleImage(event)} /> */}
+//             {/*  */}
+//         </>
+//     )
+// }
+
 export const ToSignInUserButton = ({ text, buttonFunction }) => {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
     const navigate = useNavigate();
 
     function handleNavigate() {
-        navigate('/user');
+        const user = auth.currentUser;
+        // console.log("User", user);
+        if (user.emailVerified === true) {
+            navigate('/user');
+        } else {
+            alert("You need to verify your email to continue. Please check your emails.")
+        }
     }
 
     return (

@@ -237,7 +237,7 @@ export const GetUserDataFunction = async (userId) => {
 
         if (docSnap.exists()) {
             user = docSnap.data();
-            console.log("User data:", docSnap.data());
+            // console.log("User data:", docSnap.data());
         } else {
             alert('Error', 'User data not found.');
         }

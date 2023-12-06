@@ -43,9 +43,9 @@ function App() {
     const checkAuth = (auth);
     // console.log(auth);
     const unsubscribe = checkAuth.onAuthStateChanged((user) => {
-      console.log(user);
+      // console.log(user);
       if (user !== null) {
-        console.log("user.uid",user.uid)
+        // console.log("user.uid",user.uid)
         setUserId(user.uid);
         setUserMail(user.email);
 
