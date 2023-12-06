@@ -21,13 +21,13 @@ export const fetchCoursesFunction = async (subject, category, grade) => {
             return;
         }
 
-        coursesSnapshot.forEach(item => console.log("Course:", item.data()))
+        // coursesSnapshot.forEach(item => console.log("Course:", item.data()))
 
         // Use the first document
         const courseDoc = coursesSnapshot.docs[0];
         const courseId = courseDoc.id;
 
-        console.log("courseId:", courseId);
+        // console.log("courseId:", courseId);
 
 
         // Step 2: Query the courseContent subcollection for the selected course
@@ -35,7 +35,7 @@ export const fetchCoursesFunction = async (subject, category, grade) => {
         const courseContentQuery = collectionGroup(db, 'courseContent');
         const courseContentSnapshot = await getDocs(courseContentQuery);
 
-        courseContentSnapshot.forEach(item => console.log("Course content:", item.data()))
+        // courseContentSnapshot.forEach(item => console.log("Course content:", item.data()))
 
         // Filter course content documents based on courseId
         const filteredCourseContent = courseContentSnapshot.docs
@@ -45,7 +45,7 @@ export const fetchCoursesFunction = async (subject, category, grade) => {
                 ...contentDoc.data()
             }));
 
-        console.log("Filtered courses:", filteredCourseContent);
+        // console.log("Filtered courses:", filteredCourseContent);
 
         return filteredCourseContent;
 
@@ -92,7 +92,7 @@ export const ViewCoursesFunction = async () => {
             ...doc.data()
         }));
 
-        console.log("All courses data:", courses);
+        // console.log("All courses data:", courses);
 
         return courses;
 
@@ -121,7 +121,7 @@ export const SearchBarCoursesFunction = async () => {
 
 // Filter category function
 export const FilterCategoryFunction = async (category) => {
-    console.log("category",category);
+    // console.log("category",category);
     try {
         // Reference to the collection
         const coursesCollection = collection(db, 'courses');
@@ -132,11 +132,11 @@ export const FilterCategoryFunction = async (category) => {
         let items = [];
 
         querySnapshot.forEach((doc) => {
-            console.log(doc.id, ' => ', doc.data());
+            // console.log(doc.id, ' => ', doc.data());
             items.push(doc.data());
         });
 
-        console.log("View filtered category data: ", items);
+        // console.log("View filtered category data: ", items);
 
         return items;
 
@@ -157,11 +157,11 @@ export const FilterTopicFunction = async (topic) => {
         let items = [];
 
         querySnapshot.forEach((doc) => {
-            console.log(doc.data());
+            // console.log(doc.data());
             items.push(doc.data());
         });
 
-        console.log("View filtered data: ", items);
+        // console.log("View filtered data: ", items);
 
         return items;
 
@@ -175,18 +175,18 @@ export const FilterGradeFunction = async (grade) => {
     try {
 
         // Reference to the collection
-        const coursesCollection = collection(db, 'coursesCollection');
+        const coursesCollection = collection(db, 'courses');
         // Create a query where 'mapField.nestedField' is equal to 'value2'
         const queryData = query(coursesCollection, where('grade', '==', grade));
         const querySnapshot = await getDocs(queryData);
         let items = [];
 
         querySnapshot.forEach((doc) => {
-            console.log(doc.id, ' => ', doc.data());
+            // console.log(doc.id, ' => ', doc.data());
             items.push(doc.data());
         });
 
-        console.log("Data filtered with grade: ", items);
+        // console.log("Data filtered with grade: ", items);
 
         return items;
 
@@ -197,21 +197,22 @@ export const FilterGradeFunction = async (grade) => {
 
 // Filter Grades function
 export const FilterSubscriptionFunction = async (subscription) => {
+    console.log(subscription);
     try {
 
         // Reference to the collection
-        const coursesCollection = collection(db, 'coursesCollection');
+        const coursesCollection = collection(db, 'courses');
         // Create a query where 'mapField.nestedField' is equal to 'value2'
-        const queryData = query(coursesCollection, where('coursePrice', '==', subscription));
+        const queryData = query(coursesCollection, where('courseType', '==', subscription));
         const querySnapshot = await getDocs(queryData);
         let items = [];
 
         querySnapshot.forEach((doc) => {
-            console.log(doc.id, ' => ', doc.data());
+            // console.log(doc.id, ' => ', doc.data());
             items.push(doc.data());
         });
 
-        console.log("Data filtered with subscription: ", items);
+        // console.log("Data filtered with subscription: ", items);
 
         return items;
 
@@ -253,7 +254,7 @@ export const ContactUsFunction = async (firstName, lastName, email, subject, mes
         const response = await apiUrl.json();
 
         // Handle the response here
-        console.log('Server message transmission response:', response);
+        // console.log('Server message transmission response:', response);
 
     } catch (error) {
         console.log("Error sending message:", error);
@@ -309,8 +310,8 @@ export const PaymentFunction = async (firstName, lastName, email, phoneNum) => {
         const response = await apiUrl.json();
 
         // Handle the response here
-        console.log('Server message transmission response:', response);
-        console.log("data", paymentData);
+        // console.log('Server message transmission response:', response);
+        // console.log("data", paymentData);
     } catch (error) {
         console.log("Error sending message:", error);
     }

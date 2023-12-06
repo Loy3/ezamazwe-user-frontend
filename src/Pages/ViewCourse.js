@@ -74,12 +74,12 @@ function ViewCourse({ course_data, docData }) {
 
 
     const handleStartCourse = () => {
-        console.log(costPrice);
+        console.log(courseType);
         if (user) {
-            if (costPrice === "Free") {
+            if (courseType === "Free") {
                 navigate('/courseview', { state: { courseData: courseData, doc_data: doc_data } });
             } else {
-                if (costPrice === "Subscription" && userSubscription === "subscribed") {
+                if (courseType === "Paid" && userSubscription === "subscribed") {
                     navigate('/courseview', { state: { courseData: courseData } });
                 } else {
                     alert("Only subscribed users can access this course");

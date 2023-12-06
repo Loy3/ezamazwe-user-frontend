@@ -72,6 +72,8 @@ function Courses() {
     useEffect(() => {
         if (subCategory) {
             setTopicSStatus(true);
+            handleGradeFilter();
+            setCoursesTitle(`${subCategory} Courses`);
         } else {
             setTopicSStatus(false)
         }
@@ -86,6 +88,12 @@ function Courses() {
             setTypeStatus(false)
         }
     }, [topicS])
+
+    useEffect(() => {
+        if (subscription) {
+           handleSubscriptionFilter()
+        } 
+    }, [subscription])
 
     const [categories, setCategories] = useState()
 
@@ -234,23 +242,11 @@ function Courses() {
         }
     }
 
-    // Filter courses with topic or subject
-    const handleTopicFilter = async () => {
-        try {
-            const data = await FilterTopicFunction(subject);
-            console.log("Courses data filtered with topic:", data);
-            setCourses(data);
-
-        } catch (error) {
-            console.log("Error fetching data",);
-        }
-    }
-
     const handleGradeFilter = async () => {
-
+        const convertedGrade = subCategory.replace(" ", "_");
         try {
-            const data = await FilterGradeFunction(grade);
-            console.log("Courses data filtered with topic:", data);
+            const data = await FilterGradeFunction(convertedGrade);
+            // console.log("Courses data filtered with topic:", data);
             setCourses(data);
 
         } catch (error) {
@@ -259,6 +255,7 @@ function Courses() {
     }
 
     const handleSubscriptionFilter = async () => {
+        console.log(subscription);
         try {
             const data = await FilterSubscriptionFunction(subscription);
             console.log("Courses data filtered with subscription:", data);
@@ -329,7 +326,7 @@ function Courses() {
                             }
                             {typeStatus ?
                                 <Box sx={{ paddingTop: '20px', paddingBottom: "60px" }}>
-                                    <Accordians label={'Subscription'} types={Subscription} setReturnType={setType} returnType={type} />
+                                    <Accordians label={'Subscription'} types={Subscription} setReturnType={setSubscription} returnType={type} />
                                 </Box>
                                 : null
                             }
@@ -353,7 +350,7 @@ function Courses() {
                 <Box sx={{ flexDirection: 'column', padding: '20px' }}>
                     {courses.map((course, index) => (
                         <Box key={index} sx={{ margin: "20px 0" }}>
-                            <CourseCard courseName={course.courseName} courseType={course.coursePrice} shortDescrip={course.courseShortDescription} video={video1} cardFunction={() => handleViewCourse(course.id)} />
+                            <CourseCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.courseShortDescription} video={video1} cardFunction={() => handleViewCourse(course.id)} />
                         </Box>
                     ))}
                 </Box>
