@@ -1,18 +1,18 @@
 
-import React, { useState, useRef } from "react";
-import { ViewCoursesFunction } from "../Services/CourseService";
-import { FilterCategoryFunction } from "../Services/CourseService";
+import React, { useState, useEffect, useRef } from "react";
+import { ViewCoursesFunction, fetchCourseData, fetchCourseLessons, fetchLessonTopics } from "../Services/CourseService";
+import { filterCategory } from "../Services/CourseService";
 import { FilterTopicFunction } from "../Services/CourseService";
 import { FilterGradeFunction } from "../Services/CourseService";
 import { FilterSubscriptionFunction } from "../Services/CourseService";
 import { useNavigate } from "react-router-dom";
-import { fetchCoursesFunction } from "../Services/CourseService";
+import { filterAllOptionsFunction, filterCategoryAndSubject, filterSubjectCategoryGrade } from "../Services/CourseService";
 import { FilteredDocFunction } from "../Services/CourseService";
 
 
 const Courses = () => {
 
-    const [courses, setCourses] = useState({});
+    const [courses, setCourses] = useState([]);
     const [docData, setDocData] = useState([]);
     const [category, setCategory] = useState('');
     const [subject, setSubject] = useState('');
@@ -22,10 +22,47 @@ const Courses = () => {
     const navigate = useNavigate();
 
 
+    useEffect(() => {
+        handleViewCourses();
+        let courseTest = null
+        const testTheCode = async () => {
+
+            await fetchCourseData().then( async (courseResponse) => {
+                courseTest = { ...courseResponse, lessons: [] }
+                await fetchCourseLessons(courseResponse.id).then(lessonsResponse => {
+                    lessonsResponse.forEach( async lesson => {
+                        let localLesson = { ...lesson, topics: [] }
+                        await fetchLessonTopics(courseResponse.id, lesson.id).then(topicResponse => {
+                            localLesson.topics.push(topicResponse)
+                        })
+                        courseTest.lessons.push(localLesson)
+                    })
+                })
+
+            })
+            console.log("testTheCode",courseTest)
+        }
+        
+        testTheCode()
+    }, []);
+    // View all courses
+    const handleViewCourses = async () => {
+        try {
+            const data = await ViewCoursesFunction();
+            console.log("Courses data:", data);
+            setCourses(data);
+
+        } catch (error) {
+            console.log("Error fetching data",);
+        }
+    }
+
+
     // View filtered courses
     const handleFilteredCourses = async () => {
         try {
-            const data = await fetchCoursesFunction(subject, category, grade);
+            const data = await filterAllOptionsFunction(category, subject, grade, subscription);
+
             console.log("Courses filtered data:", data);
             setCourses(data);
 
@@ -50,22 +87,10 @@ const Courses = () => {
     }
 
 
-    // View all courses
-    const handleViewCourses = async () => {
-        try {
-            const data = await ViewCoursesFunction();
-            console.log("Courses data:", data);
-            setCourses(data);
-
-        } catch (error) {
-            console.log("Error fetching data",);
-        }
-    }
-
     // Filter courses with category
     const handleCategoryFilter = async () => {
         try {
-            const data = await FilterCategoryFunction(category);
+            const data = await filterCategory(category);
             console.log("Courses data:", data);
             setCourses(data);
 
@@ -189,11 +214,14 @@ const Courses = () => {
                                     <div>
                                         {courses.filteredDocContent.map((course) => (
                                             <div>
+
+                                                <h5>Grade: {course.grade}</h5>
+                                                <h5>Subject: {course.subject}</h5>
                                                 <h5>Course Type: {course.courseType}</h5>
                                             </div>
                                         ))}
                                     </div>
-                                    <button onClick={() => handleViewCourse(courses.id)}>View Course</button>
+                                    <button onClick={() => handleViewCourse(content.id)}>View Course</button>
                                     <h3>____________________________________________________________________________________________</h3>
                                 </div>
                             ))}
@@ -202,7 +230,20 @@ const Courses = () => {
                         :
                         (
                             <div>
-                                <h3>No Courses found!</h3>
+                                {/* <h3>No Courses found!</h3> */}
+                                {courses.map((course) => (
+                                    <div>
+                                        <h1>Subject: {course.subject}</h1>
+                                        <h2>{course.courseName}</h2>
+                                        <h3>{course.courseShortDescription}</h3>
+                                        <h2>{course.courseType}</h2>
+                                        <button onClick={() => handleViewCourse(course.id)}>View Course</button>
+                                        <br></br>
+                                        <h3>____________________________________________________________________________________________</h3>
+                                        <br></br>
+                                        <br></br>
+                                    </div>
+                                ))}
                             </div>
                         )}
                 </div>
