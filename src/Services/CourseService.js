@@ -1,7 +1,7 @@
 
 // Imports from the firebase config file
 import { db, auth } from './firebaseConfig';
-import { collection, collectionGroup, getDocs, query, where } from "firebase/firestore";
+import { collection, collectionGroup, doc, getDocs, query, where } from "firebase/firestore";
 
 
 // Filter courses with subject, category, grade
@@ -317,4 +317,59 @@ export const PaymentFunction = async (firstName, lastName, email, phoneNum) => {
     }
 
 
+}
+
+// Fetch Courses function
+export const CourseFullViewFunction = async (courseId) => {
+    try {
+        const courseDocRef = doc(db, "courses", courseId);
+        const querySnapshot = await getDocs(collection(courseDocRef, "lessons"));
+
+        const courses = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        // console.log("All courses data:", courses);
+
+        return courses;
+
+    } catch (error) {
+        console.log("Failed to fetch data", error);
+    }
+}
+
+export const CourseTopicsFunction = async (courseId, lessonId) => {
+    // console.log(courseId, lessonId);
+    try {
+        // const courseDocRef = doc(db, "courses", courseId);
+        // const lessonDocRef = doc(courseDocRef, lessonId);
+        // const querySnapshot = await getDocs(collection(lessonDocRef, "topics"));
+
+        // const courses = querySnapshot.docs.map((doc) => ({
+        //     id: doc.id,
+        //     ...doc.data()
+        // }));
+
+        const courseDocRef = doc(db, "courses", courseId);
+        const lessonDocRef = doc(courseDocRef, "lessons", lessonId);
+        const topicsCollectionRef = collection(lessonDocRef, "topics");
+        const querySnapshot = await getDocs(topicsCollectionRef);
+
+        // const courses = querySnapshot.docs.map((doc) => ({
+        //     id: doc.id,
+        //     ...doc.data()
+        // }));
+
+        const courses = querySnapshot.docs.map((doc) => {
+            return { id: doc.id, ...doc.data() };
+        });
+
+        // console.log("All courses datas:", courses);
+
+        return courses;
+
+    } catch (error) {
+        console.log("Failed to fetch data", error);
+    }
 }
