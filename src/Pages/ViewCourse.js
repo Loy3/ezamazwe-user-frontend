@@ -31,8 +31,10 @@ function ViewCourse({ course_data, docData }) {
     const [courseId, setCourseId] = useState(courseData.id);
     const [courseTitle, setCourseTitle] = useState(courseData.courseName);
     const [courseDescription, setCourseDescription] = useState(courseData.courseShortDescription);
-    const [courseFullDescription, setCourseFullDescription] = useState(courseData.courseDescription);
+    const [courseFullDescription, setCourseFullDescription] = useState(courseData.courseFullDescription);
     const [costPrice, setCostPrice] = useState(courseData.coursePrice);
+    const [courseType, setCourseType] = useState(courseData.courseType);
+    const [learningOutcomes, setLearningOutcomes] = useState(courseData.learningOutcomes);
     const [video, setVideo] = useState(courseData.lessonUrl);
     const [userInfo, setUserInfo] = useState(null);
     const [userSubscription, setUserSubscription] = useState("");
@@ -117,18 +119,23 @@ function ViewCourse({ course_data, docData }) {
                 <Box sx={{ width: isMediumScreen ? '100%' : "30%", backgroundColor: '#E3ECF1', position: 'relative', paddingBottom: "20px", height: isMediumScreen ? "660px" : "inherit", marginTop: isMediumScreen ? "-25vh" : "-60px", zIndex: "50", borderRadius: "20px" }}>
 
                     <img
-                        style={{ height: isSecMediumScreen?"58%":"50%", width: "100%", objectFit: "cover", borderTopRightRadius: "20px", borderTopLeftRadius: "20px" }}
+                        style={{ height: isSecMediumScreen ? "58%" : "50%", width: "100%", objectFit: "cover", borderTopRightRadius: "20px", borderTopLeftRadius: "20px" }}
                         src={parabola} alt='card' />
 
                     <CardContent sx={{ margin: '10px' }}>
-                        <Label children={"Course Title"} />
-                        <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} />
-                        <Typography variant="body2" color="text.secondary">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis.
-                        </Typography>
-                        <Label children={"Free"} />
+                        <Label children={courseTitle} />
+                        {/* <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} /> */}
+                        <Box sx={{ marginTop: "30px" }}>
+                            <Typography variant="body2" color="text.secondary">
+                                {courseDescription}
+                                {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis. */}
+                            </Typography>
+                        </Box>
+                        <Box sx={{ marginTop: "30px" }}>
+                            <Label children={courseType} />
+                        </Box>
                     </CardContent>
-                    <Box sx={{position:isMediumScreen?"relative":"absolute", bottom:"10px", width:"100%"}}>
+                    <Box sx={{ position: isMediumScreen ? "relative" : "absolute", bottom: "10px", width: "100%" }}>
                         <Contentbutton text={"START"} buttonFunction={handleStartCourse} />
                     </Box>
                 </Box >
@@ -137,15 +144,14 @@ function ViewCourse({ course_data, docData }) {
                         <Label children={"What you will learn?"} />
                         <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} />
                         <ul className='list'>
-                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas</li>
-                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas</li>
-                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas</li>
-                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas</li>
+                            {learningOutcomes.map((outcome, index)=>(
+                            <li key={index}>{outcome}</li>
+                            ))}
                         </ul>
 
                         <Box sx={{ paddingTop: '30px' }}>
                             <Label children={"Course Content"} />
-                            <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} />
+                            <SectionSubHeading children={"Course Lessons."} />
                             <br></br>
                             <Box sx={{ margin: "10px 0" }}>
                                 <ContCard lessonNumber={1} text={short} duration={"00:00"} />
@@ -167,10 +173,10 @@ function ViewCourse({ course_data, docData }) {
 
             <Box sx={{ paddingTop: '50px', }}>
                 <Label children={'Description'} />
-                <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} sx={{ marginBottom: '30px' }} />
+                <SectionSubHeading children={"A full description of the course."} sx={{ marginBottom: '30px' }} />
                 <Typography variant="body1" paragraph sx={{ marginTop: '10px' }}>
-
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl.
+                    {courseFullDescription}
+                    {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl. */}
 
                     {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl. */}
                 </Typography>
@@ -178,17 +184,17 @@ function ViewCourse({ course_data, docData }) {
 
             <Box sx={{ paddingTop: '80px' }}>
                 <Label children={'Requirements'} />
-                <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} />
+                <SectionSubHeading children={"What's required for the course."} />
                 <Typography variant="body1" paragraph>
 
-                    <FormControl>
+                    <FormControl sx={{marginTop:"20px", marginBottom: "20px"}}>
                         <RadioGroup
 
                             defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                             name="radio-buttons-group"
                         >
-                            <FormControlLabel value="Lorem ipsum dolor sit amet, consectetur adipiscing elit." control={<Radio />} label="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
-                            <FormControlLabel value="Lorem ipsum dolor sit amet, consectetur adipiscing elit." control={<Radio />} label="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+                            <FormControlLabel value="Internet connection." control={<Radio />} label="Internet connection." />
+                            <FormControlLabel value="Laptop or smart phone." control={<Radio />} label="Laptop or smart phone." />
                         </RadioGroup>
                     </FormControl>
                 </Typography>

@@ -33,7 +33,7 @@ export const CourseCard = ({ courseName, courseType, shortDescrip, video, cardFu
                         <Typography variant="body2" sx={{ width: isSmallScreen ? "100%" : "95%", marginTop: "20px" }} >
                             {shortDescrip}
                         </Typography>
-                        <Typography variant="body2" sx={{ color: "primary.light", marginTop: "20px" }}>by: Company name</Typography>
+                        <Typography variant="body2" sx={{ color: "primary.light", marginTop: "20px" }}>by: Ezamazwe</Typography>
                     </Box>
                 </Box>
             </Box>

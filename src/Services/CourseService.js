@@ -55,17 +55,18 @@ export const fetchCoursesFunction = async (subject, category, grade) => {
 };
 
 // Filtered document function
-export const FilteredDocFunction = async (subject, category, grade) => {
+export const FilteredDocFunction = async (category, subject, grade) => {
+    // console.log(category, subject, grade);
     try {
         // Step 1: Query to get the course document based on subject, category and grade
-        const coursesQuery = query(collection(db, 'coursesCollection'),
-            where('courseCategory.subjectOrTopic', '==', subject),
-            where('courseCategory.categoryType', '==', category),
-            where('courseCategory.categoryGrade', '==', grade)
+        const coursesQuery = query(collection(db, 'courses'),
+            where('courseCategory', '==', category.toLowerCase()),
+            where('subject', '==', subject),
+            where('grade', '==', grade)
         );
         const coursesSnapshot = await getDocs(coursesQuery);
 
-        coursesSnapshot.forEach(item => console.log("Filtered doc:", item.data()))
+        // coursesSnapshot.forEach(item => console.log("Filtered doc:", item.data()))
 
         const filteredDocContent = coursesSnapshot.docs
             .map((contentDoc) => ({
@@ -84,7 +85,7 @@ export const FilteredDocFunction = async (subject, category, grade) => {
 // Fetch Courses function
 export const ViewCoursesFunction = async () => {
     try {
-        const querySnapshot = await getDocs(collection(db, "coursesCollection"));
+        const querySnapshot = await getDocs(collection(db, "courses"));
 
         const courses = querySnapshot.docs.map((doc) => ({
             id: doc.id,
@@ -120,12 +121,13 @@ export const SearchBarCoursesFunction = async () => {
 
 // Filter category function
 export const FilterCategoryFunction = async (category) => {
+    console.log("category",category);
     try {
         // Reference to the collection
-        const coursesCollection = collection(db, 'coursesCollection');
+        const coursesCollection = collection(db, 'courses');
 
         // Create a query where 'mapField.nestedField' is equal to 'value2'
-        const queryData = query(coursesCollection, where('courseCategory.categoryType', '==', category));
+        const queryData = query(coursesCollection, where('courseCategory', '==', category));
         const querySnapshot = await getDocs(queryData);
         let items = [];
 

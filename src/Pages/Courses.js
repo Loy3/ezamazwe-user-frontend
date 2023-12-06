@@ -37,7 +37,7 @@ function Courses() {
     const [subCategoryStatus, setSubCategoryStatus] = useState(false);
     const [topicSStatus, setTopicSStatus] = useState(false);
     const [typeStatus, setTypeStatus] = useState(false);
-
+    const [coursesTitle, setCoursesTitle] = useState("All Courses");
     const [rtnCategory, setRtnCategory] = useState('')
     // const [rtnSubCategory, setRtnSubCategory] = useState("");
     // const [rtnTopic, setRtnTopic] = useState("");
@@ -63,6 +63,7 @@ function Courses() {
     useEffect(() => {
         if (rtnCategory) {
             setSubCategoryStatus(true);
+            handleCategoryFilter();
         } else {
             setSubCategoryStatus(false)
         }
@@ -79,6 +80,8 @@ function Courses() {
     useEffect(() => {
         if (topicS) {
             setTypeStatus(true);
+            handleFilteredDoc();
+            setCoursesTitle(`${topicS} Courses`);
         } else {
             setTypeStatus(false)
         }
@@ -174,10 +177,13 @@ function Courses() {
 
     // View filtered doc
     const handleFilteredDoc = async () => {
+
+        const convertedGrade = subCategory.replace(" ", "_");
+        // console.log(convertedGrade);
         try {
-            const data = await FilteredDocFunction(subject, category, grade);
-            // console.log("Filtered doc data:", data);
-            setDocData(data);
+            const data = await FilteredDocFunction(rtnCategory, topicS, convertedGrade);
+            // console.log("Filtered doc datass:", data);
+            setCourses(data);
 
         } catch (error) {
             console.log("Error pulling filtered doc", error);
@@ -219,8 +225,8 @@ function Courses() {
     // Filter courses with category
     const handleCategoryFilter = async () => {
         try {
-            const data = await FilterCategoryFunction(category);
-            console.log("Courses data:", data);
+            const data = await FilterCategoryFunction(rtnCategory.toLocaleLowerCase());
+            console.log("Courses data 3:", data);
             setCourses(data);
 
         } catch (error) {
@@ -241,6 +247,7 @@ function Courses() {
     }
 
     const handleGradeFilter = async () => {
+
         try {
             const data = await FilterGradeFunction(grade);
             console.log("Courses data filtered with topic:", data);
@@ -336,7 +343,7 @@ function Courses() {
                 <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                     <Box>
                         <Typography variant='h4' sx={{ color: '#396781', fontWeight: 'bold' }}>
-                            All Maths Courses
+                            {coursesTitle}
                         </Typography>
                         <Typography >
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
