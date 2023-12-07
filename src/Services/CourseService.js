@@ -9,10 +9,10 @@ export const fetchCoursesFunction = async (subject, category, grade) => {
 
     try {
         // Step 1: Query to get the course document based on subject, category and grade
-        const coursesQuery = query(collection(db, 'coursesCollection'),
-            where('courseCategory.subjectOrTopic', '==', subject),
-            where('courseCategory.categoryType', '==', category),
-            where('courseCategory.categoryGrade', '==', grade)
+        const coursesQuery = query(collection(db, 'courses'),
+            where('courseCategory', '==', category),
+            where('subject', '==', subject),
+            where('grade', '==', grade)
         );
         const coursesSnapshot = await getDocs(coursesQuery);
 
@@ -21,31 +21,30 @@ export const fetchCoursesFunction = async (subject, category, grade) => {
             return;
         }
 
-        // coursesSnapshot.forEach(item => console.log("Course:", item.data()))
+        coursesSnapshot.forEach(item => console.log("Course:", item.data()))
 
         // Use the first document
         const courseDoc = coursesSnapshot.docs[0];
         const courseId = courseDoc.id;
 
-        // console.log("courseId:", courseId);
+        console.log("courseId:", courseId);
 
 
         // Step 2: Query the courseContent subcollection for the selected course
         let items = [];
-        const courseContentQuery = collectionGroup(db, 'courseContent');
+        const courseContentQuery = collectionGroup(db, 'lessons');
         const courseContentSnapshot = await getDocs(courseContentQuery);
 
-        // courseContentSnapshot.forEach(item => console.log("Course content:", item.data()))
+        courseContentSnapshot.forEach(item => console.log("Course content:", item.data()))
 
         // Filter course content documents based on courseId
         const filteredCourseContent = courseContentSnapshot.docs
-            // .filter((contentDoc) => contentDoc.data().courseId === courseId)
             .map((contentDoc) => ({
                 contentId: contentDoc.id,
                 ...contentDoc.data()
             }));
 
-        // console.log("Filtered courses:", filteredCourseContent);
+        console.log("Filtered courses:", filteredCourseContent);
 
         return filteredCourseContent;
 
