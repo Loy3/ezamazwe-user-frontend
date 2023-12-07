@@ -13,7 +13,10 @@ export const Accordians = ({ label, types, setReturnType, returnType }) => {
     const [categoryStatus, setCategoryStatus] = useState(false);
     const handleChange = (event) => {
         // setValue(event.target.value);
-        // console.log(event.target.value);
+        console.log('=========',event.target.value);
+        console.log('types ====',types);
+        console.log('returnType ====',returnType);
+
         setReturnType(event.target.value)
     };
     function handleButton() {

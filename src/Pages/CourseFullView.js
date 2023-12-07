@@ -3,7 +3,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Avatar from '@mui/material/Avatar';
-import { Container, Grid, selectClasses, useMediaQuery } from '@mui/material';
+import { Container, Grid, selectClasses, useMediaQuery, Button } from '@mui/material';
 import video1 from "../Assets/Videos/1.mp4";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -21,13 +21,15 @@ import { useLocation } from "react-router-dom";
 import { auth } from "../Services/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { CourseFullViewFunction, CourseTopicsFunction } from '../Services/CourseService';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
 
 function CourseFullView({ courseData }) {
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
     const location = useLocation();
     const course = location.state.courseData;
-    // console.log(course);
+    console.log("View Full Course: ", course);
 
     const [courseId, setCourseId] = useState(course.id);
     const [courseTitle, setCourseTitle] = useState(course.courseName);
@@ -39,7 +41,7 @@ function CourseFullView({ courseData }) {
     const [lessons, setLessons] = useState([]);
     const user = auth.currentUser;
     const navigate = useNavigate();
-
+    const [selectedLesson, setSelectedLesson] = useState()
 
     // Video declarations and options
     const videoRef = useRef(null);
@@ -55,37 +57,48 @@ function CourseFullView({ courseData }) {
         setIsPlaying(!isPlaying);
     };
 
-    useEffect(() => {
-        getCourseLessons();
-    }, [])
-
-    async function getCourseLessons() {
-        // console.log(course.id);
-        try {
-            const courseData = await CourseFullViewFunction(course.id);
-            console.log("Courses data:", courseData);
-            getCourseLessonTopics(courseData);
-            // setLessons(courseData);
-
-        } catch (error) {
-            console.log("Error fetching data", error);
-        }
+    const viewLesson = (topic) => {
+        setSelectedLesson(topic)
+        console.log("Selected lessons :", selectedLesson)
     }
 
-    async function getCourseLessonTopics(courseResData) {
-        // console.log(course.id);
-        setLessons([]);
-        try {
-            courseResData.forEach(async (crs) => {
-                const courseRes = await CourseTopicsFunction(course.id, crs.id);
-                setLessons(((prevData) => [...prevData, ...courseRes]));
-            })
-            setVideo(lessons[0].video)
+    const handleVisitLink = (link) => {
+        const composeUrl = link;
+        // window.location.href = composeUrl;
+        window.open(composeUrl, '_blank');
+    };
 
-        } catch (error) {
-            console.log("Error fetching data", error);
-        }
-    }
+    // useEffect(() => {
+    //     getCourseLessons();
+    // }, [])
+
+    // async function getCourseLessons() {
+    //     // console.log(course.id);
+    //     try {
+    //         const courseData = await CourseFullViewFunction(course.id);
+    //         console.log("Courses data:", courseData);
+    //         getCourseLessonTopics(courseData);
+    //         // setLessons(courseData);
+
+    //     } catch (error) {
+    //         console.log("Error fetching data", error);
+    //     }
+    // }
+
+    // async function getCourseLessonTopics(courseResData) {
+    //     // console.log(course.id);
+    //     setLessons([]);
+    //     try {
+    //         courseResData.forEach(async (crs) => {
+    //             const courseRes = await CourseTopicsFunction(course.id, crs.id);
+    //             setLessons(((prevData) => [...prevData, ...courseRes]));
+    //         })
+    //         setVideo(lessons[0].video)
+
+    //     } catch (error) {
+    //         console.log("Error fetching data", error);
+    //     }
+    // }
 
 
     return (
@@ -104,13 +117,25 @@ function CourseFullView({ courseData }) {
             {console.log("lessons", lessons)}
             <CourseNavBar courseName={courseTitle} />
             <Grid sx={{ display: 'flex', flexDirection: isSmallScreen ? 'column' : 'row', width: "100%" }}>
-                <Box sx={{ width: isSmallScreen ? "100%" : "75%", margin: "0", height: isSmallScreen ? "50vh" : "70vh" }}>
-                    <video style={{ width: "100%", height: "100%", objectFit: "cover" }} controls>
+                <Box sx={{ width: isSmallScreen ? "100%" : "75%", margin: "0", height: isSmallScreen ? "50vh" : "70vh", position: "relative" }}>
+                    {/* <video style={{ width: "100%", height: "100%", objectFit: "cover" }} controls>
                         <source src={video ? video : video1} type="video/mp4" />
+                    </video> */}
+
+                    <video ref={videoRef} controls style={{ width: "100%", height: "100%", objectFit: "cover" }}>
+                        {selectedLesson && selectedLesson.video ? (
+                            <source src={selectedLesson.video} type="video/mp4" />
+                        ) : (
+                            <p>No video available for the selected lesson.</p>
+                        )}
+                        Your browser does not support the video tag.
                     </video>
+                    <button onClick={handlePlayPause} style={{ width: isSmallScreen ? "50px" : "80px", height: isSmallScreen ? "50px" : "80px", borderRadius: "100%", outline: "none", border: "none", position: "absolute", top: "30px", left: "30px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        {isPlaying ? <PauseIcon sx={{ color: "primary.light", height:isSmallScreen? "30px": "50px", width: isSmallScreen? "30px":"50px" }} /> : <PlayArrowIcon sx={{ color: "primary.light", height:isSmallScreen? "30px": "50px", width: isSmallScreen? "30px":"50px" }} />}
+                    </button>
                 </Box>
                 <Box sx={{ width: isSmallScreen ? "100%" : "25%", height: "auto" }}>
-                    {lessons.map((less, index) => (
+                    {course.lessons.map((lesson, index) => (
                         <Accordion key={index} sx={{ backgroundColor: '#E3ECF1', height: 'auto' }}>
                             <AccordionSummary
                                 expandIcon={<ArrowLeftIcon />}
@@ -118,89 +143,39 @@ function CourseFullView({ courseData }) {
                                 id="panel1a-header"
                             >
                                 <Typography sx={{ width: "40%", margin: "0 5%", height: "100%", display: "flex", alignItems: "center", fontWeight: "bold", color: "primary.light", fontSize: '20px', textAlign: "center", marginTop: "7px" }}>{`Lesson ${index + 1}`}</Typography>
+
                             </AccordionSummary>
                             <AccordionDetails>
-                                <Typography sx={{ height: '100px' }}>
+                                {/* <Typography sx={{ height: '100px' }}>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
                                     malesuada lacus ex, sit amet blandit leo lobortis eget.
-                                </Typography>
+                                </Typography> */}
+
+                                {lesson.topics.map((topic, index) => (
+                                    <div key={index}>
+                                        <Button onClick={() => viewLesson(topic)} >
+                                            {topic.topicName}
+                                        </Button>
+                                    </div>
+                                ))}
                             </AccordionDetails>
                         </Accordion>
                     ))}
-                    {/* <Accordion sx={{ backgroundColor: '#E3ECF1', height: "auto" }}>
-                        <AccordionSummary
-                            expandIcon={<ArrowLeftIcon />}
-                            aria-controls="panel2a-content"
-                            id="panel2a-header"
-                        >
-                            <Typography sx={{ width: "40%", margin: "0 5%", height: "100%", display: "flex", alignItems: "center", fontWeight: "bold", color: "primary.light", fontSize: '20px', textAlign: "center", marginTop: "7px" }}>Lesson 2</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                malesuada lacus ex, sit amet blandit leo lobortis eget.
-                            </Typography>
-                        </AccordionDetails>
-                    </Accordion>
-                    <Accordion sx={{ backgroundColor: '#E3ECF1', height: "auto" }} >
-                        <AccordionSummary
-                            expandIcon={<ArrowLeftIcon />}
-                            aria-controls="panel3a-content"
-                            id="panel3a-header"
-                        >
-                            <Typography sx={{ width: "40%", margin: "0 5%", height: "inherit", display: "flex", alignItems: "center", fontWeight: "bold", color: "primary.light", fontSize: '20px', textAlign: "center", marginTop: "7px" }}> Lesson 3</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                malesuada lacus ex, sit amet blandit leo lobortis eget.
-                            </Typography>
-                        </AccordionDetails>
-                    </Accordion>
-                    <Accordion sx={{ backgroundColor: '#E3ECF1', height: "auto" }}>
-                        <AccordionSummary
-                            expandIcon={<ArrowLeftIcon />}
-                            aria-controls="panel2a-content"
-                            id="panel2a-header"
-                        >
-                            <Typography sx={{ width: "40%", margin: "0 5%", height: "inherit", display: "flex", alignItems: "center", fontWeight: "bold", color: "primary.light", fontSize: '20px', textAlign: "center", marginTop: "7px" }}>Lesson 4</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                malesuada lacus ex, sit amet blandit leo lobortis eget.
-                            </Typography>
-                        </AccordionDetails>
-                    </Accordion>
-                    <Accordion sx={{ backgroundColor: '#E3ECF1', height: "auto" }}>
-                        <AccordionSummary
-                            expandIcon={<ArrowLeftIcon />}
-                            aria-controls="panel2a-content"
-                            id="panel2a-header"
-                        >
-                            <Typography sx={{ width: "40%", margin: "0 5%", height: "inherit", display: "flex", alignItems: "center", fontWeight: "bold", color: "primary.light", fontSize: '20px', textAlign: "center", marginTop: "7px" }}> Lesson 5</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                malesuada lacus ex, sit amet blandit leo lobortis eget.
-                            </Typography>
-                        </AccordionDetails>
-                    </Accordion> */}
+                   
                 </Box>
             </Grid>
 
             <Box sx={{ width: "90%", margin: "100px 5%" }}>
                 <Label children={"Course Overview"} />
-                <Typography>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Typography>
+                <Typography  variant={isSmallScreen?"body2":"subtitle1"} sx={{marginBottom: "10px"}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Typography>
                 <Box sx={{ marginTop: '50px', marginBottom: "10px" }} >
                     <Label children={"Visit"} />
                 </Box>
-                {lessons[0]?.supportingLinks.map((link, index) => (
+                {selectedLesson && selectedLesson.supportingLinks.map((link, index) => (
                     <Box key={index} sx={{ display: "flex", flexDirection: "row" }}>
                         <ArrowRightIcon />
                         {/* <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} /> */}
-                        <Typography variant="subtitle1" sx={{ color: 'primary.light', fontWeight: "400", textAlign: "left" }}>
+                        <Typography sx={{ color: 'primary.light', fontWeight: "400", textAlign: "left", cursor: "pointer", fontSize: isSmallScreen?"11px":"16px" }} onClick={() => handleVisitLink(link)}>
                             {link}
                         </Typography>
                     </Box>
@@ -223,7 +198,7 @@ function CourseFullView({ courseData }) {
                     <Box sx={{ marginBottom: "10px" }}>
                         <Label children={'Description'} />
                     </Box>
-                    <Typography  >Course Full Description</Typography>
+                    <Typography  variant={isSmallScreen?"body2":"subtitle1"} sx={{marginBottom: "10px"}}>Course Full Description</Typography>
                     <Typography>
                         {courseFullDescription}
                     </Typography>

@@ -14,7 +14,7 @@ import { ContCard } from '../Components/Cards';
 import { useLocation } from "react-router-dom";
 import { auth } from "../Services/firebaseConfig";
 import { useNavigate } from "react-router-dom";
-
+import video1 from "../Assets/Videos/video1.mp4";
 
 function ViewCourse({ course_data, docData }) {
     const isSmallScreen = useMediaQuery('(max-width:600px)');
@@ -117,10 +117,17 @@ function ViewCourse({ course_data, docData }) {
         <Grid sx={{ padding: isMediumScreen ? '0 20px' : '0 40px' }}>
             <Grid sx={{ display: 'flex', flexDirection: isMediumScreen ? 'column' : 'row', }}>
                 <Box sx={{ width: isMediumScreen ? '100%' : "30%", backgroundColor: '#E3ECF1', position: 'relative', paddingBottom: "20px", height: isMediumScreen ? "660px" : "inherit", marginTop: isMediumScreen ? "-25vh" : "-60px", zIndex: "50", borderRadius: "20px" }}>
-
-                    <img
+                <video
+                        muted
+                        style={{ height: isSecMediumScreen ? "58%" : "50%", width: "100%", objectFit: "cover", borderTopRightRadius: "20px", borderTopLeftRadius: "20px" }}>
+                        <source
+                            src={courseData.lessons[0]?.topics[0].video}
+                            type="video/mp4"
+                        />
+                    </video>
+                    {/* <img
                         style={{ height: isSecMediumScreen ? "58%" : "50%", width: "100%", objectFit: "cover", borderTopRightRadius: "20px", borderTopLeftRadius: "20px" }}
-                        src={parabola} alt='card' />
+                        src={parabola} alt='card' /> */}
 
                     <CardContent sx={{ margin: '10px' }}>
                         <Label children={courseTitle} />
@@ -140,28 +147,33 @@ function ViewCourse({ course_data, docData }) {
                     </Box>
                 </Box >
                 <Grid sx={{ paddingLeft: isMediumScreen ? '0' : '20px', paddingTop: '70px', width: isMediumScreen ? "100%" : "70%", paddingBottom: "20px" }}>
-                    <Box sx={{ width: "90%", margin: "0 5%" }}>
+                    <Box sx={{ width: isSmallScreen? "96%" : "90%", margin: isSmallScreen ? "0 2%": "0 5%" }}>
                         <Label children={"What you will learn?"} />
-                        <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} />
+                        
+                        {/* <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} /> */}
+                        <Typography  variant={isSmallScreen?"body2":"subtitle1"} sx={{marginBottom: "10px", color: 'primary.light', fontWeight: "400", marginTop:"10px"}}>What you will learn from this course.</Typography>
                         <ul className='list'>
                             {learningOutcomes.map((outcome, index)=>(
                             <li key={index}>{outcome}</li>
                             ))}
                         </ul>
 
-                        <Box sx={{ paddingTop: '30px' }}>
+                        <Box sx={{ paddingTop: '30px',  }}>
                             <Label children={"Course Content"} />
-                            <SectionSubHeading children={"Course Lessons."} />
+                            {/* <SectionSubHeading children={"Course Lessons."} /> */}
+                            <Typography  variant={isSmallScreen?"body2":"subtitle1"} sx={{marginBottom: "10px", color: 'primary.light', fontWeight: "400", marginTop:"10px"}}>Course Lessons.</Typography>
                             <br></br>
-                            <Box sx={{ margin: "10px 0" }}>
-                                <ContCard lessonNumber={1} text={short} duration={"00:00"} />
+                            {courseData.lessons.map((lesson, index) => (
+                            <Box key={index} sx={{ margin: "10px 0" }}>
+                                <ContCard lessonNumber={index+1} text={lesson.lessonName} duration={lesson.lessonDuration ? lesson.lessonDuration : "00:00"} />
                             </Box>
-                            <Box sx={{ margin: "10px 0" }}>
+                              ))}
+                            {/* <Box sx={{ margin: "10px 0" }}>
                                 <ContCard lessonNumber={2} text={short} duration={"00:00"} />
                             </Box>
                             <Box sx={{ margin: "10px 0" }}>
                                 <ContCard lessonNumber={3} text={short} duration={"00:00"} />
-                            </Box>
+                            </Box> */}
                             {/* <Box sx={{ margin: "10px 0" }}>
                                 <ContCard lessonNumber={4} text={short} duration={"00:00"} />
                             </Box> */}
@@ -173,7 +185,8 @@ function ViewCourse({ course_data, docData }) {
 
             <Box sx={{ paddingTop: '50px', }}>
                 <Label children={'Description'} />
-                <SectionSubHeading children={"A full description of the course."} sx={{ marginBottom: '30px' }} />
+                <Typography  variant={isSmallScreen?"body2":"subtitle1"} sx={{marginBottom: "10px", color: 'primary.light', fontWeight: "400", marginTop:"10px"}}>A full description of the course.</Typography>
+                {/* <SectionSubHeading children={"A full description of the course."} sx={{ marginBottom: '30px' }} /> */}
                 <Typography variant="body1" paragraph sx={{ marginTop: '10px' }}>
                     {courseFullDescription}
                     {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque convallis magna a tellus blandit, eu bibendum enim venenatis. Nulla massa turpis, elementum id maximus nec, pellentesque vel ante. Vestibulum dapibus enim neque, id vestibulum quam facilisis ac. Ut nec accumsan turpis. Ut eget leo arcu. Suspendisse potenti. Nunc a pellentesque nisl. */}
@@ -184,7 +197,8 @@ function ViewCourse({ course_data, docData }) {
 
             <Box sx={{ paddingTop: '80px' }}>
                 <Label children={'Requirements'} />
-                <SectionSubHeading children={"What's required for the course."} />
+                {/* <SectionSubHeading children={"What's required for the course."} /> */}
+                <Typography  variant={isSmallScreen?"body2":"subtitle1"} sx={{marginBottom: "10px", color: 'primary.light', fontWeight: "400", marginTop:"10px"}}>What's required for the course.</Typography>
                 <Typography variant="body1" paragraph>
 
                     <FormControl sx={{marginTop:"20px", marginBottom: "20px"}}>

@@ -234,7 +234,7 @@ function LandingPage() {
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas metus nulla, et tincidunt sapien faucibus quis. Proin accumsan, tortor a luctus euismod, ex orci sodales nunc.
                                 </Typography>
                                 <Box sx={{ width: "100%", display: "flex", justifyContent: isMediumScreen ? "center" : "start", alignItems: "center", marginTop: "15px" }}>
-                                    <Box sx={{ width: isSmallScreen ? "70%" : "35%", marginLeft: isSmallScreen ? "15%" : "0" }}>
+                                    <Box sx={{ width: isSmallScreen ? "70%" : "35%" }}>
                                         <HomeButtons text={"Join"} buttonFunction={toSignUp} />
                                     </Box>
                                 </Box>
