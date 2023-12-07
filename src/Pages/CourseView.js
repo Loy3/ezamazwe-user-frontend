@@ -8,18 +8,17 @@ import { useNavigate } from "react-router-dom";
 import { GetUserDataFunction } from "../Services/AuthService";
 
 
-const CourseView = ({ course_data, docData }) => {
+const CourseView = ({ course_data }) => {
     const location = useLocation();
     const courseData = location.state.course_data;
-    const doc_data = location.state.docData;
     console.log("courseData", courseData);
-    console.log("doc_data:", doc_data);
+
 
     const [courseId, setCourseId] = useState(courseData.id);
-    const [courseTitle, setCourseTitle] = useState(doc_data.courseName);
-    const [courseDescription, setCourseDescription] = useState(doc_data.courseShortDescription);
-    const [courseFullDescription, setCourseFullDescription] = useState(doc_data.courseDescription);
-    const [costPrice, setCostPrice] = useState(doc_data.coursePrice);
+    const [courseName, setCourseName] = useState(courseData.courseName);
+    const [courseDescription, setCourseDescription] = useState(courseData.courseShortDescription);
+    const [courseFullDescription, setCourseFullDescription] = useState(courseData.courseFullDescription);
+    const [courseType, setCourseType] = useState(courseData.courseType);
     const [video, setVideo] = useState(courseData.lessonUrl);
     const [userInfo, setUserInfo] = useState(null);
     const [userSubscription, setUserSubscription] = useState(false);
@@ -29,6 +28,7 @@ const CourseView = ({ course_data, docData }) => {
     const user = auth.currentUser;
     let userId = '';
     const navigate = useNavigate();
+    let count = 1;
 
     useEffect(() => {
         if (user) {
@@ -61,9 +61,9 @@ const CourseView = ({ course_data, docData }) => {
     const handleStartCourse = () => {
 
         if (user) {
-            if (costPrice === "Free") {
-                navigate('/coursefullview', { state: { courseData: courseData, doc_data: doc_data } });
-            } else if (costPrice === "Subscription" && userSubscription === true) {
+            if (courseType === "Free") {
+                navigate('/coursefullview', { state: { courseData: courseData } });
+            } else if (courseType === "Paid" && userSubscription === true) {
                 navigate('/coursefullview', { state: { courseData: courseData } });
             } else {
                 alert("Only subscribed users can access this course");
@@ -78,14 +78,49 @@ const CourseView = ({ course_data, docData }) => {
 
     return (
         <div>
-            <h2>Course View</h2>
+            
+            <h2>What you will learn</h2>
+            <div>
+                {courseData.learningOutcomes.map((outcome) => (
+                    <div>
+                        <p>{outcome}</p>
+                    </div>
+                ))}
+            </div>
+            <div>
+                <h3>Lessons:</h3>
+                <div>
+                    {courseData.lessons ? (
+                        <div>
+                            {courseData.lessons.map((lesson, index) => (
+                                <div key={index}>
+                                    <h5>Lesson {count++}</h5>
+                                    <p>{lesson.lessonName}</p>
+                                    <p>Duration: {lesson.lessonDuration ? lesson.lessonDuration : "00:00"}</p>
+                                </div>
+                            ))}
+                        </div>
+
+                    )
+                        :
+                        <div>
+                            
+                            <div>
+                                <h3>No lessons found</h3>
+                            </div>
+                            
+                        </div>
+                    }
+                </div>
+
+            </div>
             <video ref={videoRef} width="400" height="300">
                 <source src={video} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
-            <h3>{lessonName}</h3>
+            <h2>{courseName}</h2>
             <p>Description: {courseDescription}</p>
-            <h3>{costPrice}</h3>
+            <h3>{courseType}</h3>
 
             <button onClick={handleStartCourse}>START</button>
 

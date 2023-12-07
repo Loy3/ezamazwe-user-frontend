@@ -197,7 +197,7 @@ export const fetchLessonTopics = async (courseId, lessonId) => {
 
 
 
-export const filterSubjectCategoryGrade = async (category, subject, grade) => {
+export const filterSubjectCategoryGrade = async (category, subject, grade) => { 
     try {
         // Step 1: Query to get the course document based on subject, category, and grade
         const coursesQuery = query(collection(db, 'courses'),
