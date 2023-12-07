@@ -116,7 +116,7 @@ function ViewCourse({ course_data, docData }) {
     return (
         <Grid sx={{ padding: isMediumScreen ? '0 20px' : '0 40px' }}>
             <Grid sx={{ display: 'flex', flexDirection: isMediumScreen ? 'column' : 'row', }}>
-                <Box sx={{ width: isMediumScreen ? '100%' : "30%", backgroundColor: '#E3ECF1', position: 'relative', paddingBottom: "20px", height: isMediumScreen ? "660px" : "inherit", marginTop: isMediumScreen ? "-25vh" : "-60px", zIndex: "50", borderRadius: "20px" }}>
+                <Box sx={{ width: isMediumScreen ? '100%' : "30%", backgroundColor: '#E3ECF1', position: 'relative', paddingBottom: "20px", height: isMediumScreen ? "660px" : "700px", marginTop: isMediumScreen ? "-25vh" : "-60px", zIndex: "50", borderRadius: "20px" }}>
                 <video
                         muted
                         style={{ height: isSecMediumScreen ? "58%" : "50%", width: "100%", objectFit: "cover", borderTopRightRadius: "20px", borderTopLeftRadius: "20px" }}>

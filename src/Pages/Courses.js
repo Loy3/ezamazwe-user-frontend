@@ -416,7 +416,7 @@ function Courses() {
     const [grade, setGrade] = useState('');
     const [subscription, setSubscription] = useState('');
     const videoRef = useRef(null);
-    const [course, setCourse] = useState({});
+    const [course, setCourse] = useState(null);
 
     const [openMenuStatus, setOpenMenuStatus] = useState(false);
     useEffect(() => {
@@ -521,6 +521,9 @@ function Courses() {
 
     useEffect(() => {
         console.log({ course });
+        // if (course) {
+        //     setCourse(course)
+        // }
     }, [course])
 
     const categoryNames = (types) => {
@@ -610,15 +613,21 @@ function Courses() {
         handleViewCourses()
     }, [])
     const handleViewCourses = async () => {
-        setCourses([]);
+
         try {
+            setCourses([]);
             const data = await ViewCoursesFunction();
             let returnCourses = []
-            data.forEach(async (dat) => {
+            // data.forEach(async (dat) => {
+            //     const videoToGet = await getCourseVideo(dat.id);
+            //     setCourses((prevCourse) => [...prevCourse, { ...dat, video: videoToGet }])
+            // });
+
+            for (const dat of data) {
                 const videoToGet = await getCourseVideo(dat.id);
-                setCourses((prevCourse) => [...prevCourse, { ...dat, video: videoToGet }])
-            });
-            
+                setCourses((prevCourse) => [...prevCourse, { ...dat, video: videoToGet }]);
+            }
+
         } catch (error) {
             console.log("Error fetching data", error);
         }
@@ -690,14 +699,20 @@ function Courses() {
         }
     }
 
-    const handleViewCourse = async (id) => {
+    const handleViewCourse = async (event, id) => {
+        event.preventDefault();
         // const [course_data] = courses.filter((course) => course.id === id);
 
         // navigate('/course', { state: { course_data: course_data, docData: docData } });
 
         await testTheCode(id).then(() => {
-            navigate('/course', { state: { course_data: course } });
+            // navigate('/course', { state: { course_data: course } });
             // console.log("course",course);
+            if (course) {
+                navigate('/course', { state: { course_data: course } });
+            } else {
+                alert("Click again.")
+            }
         })
 
 
@@ -783,7 +798,7 @@ function Courses() {
                 <Box sx={{ flexDirection: 'column', padding: '20px' }}>
                     {courses && courses.map((course, index) => (
                         <Box key={index} sx={{ margin: "20px 0" }}>
-                            <CourseCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.courseShortDescription} video={course.video ? course.video : video1} cardFunction={() => handleViewCourse(course.id)} />
+                            <CourseCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.courseShortDescription} video={course.video ? course.video : video1} cardFunction={(event) => handleViewCourse(event, course.id)} />
                         </Box>
                     ))}
                 </Box>

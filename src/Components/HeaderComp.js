@@ -6,7 +6,7 @@ export const HeaderComp = ({text, paragraph}) => {
         <>
             <Box sx={{
                 width: "100%",
-                height: isSmallScreen?"40vh":"60vh",
+                height: isSmallScreen?"40vh":"80vh",
                 backgroundImage: `url(${bgImage})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
