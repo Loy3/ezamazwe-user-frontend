@@ -612,24 +612,48 @@ function Courses() {
     useEffect(() => {
         handleViewCourses()
     }, [])
+    // const handleViewCourses = async () => {
+
+    //     try {
+    //         setCourses([]);
+    //         const data = await ViewCoursesFunction();
+    //         let returnCourses = []
+    //         // data.forEach(async (dat) => {
+    //         //     const videoToGet = await getCourseVideo(dat.id);
+    //         //     setCourses((prevCourse) => [...prevCourse, { ...dat, video: videoToGet }])
+    //         // });
+
+    //         for (const dat of data) {
+    //             const videoToGet = await getCourseVideo(dat.id);
+    //             // setCourses((prevCourse) => [...prevCourse, { ...dat, video: videoToGet }]);
+
+    //             setCourses((prevCourse) => {
+    //                 // Check if the item already exists in the array
+    //                 const isDuplicate = prevCourse.some((course) => course.video === videoToGet);
+
+    //                 // If it's a duplicate, return the previous state without making any changes
+    //                 if (isDuplicate) {
+    //                   return prevCourse;
+    //                 }
+
+    //                 // If it's not a duplicate, add the new item to the array
+    //                 return [...prevCourse, { ...dat, video: videoToGet }];
+    //               });
+    //         }
+
+    //     } catch (error) {
+    //         console.log("Error fetching data", error);
+    //     }
+    // }
+
     const handleViewCourses = async () => {
-
         try {
-            setCourses([]);
             const data = await ViewCoursesFunction();
-            let returnCourses = []
-            // data.forEach(async (dat) => {
-            //     const videoToGet = await getCourseVideo(dat.id);
-            //     setCourses((prevCourse) => [...prevCourse, { ...dat, video: videoToGet }])
-            // });
-
-            for (const dat of data) {
-                const videoToGet = await getCourseVideo(dat.id);
-                setCourses((prevCourse) => [...prevCourse, { ...dat, video: videoToGet }]);
-            }
+            console.log("Courses data:", data);
+            setCourses(data);
 
         } catch (error) {
-            console.log("Error fetching data", error);
+            console.log("Error fetching data",);
         }
     }
 
