@@ -19,7 +19,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 const Category = ["CAP", "IEB", "Entrapreneur"]
 const Grades = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
 const Subjects = ["Language", "Accounting", "Economics", "History", "Life Science", "Maths", "Physical Science",]
-const Subscription = ["Free", "Subscribed"]
+const Subscription = ["Free", "Paid"]
 const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis.";
 
 function Courses() {
@@ -101,13 +101,15 @@ function Courses() {
         const category = async () => {
             await getCategoryData().then(data => {
                 const catNames = categoryNames(data)
-                // console.log(catNames);
+                // console.log('****',catNames);
                 let catArr = [];
 
                 catNames.map(value => {
                     const entries = Object.entries(value)
                     catArr.push(entries[0][1])
                 })
+                // console.log("catArr:", catArr)
+                // console.log("catArr:", data)
                 setFilterCategories(catArr)
                 setCategories(data);
             })
@@ -117,12 +119,14 @@ function Courses() {
 
     const categoryNames = (types) => {
         return Object.keys(types).map(key => {
-            return { [key]: types[key].name }
+            return { [key.toLowerCase()]: types[key].name }
 
         })
     }
 
     const subCategories = (key) => {
+        // console.log('key:', key)
+        // console.log('cats:', categories)
         return categories[key]?.grades || [];
     };
 
@@ -222,7 +226,7 @@ function Courses() {
     const handleViewCourses = async () => {
         try {
             const data = await ViewCoursesFunction();
-            console.log("Courses data:", data);
+            // console.log("Courses data:", data);
             setCourses(data);
 
         } catch (error) {
@@ -234,7 +238,7 @@ function Courses() {
     const handleCategoryFilter = async () => {
         try {
             const data = await FilterCategoryFunction(rtnCategory.toLocaleLowerCase());
-            console.log("Courses data 3:", data);
+            // console.log("Courses data 3:", data);
             setCourses(data);
 
         } catch (error) {
@@ -258,7 +262,7 @@ function Courses() {
         console.log(subscription);
         try {
             const data = await FilterSubscriptionFunction(subscription);
-            console.log("Courses data filtered with subscription:", data);
+            // console.log("Courses data filtered with subscription:", data);
             setCourses(data);
 
         } catch (error) {
@@ -326,7 +330,7 @@ function Courses() {
                             }
                             {typeStatus ?
                                 <Box sx={{ paddingTop: '20px', paddingBottom: "60px" }}>
-                                    <Accordians label={'Subscription'} types={Subscription} setReturnType={setSubscription} returnType={type} />
+                                    <Accordians label={'Subscription'} types={Subscription} setReturnType={setSubscription} returnType={subscription} />
                                 </Box>
                                 : null
                             }

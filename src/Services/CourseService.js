@@ -1,7 +1,7 @@
 
 // Imports from the firebase config file
 import { db, auth } from './firebaseConfig';
-import { collection, collectionGroup, doc, getDocs, query, where } from "firebase/firestore";
+import { collection, collectionGroup, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 
 
 // Filter courses with subject, category, grade
@@ -274,7 +274,7 @@ export const getCategoryData = async () => {
         }));
         const categoryData = {};
         data.docs.forEach((doc) => (
-            categoryData[doc.id] = {
+            categoryData[doc.id.toLowerCase()] = {
                 ...doc.data(),
                 id: doc.id
             }));
@@ -733,7 +733,7 @@ export const filterCategory = async (category) => {
 
 
 // Filtered document function
-export const FilteredDocFunction = async (subject, category, grade) => {
+export const FilteredDocFunction1 = async (subject, category, grade) => {
     try {
         // Step 1: Query to get the course document based on subject, category and grade
         const coursesQuery = query(collection(db, 'courses'),
@@ -759,7 +759,7 @@ export const FilteredDocFunction = async (subject, category, grade) => {
 }
 
 // Fetch all courses function
-export const ViewCoursesFunction = async () => {
+export const ViewCoursesFunction1 = async () => {
     try {
         const querySnapshot = await getDocs(collection(db, "courses"));
 
@@ -839,7 +839,7 @@ export const ViewCoursesFunction = async () => {
 
 
 
-export const SearchBarCoursesFunction = async () => {
+export const SearchBarCoursesFunction1 = async () => {
     try {
         const querySnapshot = await getDocs(collection(db, "courses"));
 
@@ -858,7 +858,7 @@ export const SearchBarCoursesFunction = async () => {
 }
 
 // Filter category function
-export const FilterCategoryFunction = async (category) => {
+export const FilterCategoryFunction1 = async (category) => {
     try {
         // Reference to the collection
         const coursesCollection = collection(db, 'courses');
@@ -883,7 +883,7 @@ export const FilterCategoryFunction = async (category) => {
 }
 
 // Filter topics function
-export const FilterTopicFunction = async (topic) => {
+export const FilterTopicFunction1 = async (topic) => {
     try {
         // const queryData = query(collectionGroup(db, "courseCategory"), where("subjectOrTopic", "==", topic));
         // Reference to the collection
@@ -908,7 +908,7 @@ export const FilterTopicFunction = async (topic) => {
 }
 
 // Filter Grades function
-export const FilterGradeFunction = async (grade) => {
+export const FilterGradeFunction1 = async (grade) => {
     try {
 
         // Reference to the collection
@@ -933,7 +933,7 @@ export const FilterGradeFunction = async (grade) => {
 }
 
 // Filter Grades function
-export const FilterSubscriptionFunction = async (subscription) => {
+export const FilterSubscriptionFunction1 = async (subscription) => {
     try {
 
         // Reference to the collection
@@ -959,7 +959,7 @@ export const FilterSubscriptionFunction = async (subscription) => {
 
 
 // User courses function
-export const FetchUserCoursesFunction = async (userId) => {
+export const FetchUserCoursesFunction1 = async (userId) => {
     try {
         const coursesRef = collection(db, `users/${userId}/userCourses`);
         const snapshot = await getDocs(coursesRef);
