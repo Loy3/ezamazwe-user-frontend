@@ -130,9 +130,11 @@ function CourseFullView({ courseData }) {
                         )}
                         Your browser does not support the video tag.
                     </video>
-                    <button onClick={handlePlayPause} style={{ width: isSmallScreen ? "50px" : "80px", height: isSmallScreen ? "50px" : "80px", borderRadius: "100%", outline: "none", border: "none", position: "absolute", top: "30px", left: "30px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        {isPlaying ? <PauseIcon sx={{ color: "primary.light", height:isSmallScreen? "30px": "50px", width: isSmallScreen? "30px":"50px" }} /> : <PlayArrowIcon sx={{ color: "primary.light", height:isSmallScreen? "30px": "50px", width: isSmallScreen? "30px":"50px" }} />}
-                    </button>
+                    {!isPlaying ?
+                        <button onClick={handlePlayPause} style={{ width: isSmallScreen ? "50px" : "80px", height: isSmallScreen ? "50px" : "80px", borderRadius: "100%", outline: "none", border: "none", position: "absolute", top: "35%", left: "45%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            {isPlaying ? <PauseIcon sx={{ color: "primary.light", height: isSmallScreen ? "30px" : "50px", width: isSmallScreen ? "30px" : "50px" }} /> : <PlayArrowIcon sx={{ color: "primary.light", height: isSmallScreen ? "30px" : "50px", width: isSmallScreen ? "30px" : "50px" }} />}
+                        </button>
+                        : null}
                 </Box>
                 <Box sx={{ width: isSmallScreen ? "100%" : "25%", height: "auto" }}>
                     {course.lessons.map((lesson, index) => (
@@ -153,7 +155,7 @@ function CourseFullView({ courseData }) {
 
                                 {lesson.topics.map((topic, index) => (
                                     <div key={index}>
-                                        <Button onClick={() => viewLesson(topic)} >
+                                        <Button onClick={() => viewLesson(topic)} style={{marginLeft: "20px", marginTop:"-10px"}}>
                                             {topic.topicName}
                                         </Button>
                                     </div>
@@ -161,13 +163,13 @@ function CourseFullView({ courseData }) {
                             </AccordionDetails>
                         </Accordion>
                     ))}
-                   
+
                 </Box>
             </Grid>
 
             <Box sx={{ width: "90%", margin: "100px 5%" }}>
                 <Label children={"Course Overview"} />
-                <Typography  variant={isSmallScreen?"body2":"subtitle1"} sx={{marginBottom: "10px"}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Typography>
+                <Typography variant={isSmallScreen ? "body2" : "subtitle1"} sx={{ marginBottom: "10px" }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Typography>
                 <Box sx={{ marginTop: '50px', marginBottom: "10px" }} >
                     <Label children={"Visit"} />
                 </Box>
@@ -175,7 +177,7 @@ function CourseFullView({ courseData }) {
                     <Box key={index} sx={{ display: "flex", flexDirection: "row" }}>
                         <ArrowRightIcon />
                         {/* <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} /> */}
-                        <Typography sx={{ color: 'primary.light', fontWeight: "400", textAlign: "left", cursor: "pointer", fontSize: isSmallScreen?"11px":"16px" }} onClick={() => handleVisitLink(link)}>
+                        <Typography sx={{ color: 'primary.light', fontWeight: "400", textAlign: "left", cursor: "pointer", fontSize: isSmallScreen ? "11px" : "16px" }} onClick={() => handleVisitLink(link)}>
                             {link}
                         </Typography>
                     </Box>
@@ -198,7 +200,7 @@ function CourseFullView({ courseData }) {
                     <Box sx={{ marginBottom: "10px" }}>
                         <Label children={'Description'} />
                     </Box>
-                    <Typography  variant={isSmallScreen?"body2":"subtitle1"} sx={{marginBottom: "10px"}}>Course Full Description</Typography>
+                    <Typography variant={isSmallScreen ? "body2" : "subtitle1"} sx={{ marginBottom: "10px" }}>Course Full Description</Typography>
                     <Typography>
                         {courseFullDescription}
                     </Typography>
