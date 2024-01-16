@@ -201,7 +201,11 @@ function ViewCourse({ course_data, docData }) {
                 <Typography  variant={isSmallScreen?"body2":"subtitle1"} sx={{marginBottom: "10px", color: 'primary.light', fontWeight: "400", marginTop:"10px"}}>What's required for the course.</Typography>
                 <Typography variant="body1" paragraph>
 
-                    <FormControl sx={{marginTop:"20px", marginBottom: "20px"}}>
+<ul style={{margin:"20px 0"}}>
+    <li>Internet connection.</li>
+    <li>Laptop or smart phone.</li>
+</ul>
+                    {/* <FormControl sx={{marginTop:"20px", marginBottom: "20px"}}>
                         <RadioGroup
 
                             defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
@@ -210,7 +214,7 @@ function ViewCourse({ course_data, docData }) {
                             <FormControlLabel value="Internet connection." control={<Radio />} label="Internet connection." />
                             <FormControlLabel value="Laptop or smart phone." control={<Radio />} label="Laptop or smart phone." />
                         </RadioGroup>
-                    </FormControl>
+                    </FormControl> */}
                 </Typography>
             </Box>
         </Grid>

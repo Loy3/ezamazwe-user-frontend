@@ -488,27 +488,51 @@ function Courses() {
     // useEffect(() => {
     // handleViewCourses();
 
+        useEffect(()=>{
+    if (course) {
+         navigate('/course', { state: { course_data: course } });
+        // console.log("course.lessons",course.lessons);
+    }
+        },[course])
+
     const testTheCode = async (id) => {
         let courseTest = null
 
         try {
             // console.log("course id", id);
-            await fetchCourseData(id).then(async (courseResponse) => {
+            // await fetchCourseData(id).then(async (courseResponse) => {
 
-                courseTest = { ...courseResponse, lessons: [] }
-                await fetchCourseLessons(courseResponse.id).then(lessonsResponse => {
-                    lessonsResponse.forEach(async lesson => {
-                        let localLesson = { ...lesson, topics: [] }
-                        await fetchLessonTopics(courseResponse.id, lesson.id).then(topicResponse => {
-                            console.log("topicResponse====", topicResponse)
-                            localLesson.topics = [...topicResponse]
-                        })
-                        courseTest.lessons.push(localLesson)
-                    })
-                })
-                // console.log("testTheCode", courseTest);
+            //     courseTest = { ...courseResponse, lessons: [] }
+            //     await fetchCourseLessons(courseResponse.id).then(lessonsResponse => {
+            //         lessonsResponse.forEach(async lesson => {
+            //             let localLesson = { ...lesson, topics: [] }
+            //             await fetchLessonTopics(courseResponse.id, lesson.id).then(topicResponse => {
+            //                 console.log("topicResponse====", topicResponse)
+            //                 localLesson.topics = [...topicResponse]
+            //             })
+            //             courseTest.lessons.push(localLesson)
+            //         })
+            //     })
+            //     console.log("testTheCode", courseTest.lessons.length);
+            //     setCourse(courseTest);
+
+            // })
+            await fetchCourseData(id).then(async (courseResponse) => {
+                courseTest = { ...courseResponse, lessons: [] };
+                const lessonsResponse = await fetchCourseLessons(courseResponse.id);
+                const lessonPromises = lessonsResponse.map(async (lesson) => {
+                  let localLesson = { ...lesson, topics: [] };
+                  const topicResponse = await fetchLessonTopics(courseResponse.id, lesson.id);
+                  localLesson.topics = [...topicResponse];
+                  return localLesson;
+                });
+                const lessons = await Promise.all(lessonPromises);
+                courseTest.lessons = lessons;
+                // console.log("testTheCode", courseTest.lessons.length);
                 setCourse(courseTest);
-            })
+              });
+              
+            return courseTest
         } catch (error) {
             console.log("Error:", error);
         }
@@ -519,12 +543,12 @@ function Courses() {
 
     // }, []);
 
-    useEffect(() => {
-        console.log({ course });
-        // if (course) {
-        //     setCourse(course)
-        // }
-    }, [course])
+    // useEffect(() => {
+    //     console.log({ course });
+    //     // if (course) {
+    //     //     setCourse(course)
+    //     // }
+    // }, [course])
 
     const categoryNames = (types) => {
         return Object.keys(types).map(key => {
@@ -729,14 +753,17 @@ function Courses() {
 
         // navigate('/course', { state: { course_data: course_data, docData: docData } });
 
-        await testTheCode(id).then(() => {
-            // navigate('/course', { state: { course_data: course } });
+        await testTheCode(id).then((courseRes) => {
+            console.log(courseRes.lessons);
+            // const lessons = courseRes.lessons
+            // console.log(course.lessons);
+            // navigate('/course', { state: { course_data: courseRes } });
             // console.log("course",course);
-            if (course) {
-                navigate('/course', { state: { course_data: course } });
-            } else {
-                alert("Click again.")
-            }
+            // if (course) {
+            //     navigate('/course', { state: { course_data: course } });
+            // } else {
+            //     alert("Click again.")
+            // }
         })
 
 
@@ -764,12 +791,13 @@ function Courses() {
                             </Box>
                         </Box>
                         :
-                        <Box sx={{ width: "96%", margin: "0 2%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                            <Box sx={{ width: "90%", marginLeft: "-30px" }}>
-                                <FilterButton text={"Filter"} />
-                            </Box>
+                        null
+                        // <Box sx={{ width: "96%", margin: "0 2%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        //     <Box sx={{ width: "90%", marginLeft: "-30px" }}>
+                        //         <FilterButton text={"Filter"} />
+                        //     </Box>
 
-                        </Box>
+                        // </Box>
                     }
                     {/* <Button variant="outlined" startIcon={<TuneIcon />} sx={{ width: "150px", border: "2px solid", fontWeight: "bold", borderRadius: "12px" }}>
           Filter
@@ -786,7 +814,7 @@ function Courses() {
                             </Box>
                             {subCategoryStatus ?
                                 <Box sx={{ paddingTop: '20px' }}>
-                                    <Accordians label={'SubCategories'} types={subCategories(rtnCategory.toLowerCase())} setReturnType={setSubCategory} returnType={subCategory} />
+                                    <Accordians label={'Sub Categories'} types={subCategories(rtnCategory.toLowerCase())} setReturnType={setSubCategory} returnType={subCategory} />
                                 </Box>
                                 : null
                             }
@@ -819,6 +847,7 @@ function Courses() {
                         </Typography>
                     </Box>
                 </Box>
+
                 <Box sx={{ flexDirection: 'column', padding: '20px' }}>
                     {courses && courses.map((course, index) => (
                         <Box key={index} sx={{ margin: "20px 0" }}>
@@ -826,6 +855,11 @@ function Courses() {
                         </Box>
                     ))}
                 </Box>
+                {courses.length === 0 ?
+                    <Typography variant='h6' sx={{ fontStyle: "italic", marginTop: "10px" }}>Courses not available.</Typography>
+                    : null
+                }
+                {console.log(courses)}
                 {/* <button onClick={handleViewCourses}>All Courses</button> */}
             </Grid>
         </Box>

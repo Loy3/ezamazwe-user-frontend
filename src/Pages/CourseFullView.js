@@ -130,11 +130,11 @@ function CourseFullView({ courseData }) {
                         )}
                         Your browser does not support the video tag.
                     </video>
-                    {!isPlaying ?
+                    {/* {!isPlaying ?
                         <button onClick={handlePlayPause} style={{ width: isSmallScreen ? "50px" : "80px", height: isSmallScreen ? "50px" : "80px", borderRadius: "100%", outline: "none", border: "none", position: "absolute", top: "35%", left: "45%", display: "flex", alignItems: "center", justifyContent: "center" }}>
                             {isPlaying ? <PauseIcon sx={{ color: "primary.light", height: isSmallScreen ? "30px" : "50px", width: isSmallScreen ? "30px" : "50px" }} /> : <PlayArrowIcon sx={{ color: "primary.light", height: isSmallScreen ? "30px" : "50px", width: isSmallScreen ? "30px" : "50px" }} />}
                         </button>
-                        : null}
+                        : null} */}
                 </Box>
                 <Box sx={{ width: isSmallScreen ? "100%" : "25%", height: "auto" }}>
                     {course.lessons.map((lesson, index) => (
