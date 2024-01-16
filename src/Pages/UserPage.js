@@ -297,12 +297,23 @@ function UserPage({ signInUser }) {
                     {couStatus ?
                         <>
                             <Box sx={{ paddingTop: '50px', gap: '15px', width: "90%", margin: "5%", position: "relative", display: "flex", flexDirection: isSmallScreen ? "column" : "row" }}>
-                                {userCoursesCards.map((course, index) => (
+                                {/* {userCoursesCards.map((course, index) => (
                                     <Box key={index} sx={{ width: isSmallScreen ? "100%" : "33%", }}>
                                         <UserCourseContCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.shortDescrip} image={course.cardImage} />
                                     </Box>
-                                ))}
+                                ))} */}
+                                <Typography variant='body1' sx={{ fontStyle: "italic" }}>No courses.</Typography>
+                            </Box>
+                        </>
+                        : null
+                    }
 
+
+                    {tutStatus ?
+                        <>
+                            <Box sx={{ paddingTop: '50px', gap: '15px', width: "90%", margin: "5%", position: "relative", display: "flex", flexDirection: isSmallScreen ? "column" : "row" }}>
+
+                                <Typography variant='body1' sx={{ fontStyle: "italic" }}>No Sessions.</Typography>
                             </Box>
                         </>
                         : null

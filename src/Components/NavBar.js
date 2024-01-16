@@ -160,6 +160,7 @@ export const NavBar = ({ location }) => {
             case "tutors":
                 // navigate("");
                 console.log("Tutors");
+                alert("Route not available yet.")
                 break;
             case "contact":
                 navigate("/contact");

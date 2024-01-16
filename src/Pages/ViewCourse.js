@@ -164,7 +164,7 @@ function ViewCourse({ course_data, docData }) {
                             <Typography  variant={isSmallScreen?"body2":"subtitle1"} sx={{marginBottom: "10px", color: 'primary.light', fontWeight: "400", marginTop:"10px"}}>Course Lessons.</Typography>
                             <br></br>
                             {courseData.lessons.map((lesson, index) => (
-                            <Box key={index} sx={{ margin: "10px 0" }}>
+                            <Box key={index} sx={{ margin: "10px 0 30px 0" }}>
                                 <ContCard lessonNumber={index+1} text={lesson.lessonName} duration={lesson.lessonDuration ? lesson.lessonDuration : "00:00"} />
                             </Box>
                               ))}
