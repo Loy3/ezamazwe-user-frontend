@@ -17,30 +17,32 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { FooterComp } from '../Components/Footer';
 import { CourseNavBar } from '../Components/NavBar';
 import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { auth } from "../Services/firebaseConfig";
 import { useNavigate } from "react-router-dom";
-import { CourseFullViewFunction, CourseTopicsFunction } from '../Services/CourseService';
+import { CourseFullViewFunction, CourseTopicsFunction, fetchVideoLink } from '../Services/CourseService';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 
 function CourseFullView({ courseData }) {
     const isSmallScreen = useMediaQuery('(max-width:600px)');
-
+    
     const location = useLocation();
-    const course = location.state.courseData;
+    const course = location.state?.courseData ?? null;
     console.log("View Full Course: ", course);
 
-    const [courseId, setCourseId] = useState(course.id);
-    const [courseTitle, setCourseTitle] = useState(course.courseName);
-    const [courseDescription, setCourseDescription] = useState(course.courseShortDescription);
-    const [courseFullDescription, setCourseFullDescription] = useState(course.courseFullDescription);
-    const [subscription, setSubscription] = useState(course.coursePrice);
+    const [courseId, setCourseId] = useState(course.id ?? null);
+    const [courseTitle, setCourseTitle] = useState(course.courseName ?? null);
+    const [courseDescription, setCourseDescription] = useState(course.courseShortDescription ?? null);
+    const [courseFullDescription, setCourseFullDescription] = useState(course.courseFullDescription ?? null);
+    const [subscription, setSubscription] = useState(course.coursePrice ?? null);
     const [video, setVideo] = useState("");
-    const [lesson, setLesson] = useState(course.lessonName);
+    const [videoUrl, setVideoUrl] = useState("")
+    const [lesson, setLesson] = useState(course.lessonName ?? null);
     const [lessons, setLessons] = useState([]);
     const user = auth.currentUser;
     const navigate = useNavigate();
+    const params = useParams()
     const [selectedLesson, setSelectedLesson] = useState()
 
     // Video declarations and options
@@ -56,9 +58,31 @@ function CourseFullView({ courseData }) {
         }
         setIsPlaying(!isPlaying);
     };
-
-    const viewLesson = (topic) => {
-        setSelectedLesson(topic)
+    useEffect(() => {
+        console.log({ params });
+        fetchVideo()
+    }, [params])
+    const fetchVideo = async() => {
+        const courseId = course.id
+        const lessonId = location.state.activeLesson
+        const videoId = params.videoId
+        console.log({ courseId, lessonId, videoId });
+        const url = await fetchVideoLink(courseId, lessonId, videoId)
+        console.log({ url });
+        setVideoUrl(url)
+    }
+    useEffect(() => {
+        console.log({ videoUrl });
+    }, [videoUrl])
+    const viewLesson = (lessonId, topic) => {
+        const { courseName } = params
+        const videoId = topic.id
+        console.log({ topic });
+        console.log({ courseName, videoId });
+        
+        // setSelectedLesson(topic)
+        // navigate('asdfsd', { shallow: true })
+        navigate(`/course/${courseName}/learn/${videoId}`, { state: { ...location.state, activeLesson: lessonId }})
         console.log("Selected lessons :", selectedLesson)
     }
 
@@ -122,9 +146,9 @@ function CourseFullView({ courseData }) {
                         <source src={video ? video : video1} type="video/mp4" />
                     </video> */}
 
-                    <video ref={videoRef} controls style={{ width: "100%", height: "100%", objectFit: "cover" }}>
-                        {selectedLesson && selectedLesson.video ? (
-                            <source src={selectedLesson.video} type="video/mp4" />
+                    <video ref={videoRef} src={videoUrl} controls style={{ width: "100%", height: "100%", objectFit: "cover" }}>
+                        {videoUrl ? (
+                            <source src={videoUrl} type="video/mp4" />
                         ) : (
                             <p>No video available for the selected lesson.</p>
                         )}
@@ -155,7 +179,7 @@ function CourseFullView({ courseData }) {
 
                                 {lesson.topics.map((topic, index) => (
                                     <div key={index}>
-                                        <Button onClick={() => viewLesson(topic)} style={{marginLeft: "20px", marginTop:"-10px"}}>
+                                        <Button onClick={() => viewLesson(lesson.id, topic)} style={{marginLeft: "20px", marginTop:"-10px"}}>
                                             {topic.topicName}
                                         </Button>
                                     </div>
@@ -173,7 +197,7 @@ function CourseFullView({ courseData }) {
                 <Box sx={{ marginTop: '50px', marginBottom: "10px" }} >
                     <Label children={"Visit"} />
                 </Box>
-                {selectedLesson && selectedLesson.supportingLinks.map((link, index) => (
+                {selectedLesson ?  selectedLesson.supportingLinks.map((link, index) => (
                     <Box key={index} sx={{ display: "flex", flexDirection: "row" }}>
                         <ArrowRightIcon />
                         {/* <SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} /> */}
@@ -181,7 +205,11 @@ function CourseFullView({ courseData }) {
                             {link}
                         </Typography>
                     </Box>
-                ))}
+                )): (
+                    <Typography>
+                        No links provided
+                    </Typography>
+                )}
                 {/* <Box sx={{ display: "flex", flexDirection: "row" }}>
                     <ArrowRightIcon /> */}
                 {/* SectionSubHeading children={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."} /> */}

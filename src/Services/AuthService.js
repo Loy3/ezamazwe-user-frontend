@@ -22,7 +22,7 @@ export const SigninFunction = async (email, password) => {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-        alert('Successfully logged in.')
+        // alert('Successfully logged in.')
 
         const user = userCredential.user;
         console.log("Successfully logged in.", user);

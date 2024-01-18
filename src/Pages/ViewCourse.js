@@ -11,7 +11,7 @@ import Label from '../Components/Label';
 import { GetUserDataFunction } from "../Services/AuthService";
 import Contentbutton from '../Components/ContentButton';
 import { ContCard } from '../Components/Cards';
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { auth } from "../Services/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import video1 from "../Assets/Videos/video1.mp4";
@@ -44,6 +44,7 @@ function ViewCourse({ course_data, docData }) {
     const user = auth.currentUser;
     let userId = '';
     const navigate = useNavigate();
+    const params = useParams()
 
     useEffect(() => {
         if (user) {
@@ -54,6 +55,9 @@ function ViewCourse({ course_data, docData }) {
             userData();
         }
     }, [user]);
+    useEffect(() => {
+        console.log({ params, courseName: params.courseName });
+    }, [])
 
     useEffect(() => {
         // Check userSubscription once userInfo is available
@@ -76,11 +80,15 @@ function ViewCourse({ course_data, docData }) {
     const handleStartCourse = () => {
         console.log(courseType);
         if (user) {
+            console.log({ courseData, doc_data });
+            console.log({ id: courseData.lessons[0].topics[0].id });
+            const videoId = courseData.lessons[0].topics[0].id 
+            // return
             if (courseType === "Free") {
-                navigate('/courseview', { state: { courseData: courseData, doc_data: doc_data } });
+                navigate(`learn/${videoId}`, { state: { courseData: courseData, doc_data: doc_data, activeLesson: courseData.lessons[0].id } });
             } else {
                 if (courseType === "Paid" && userSubscription === "subscribed") {
-                    navigate('/courseview', { state: { courseData: courseData } });
+                    navigate(`learn/${videoId}`, { state: { courseData: courseData } });
                 } else {
                     alert("Only subscribed users can access this course");
                     navigate('/courses');   // Navigate back to courses page

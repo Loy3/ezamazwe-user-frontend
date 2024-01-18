@@ -1354,7 +1354,16 @@ export const CourseTopicsFunction = async (courseId, lessonId) => {
     }
 }
 
+export const fetchVideoLink = async(courseId, lessonId, videoId) => {
 
+    const path = `courses/${courseId}/lessons/${lessonId}/topics/${videoId}`
+    const docRef = doc(db, path)
+    console.log({ path });
+    return getDoc(docRef).then(doc => { 
+        console.log({ doc:  doc.data() });
+        return doc.data().video
+    })
+} 
 export const filterAllOptionsFunction = async (category, subject, grade, subscription) => {
     console.log("category", category);
     console.log("subject", subject);
@@ -1475,7 +1484,7 @@ export const fetchLessonTopics = async (courseId, lessonId) => {
     const topicsSnap = await getDocs(topicRef);
     const lessonTopics =  []
     topicsSnap.forEach(item => {
-        lessonTopics.push({...item.data()})
+        lessonTopics.push({...item.data(), id: item.id })
     })
     // console.log("Topics", lessonTopics)
     return lessonTopics

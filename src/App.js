@@ -2,14 +2,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import SetUpProfile from './Pages/SetUpProfile';
-import SignIn from './Pages/SignIn';
-import SignUp from './Pages/SignUp';
-import ResetPassword from './Pages/ResetPassword';
-import ForgotPassowrd from './Pages/ForgotPassowrd';
-import LandingPage from './Pages/LandingPage';
-import VerificationPage from './Pages/VerificationPage';
-import VerifyEmail from './Pages/VerifyEmail';
 import { NavBar } from './Components/NavBar';
 import { FooterComp } from './Components/Footer';
 import { FilterButton } from './Components/Buttons';
@@ -22,16 +14,12 @@ import { CourseCard, CourseContCard } from './Components/Cards';
 import video1 from "./Assets/Videos/video.mp4";
 import image1 from "./Assets/Images/cardsImages/caps1.jpg"
 import { SearchBar } from './Components/SearchBar';
-import ScreenView from './Pages/ScreenView';
-import CoursesPage from './Pages/CoursesPage';
-import ViewCoursePage from './Pages/ViewCoursePage';
-import User from './Pages/User';
 import { auth, db } from './Services/firebaseConfig';
 import { collection, doc, getDoc, query } from 'firebase/firestore';
-import CourseFullView from './Pages/CourseFullView';
-import ContactUs from './Pages/ContactUs';
-import AboutUs from './Pages/AboutUs';
-import Payment from './Pages/Payment';
+import {
+  ScreenView, CoursesPage, User, ViewCoursePage, CourseFullView, ContactUs, AboutUs, Payment, SetUpProfile, SignIn, SignUp, ResetPassword,
+  ForgotPassword as ForgotPassowrd, LandingPage, VerificationPage, VerifyEmail
+} from './Pages'
 function App() {
   const [isSignedIn, setSignIn] = useState(false);
   const [userId, setUserId] = useState("");
@@ -98,8 +86,8 @@ function App() {
           <Route path='/profilesetup' element={toProfileStatus ? <SetUpProfile setToProfileStatus={setToProfileStatus} /> : <Navigate to="/signup" />} />
           <Route path='/screen' element={<ScreenView />} />
           <Route path='/courses' element={<CoursesPage />} />
-          <Route path='/course' element={<ViewCoursePage />} />
-          <Route path='/courseview' element={!isSignedIn ? <Navigate to="/" /> : <CourseFullView />} />
+          <Route path='/course/:courseName' element={<ViewCoursePage />} />
+          <Route path='/course/:courseName/learn/:videoId' element={!isSignedIn ? <Navigate to="/" /> : <CourseFullView />} />
           <Route path='/user' element={!isSignedIn ? <Navigate to="/" /> : <User signInUser={signInUser} />} />
           <Route path='/reset' element={<ResetPassword />} />
           <Route path='/forgot' element={<ForgotPassowrd />} />

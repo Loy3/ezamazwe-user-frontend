@@ -488,14 +488,7 @@ function Courses() {
     // useEffect(() => {
     // handleViewCourses();
 
-        useEffect(()=>{
-    if (course) {
-         navigate('/course', { state: { course_data: course } });
-        // console.log("course.lessons",course.lessons);
-    }
-        },[course])
-
-    const testTheCode = async (id) => {
+    const testTheCode = async (id, hyphenatedName) => {
         let courseTest = null
 
         try {
@@ -529,7 +522,8 @@ function Courses() {
                 const lessons = await Promise.all(lessonPromises);
                 courseTest.lessons = lessons;
                 // console.log("testTheCode", courseTest.lessons.length);
-                setCourse(courseTest);
+                navigate(`/course/${hyphenatedName}`, { state: { course_data: courseTest } });
+                // setCourse(courseTest);
               });
               
             return courseTest
@@ -747,13 +741,16 @@ function Courses() {
         }
     }
 
-    const handleViewCourse = async (event, id) => {
+    const handleViewCourse = async (event, id, name) => {
         event.preventDefault();
         // const [course_data] = courses.filter((course) => course.id === id);
-
+        console.log('course clicked: ', { id, name });
+        const hyphenatedName = (name.trim().toLowerCase()).replaceAll(' ', '-')
+        console.log(hyphenatedName);
+        // navigate(`/course/${id}`)
         // navigate('/course', { state: { course_data: course_data, docData: docData } });
-
-        await testTheCode(id).then((courseRes) => {
+        // return 
+        await testTheCode(id, hyphenatedName).then((courseRes) => {
             console.log(courseRes.lessons);
             // const lessons = courseRes.lessons
             // console.log(course.lessons);
@@ -851,7 +848,7 @@ function Courses() {
                 <Box sx={{ flexDirection: 'column', padding: '20px' }}>
                     {courses && courses.map((course, index) => (
                         <Box key={index} sx={{ margin: "20px 0" }}>
-                            <CourseCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.courseShortDescription} video={course.video ? course.video : video1} cardFunction={(event) => handleViewCourse(event, course.id)} />
+                            <CourseCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.courseShortDescription} video={course.video ? course.video : video1} cardFunction={(event) => handleViewCourse(event, course.id, course.courseName)} />
                         </Box>
                     ))}
                 </Box>
