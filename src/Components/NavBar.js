@@ -11,10 +11,12 @@ import { useEffect, useState } from "react";
 import { auth, db } from "../Services/firebaseConfig";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
+import NavLink from "./NavLink";
 
 export const NavBar = ({ location }) => {
     const navigate = useNavigate();
-    const isSmallScreen = useMediaQuery("(max-width:800px)");
+    const isSmallScreen = useMediaQuery("(max-width:900px)");
+    
     const isMedToLaScreen = useMediaQuery("(max-width:1024px) and (min-width:800px)");
     const [navStatus, setNavStatus] = useState(false);
     const [isSignedIn, setSignIn] = useState(false);
@@ -195,7 +197,7 @@ export const NavBar = ({ location }) => {
                     <Button sx={{ textDecoration: "none", padding: "0 5px", color: "black", cursor: "pointer" }} onClick={() => handleNav("open")}> <MenuIcon sx={{ color: "#fff", width: "40px", height: "40px", marginLeft: "4%", marginTop: "4%" }} /></Button>
                 </Box>
                 :
-                <Box sx={{ width: isSmallScreen ? "100%" : "100%", height: isSmallScreen ? "100%" : "120px", backgroundColor: "white", position: isSmallScreen ? "fixed" : "relative", zIndex: isSmallScreen ? "80" : "0" }}>
+                <Box sx={{ width: "100%", maxWidth: isSmallScreen ? "420px" : "100%",  height: isSmallScreen ? "100%" : "120px", backgroundColor: "white", position: isSmallScreen ? "fixed" : "relative", zIndex: isSmallScreen ? "80" : "0" }}>
                     {isSmallScreen ?
                         <Button sx={{ textDecoration: "none", padding: "0 5px", color: "black", cursor: "pointer", position: "absolute", right: "5px", top: "20px", zIndex: "50" }} onClick={() => handleNav("close")}> <CancelIcon sx={{ color: "primary.light", width: "30px", height: "30px" }} /></Button>
                         : null}
@@ -214,7 +216,7 @@ export const NavBar = ({ location }) => {
                             </Box>
                         </Box>
                     }
-                    <Box sx={{ width: "100%", height: isSmallScreen ? "100%" : "90px", display: "flex", flexDirection: isSmallScreen ? "column" : "row", position: "relative" }}>
+                    <Box sx={{ width: "100%", height: isSmallScreen ? "100%" : "90px", display: "flex", flexDirection: isSmallScreen ? "column" : "row", position: "relative", justifyContent: 'space-between' }}>
                         {isMedToLaScreen ?
                             <Box sx={{ width: "18%", height: isSmallScreen ? "auto" : "100%", display: "flex", justifyContent: isSmallScreen ? "start" : "center", alignItems: "center" }}>
                                 <img src={logo} style={{ width: "150px", marginLeft: isSmallScreen ? "20px" : "0" }} />
@@ -224,20 +226,20 @@ export const NavBar = ({ location }) => {
                                 <img src={logo} style={{ width: "150px", marginLeft: isSmallScreen ? "20px" : "0" }} />
                             </Box>
                         }
-                        <Box sx={{ width: isSmallScreen ? "100%" : "60%", height: "100px", display: "flex", justifyContent: isSmallScreen ? "start" : "center", alignItems: "center", marginTop: isSmallScreen ? "50px" : "0" }}>
-                            <Box sx={{ display: "flex", flexDirection: isSmallScreen ? "column" : "row" }}>
-                                <Link sx={{ textDecoration: "none", padding: "0 10px", color: homeColor, cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0", fontWeight: homeWeight }} onClick={() => handleNavigation("home")}>Home</Link>
-                                <Link sx={{ textDecoration: "none", padding: "0 10px", color: aboutColor, cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0", fontWeight: aboutWeight }} onClick={() => handleNavigation("about")}>About Us</Link>
-                                <Link sx={{ textDecoration: "none", padding: "0 10px", color: coursesColor, cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0", fontWeight: coursesWeight }} onClick={() => handleNavigation("courses")}>Courses</Link>
-                                <Link sx={{ textDecoration: "none", padding: "0 10px", color: "black", cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0", fontWeight: "normal" }} onClick={() => handleNavigation("tutors")}>Tutors</Link>
-                                <Link sx={{ textDecoration: "none", padding: "0 10px", color: contactColor, cursor: "pointer", marginLeft: isSmallScreen ? "25px" : "0", marginTop: isSmallScreen ? "10px" : "0", fontWeight: contactWeight }} onClick={() => handleNavigation("contact")}>Contact Us</Link>
+                        <Box sx={{ width: isSmallScreen ? "100%" : "auto", height: "100%", display: "flex", justifyContent: isSmallScreen ? "start" : "center", alignItems: isSmallScreen ? "flex-start" : "center", marginTop: isSmallScreen ? "50px" : "0" }}>
+                            <Box sx={{ display: "flex", height: 'auto', flexDirection: isSmallScreen ? "column" : "row", width: isSmallScreen ? "100%" : 'fit-content' }}>
+                                <NavLink color={homeColor} path={'home'} text={'Home'} isSmallScreen={isSmallScreen} handleNavigation={handleNavigation} fontWeight={homeWeight} />
+                                <NavLink color={aboutColor} path={'about'} text={'About Us'} isSmallScreen={isSmallScreen} handleNavigation={handleNavigation} fontWeight={aboutWeight} />
+                                <NavLink color={coursesColor} path={'courses'} text={'Courses'} isSmallScreen={isSmallScreen} handleNavigation={handleNavigation} fontWeight={coursesWeight} />
+                                <NavLink color={'black'} path={'tutors'} text={'Tutors'} isSmallScreen={isSmallScreen} handleNavigation={handleNavigation} fontWeight="normal" />
+                                <NavLink color={contactColor} path={'contact'} text={'Contact Us'} isSmallScreen={isSmallScreen} handleNavigation={handleNavigation} fontWeight={contactWeight} />
                             </Box>
                         </Box>
-                        
-                        <Box sx={{ width: isSmallScreen ? "100%" : "20%", height: isSmallScreen ? "auto" : "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: isSmallScreen ? "50px" : "0", position: isSmallScreen ? "absolute" : "relative", bottom: isSmallScreen ? "50px" : "unset" }}>
+
+                        <Box sx={{ width: isSmallScreen ? "100%" : "9%", minWidth: isSmallScreen && '60px', height: isSmallScreen ? "auto" : "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: isSmallScreen ? "50px" : "0", position: isSmallScreen ? "absolute" : "relative", bottom: isSmallScreen ? "50px" : "unset", padding: !isSmallScreen ? "0 20px" : "0" }}>
                             {!isSignedIn ?
                                 <Box sx={{ display: "flex", flexDirection: "row", marginLeft: isSmallScreen ? "20px" : "0" }}>
-                                    <SmallButton text={"Sign In"} buttonFunction={signIn} />
+                                    {/* <SmallButton text={"Sign In"} buttonFunction={signIn} /> */}
                                     <ToUserButton isSignedIn={isSignedIn} />
                                 </Box>
                                 :

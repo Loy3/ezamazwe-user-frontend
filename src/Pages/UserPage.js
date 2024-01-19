@@ -211,20 +211,22 @@ function UserPage({ signInUser }) {
 
     return (
         <Grid sx={{ display: 'flex', flexDirection: isSmallScreen ? 'column' : 'row', marginTop: '30px', padding: '20px', width: "96%", margin: isSmallScreen ? "-30vh 2% 2% 2%" : "-150px 2% 2% 2%" }}>
-            <Box sx={{ width: isSmallScreen ? '100%' : "30%", height: "700px", backgroundColor: '#E3ECF1', position: 'relative', paddingBottom: "10px", borderRadius: '20px', marginBottom: isSmallScreen ? "30px" : "0" }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', width: isSmallScreen ? '100%' : "30%", height: "700px", backgroundColor: '#E3ECF1', position: 'relative', borderRadius: '20px' }}>
 
                 <img
                     style={{ height: isMediumScreen ? "55%" : "60%", width: "100%", objectFit: "cover", borderTopLeftRadius: "20px", borderTopRightRadius: "20px" }}
                     src={imageURL} alt='card' />
 
-                <CardContent sx={{ margin: '10px', position: "relative", height: "40%" }}>
-                    <Typography variant='h5' sx={{ color: '#396781', fontWeight: 'bold', width: "100%", textAlign: "center" }}>
-                        {`${firstName} ${lastName}`}
-                    </Typography>
-                    <Typography variant='body1' sx={{ width: "100%", textAlign: "center" }}>
-                        Lorem ipsum dolor sit amet
-                    </Typography>
-                    <Box sx={{ marginTop: "80px" }}>
+                <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1, paddingX: "20px" }}>
+                    <Box sx={{ marginTop: "20px"}}>
+                        <Typography variant='h5' sx={{ color: '#396781', fontWeight: 'bold', width: "100%", textAlign: "center" }}>
+                            {`${firstName} ${lastName}`}
+                        </Typography>
+                        <Typography variant='body1' sx={{ width: "100%", textAlign: "center" }}>
+                            Lorem ipsum dolor sit amet
+                        </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignSelf: 'center', width: '100%', maxWidth: '200px'}}>
                         <form action="https://ezamazwe-edutech-nodejs.onrender.com/payment" method="post">
 
                             <input type="hidden" name="email_address" value={email} />
@@ -243,15 +245,15 @@ function UserPage({ signInUser }) {
                             </Box>
                         </form>
 
-                        <Box sx={{ margin: "10px 0", width: "100%" }}>
+                        <Box sx={{ margin: "10px 0", width: "100%", marginBottom: "40px" }}>
                             <UserButton text={"BECOME A TUTOR"} />
                         </Box>
                     </Box>
-                </CardContent>
+                </Box>
             </Box >
 
             <Box sx={{ width: isSmallScreen ? "100%" : "70%", zIndex: "50", height: isSmallScreen ? "auto" : 'inherit', position: "relative", }} >
-                <Box sx={{ backgroundColor: '#E3ECF1', width: isSmallScreen ? '100%' : '97%', height: '100%', margin: isSmallScreen ? "0" : "0 0 0 3%", borderRadius: '16px', paddingBottom: "10px", marginTop: "-20px", paddingBottom: isSmallScreen ? "100px" : "0" }}>
+                <Box sx={{ backgroundColor: '#E3ECF1', width: isSmallScreen ? '100%' : '97%', height: '100%', margin: isSmallScreen ? "0" : "0 0 0 3%", borderRadius: '16px', paddingBottom: "10px", marginTop: "-20px", paddingBottom: "0" }}>
                     <Box sx={{ display: 'flex', flexDirection: 'row', gap: '2%', borderBottom: '2px solid rgba(57, 103, 128, 0.30)', width: "94%", height: "60px", margin: "20px 3%", }}>
                         <Box sx={{ width: "29%", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
                             <Typography variant={isMediumScreen ? "subtitle2" : 'h5'} sx={{ fontWeight: "bold", padding: "0 15px", color: "primary.light", cursor: "pointer", borderBottom: `${accBorder}`, display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }} onClick={() => userNavigate("account")}>Account</Typography>
@@ -264,7 +266,7 @@ function UserPage({ signInUser }) {
                         </Box>
                     </Box>
                     {accStatus ?
-                        <>
+                        <Box style={{ display: 'flex', flex: 1, height: 'calc(100% - 80px)', flexDirection: "column", justifyContent: "space-between", }}>
                             <Box sx={{ paddingTop: '50px', gap: '15px', width: "90%", margin: "5%", position: "relative" }}>
                                 <Box sx={{ display: 'flex', flexDirection: 'row', gap: '10px', mb: '15px' }}>
                                     <UserTextFields label={"First name:"} setState={setFirstName} placeholder={`First Name: ${firstName}`} />
@@ -279,18 +281,20 @@ function UserPage({ signInUser }) {
                                     </Box>
                                 </Box>
 
-                                <Link href="reset" style={{ width: "100%", textAlign: "right", cursor: "pointer", fontSize: isSmallScreen ? "14px" : "16px", fontWeight: "400", }}>
-                                    Reset Password
-                                </Link>
+                                <Box style={{ display: "flex", paddingTop: "10px" }}>
+                                    <Link href="reset" style={{ alignSelf: "auto", marginLeft: "auto", textAlign: "right", cursor: "pointer", fontSize: isSmallScreen ? "14px" : "18px", fontWeight: "400", paddingTop: "5px", paddingBottom: "5px" }}>
+                                        Reset Password
+                                    </Link>
+                                </Box>
 
                             </Box>
-                            <Box sx={{ position: 'absolute', bottom: "10px", left: "5%", padding: '10px', }}>
-                                <SmallButton text={"UPDATE"} buttonFunction={handleUpdate} />
+                            <Box sx={{ marginBottom: "40px", width: "90%", alignSelf: 'center' }}>
+                                <Box sx={{ display: 'flex', width: "100%", flexDirection: 'row', justifyContent: "space-between" }}>
+                                    <SmallButton text={"UPDATE"} buttonFunction={handleUpdate} />
+                                    <SignOutButton text={"Sign Out"} buttonFunction={signOut} />
+                                </Box>
                             </Box>
-                            <Box sx={{ position: 'absolute', bottom: "10px", right: "5%", padding: '10px', }}>
-                                <SignOutButton text={"Sign Out"} buttonFunction={signOut} />
-                            </Box>
-                        </>
+                        </Box>
                         : null
                     }
 

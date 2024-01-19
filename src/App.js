@@ -20,8 +20,9 @@ import {
   ScreenView, CoursesPage, User, ViewCoursePage, CourseFullView, ContactUs, AboutUs, Payment, SetUpProfile, SignIn, SignUp, ResetPassword,
   ForgotPassword as ForgotPassowrd, LandingPage, VerificationPage, VerifyEmail
 } from './Pages'
+import LoadingScreen from './Components/LoadingScreen';
 function App() {
-  const [isSignedIn, setSignIn] = useState(false);
+  const [isSignedIn, setSignIn] = useState(null);
   const [userId, setUserId] = useState("");
   const [userMail, setUserMail] = useState("");
   const [mypath, setPath] = useState("");
@@ -44,7 +45,9 @@ function App() {
     });
     return () => unsubscribe();
   }, []);
-
+  useEffect(() => {
+    console.log({ isSignedIn });
+  }, [isSignedIn])
   async function setUserPath(docId) {
     const docRef = doc(collection(db, "users"), docId);
     const docSnap = await getDoc(docRef);
@@ -87,8 +90,23 @@ function App() {
           <Route path='/screen' element={<ScreenView />} />
           <Route path='/courses' element={<CoursesPage />} />
           <Route path='/course/:courseName' element={<ViewCoursePage />} />
-          <Route path='/course/:courseName/learn/:videoId' element={!isSignedIn ? <Navigate to="/" /> : <CourseFullView />} />
-          <Route path='/user' element={!isSignedIn ? <Navigate to="/" /> : <User signInUser={signInUser} />} />
+          <Route path='/course/:courseName/learn/:videoId' element={
+            isSignedIn == undefined && isSignedIn == null
+              ? <LoadingScreen />
+              : isSignedIn
+                ? <CourseFullView />
+                : <Navigate to="/" />
+          } />
+          {/* <Route path='/course/:courseName/learn/:videoId' element={(isSignedIn !== null) ? <CourseFullView /> : <Navigate to="/" /> }  /> */}
+
+          <Route path='/user' element={
+            isSignedIn == undefined && isSignedIn == null
+              ? <LoadingScreen />
+              : isSignedIn
+                ? <User signInUser={signInUser} />
+                : <Navigate to="/" />
+            } />
+          {/* <Route path='/user' element={!isSignedIn ? <Navigate to="/" /> : <User signInUser={signInUser} />} /> */}
           <Route path='/reset' element={<ResetPassword />} />
           <Route path='/forgot' element={<ForgotPassowrd />} />
           <Route path='/contact' element={<ContactUs />} />
