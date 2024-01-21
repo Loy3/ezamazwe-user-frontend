@@ -5,10 +5,13 @@ export default function NavLink({ color, path, text, isSmallScreen, handleNaviga
     return (
         <Link
             sx={{
-                '&:hover': color !== "#396781" &&  {
+                '&:hover': color !== "#396781" ? {
                     backgroundColor: "#396781",
                     color: "#FFF",
                     fontWeight: "bold",
+                    borderRadius: !isSmallScreen && "10px"
+                } : {
+                    backgroundColor: "secondary.light",
                     borderRadius: !isSmallScreen && "10px"
                 },
                 width: isSmallScreen ? "calc(100% - 40px)" : '80px',

@@ -219,11 +219,11 @@ export const NavBar = ({ location }) => {
                     <Box sx={{ width: "100%", height: isSmallScreen ? "100%" : "90px", display: "flex", flexDirection: isSmallScreen ? "column" : "row", position: "relative", justifyContent: 'space-between' }}>
                         {isMedToLaScreen ?
                             <Box sx={{ width: "18%", height: isSmallScreen ? "auto" : "100%", display: "flex", justifyContent: isSmallScreen ? "start" : "center", alignItems: "center" }}>
-                                <img src={logo} style={{ width: "150px", marginLeft: isSmallScreen ? "20px" : "0" }} />
+                                <img src={logo} style={{ width: "150px", marginLeft: isSmallScreen ? "20px" : "0", cursor: "pointer" }} onClick={() => handleNavigation('home')} />
                             </Box>
                             :
                             <Box sx={{ width: isSmallScreen ? "100%" : "20%", height: isSmallScreen ? "auto" : "100%", display: "flex", justifyContent: isSmallScreen ? "start" : "center", alignItems: "center" }}>
-                                <img src={logo} style={{ width: "150px", marginLeft: isSmallScreen ? "20px" : "0" }} />
+                                <img src={logo} style={{ width: "150px", marginLeft: isSmallScreen ? "20px" : "0", cursor: "pointer" }} onClick={() => handleNavigation('home')} />
                             </Box>
                         }
                         <Box sx={{ width: isSmallScreen ? "100%" : "auto", height: "100%", display: "flex", justifyContent: isSmallScreen ? "start" : "center", alignItems: isSmallScreen ? "flex-start" : "center", marginTop: isSmallScreen ? "50px" : "0" }}>
