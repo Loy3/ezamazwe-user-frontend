@@ -33,7 +33,9 @@ import impactVid4 from "../Assets/Videos/4.mp4";
 
 import { useEffect, useMemo, useState } from "react"
 import { CourseContCard } from "../Components/Cards"
-import { auth } from "../Services/firebaseConfig";
+import { auth, db } from "../Services/firebaseConfig";
+import { collection, getCountFromServer, getDocs, orderBy, query, where } from "firebase/firestore";
+import { fetchRecentCategoryCourses } from "../Services/CourseService";
 const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis.";
 
 
@@ -43,27 +45,47 @@ function LandingPage() {
     const isMediumScreen = useMediaQuery("(max-width:800px)");
     const isMedToLaScreen = useMediaQuery("(max-width:1024px) and (min-width:800px)");
     const isSecMediumScreen = useMediaQuery("(max-width:800px) and (min-width:600px)");
+    const [numberOfCourses, setNumberOfCourses] = useState(0)
+    const [numberOfStudents, setNumberOfStudents] = useState(0)
     const navigate = useNavigate();
     const headCards = useMemo(() => {
         return [
             {
                 iconN: enrolledStuIcon,
                 title: "Enrolled Students",
-                numberC: "10000"
+                numberC: numberOfStudents
             },
             {
                 iconN: onCoursesIcon,
                 title: "Online Courses",
-                numberC: "10000"
+                numberC: numberOfCourses
             },
             {
                 iconN: tutorsIcon,
                 title: "Expert Tutors",
-                numberC: "10000"
+                numberC: "0"
             }
         ]
     }, [])
+    useEffect(() => {
+        handleCategory('caps')
+        fetchStats()
+    }, [])
+    const fetchStats = async () => {
+        const studentsColRef = collection(db, 'users')
+        const studentQry = query(studentsColRef, where('role', '==', 'user'))
+        const studentsSnapshot = await getCountFromServer(studentQry)
+        const studentCount = studentsSnapshot.data().count
+        console.log({ studentCount });
+        setNumberOfStudents(studentCount)
 
+        const coursesColRef = collection(db, 'courses')
+        const courseQry = query(coursesColRef)
+        const courseSnapshot = await getCountFromServer(courseQry)
+        const courseCount = courseSnapshot.data().count
+        console.log({ courseCount });
+        setNumberOfCourses(courseCount)
+    }
     const newCoursesCards = useMemo(() => {
         return [
             {
@@ -161,8 +183,9 @@ function LandingPage() {
         return numConvert.toLocaleString()
     }
 
-    function handleCategory(type) {
+    async function handleCategory(type) {
         let displayArr = [];
+        console.log({ type });
         switch (type) {
             case "caps":
                 setCapsBorder(withBorder);
@@ -176,19 +199,15 @@ function LandingPage() {
                 setEntBorder(withNoBorder);
                 break;
 
-            case "ent":
+            case "Entrepreneur":
                 setCapsBorder(withNoBorder);
                 setIebBorder(withNoBorder);
                 setEntBorder(withBorder);
                 break;
             default:
         }
-        newCoursesCards.forEach(c => {
-            if (c.type === type) {
-                displayArr.push(c);
-            }
-        });
-        setViewCourses(displayArr);
+        const recentFilteredCourses = await fetchRecentCategoryCourses(type, entImg1)
+        setViewCourses(recentFilteredCourses)
     }
 
     useEffect(() => {
@@ -244,7 +263,7 @@ function LandingPage() {
                             <Box sx={{ width: "90%", height: "auto", position: "relative" }}>
 
                                 <Box sx={{ height: isMedToLaScreen ? "350px" : "450px", width: isMedToLaScreen ? "300px" : "400px", opacity: "0.5", backgroundColor: "primary.light", borderRadius: "20px", zIndex: "10", marginLeft: isMedToLaScreen ? "40px" : "80px", marginTop: isMedToLaScreen ? "60px" : "30px" }} />
-                                <img src={headerImage} alt="headerImage" style={{ height: isMedToLaScreen ? "350px" : "450px", width: isMedToLaScreen ? "300px" : "400px", objectFit: "cover", zIndex: "20", position: "absolute", top:isMedToLaScreen ? "20px" : "0", left: isMedToLaScreen ? "20px" : "50px", borderRadius: "20px" }} />
+                                <img src={headerImage} alt="headerImage" style={{ height: isMedToLaScreen ? "350px" : "450px", width: isMedToLaScreen ? "300px" : "400px", objectFit: "cover", zIndex: "20", position: "absolute", top: isMedToLaScreen ? "20px" : "0", left: isMedToLaScreen ? "20px" : "50px", borderRadius: "20px" }} />
                             </Box>
                         </Box>
                     </Box>
@@ -260,20 +279,40 @@ function LandingPage() {
                     </Box>
                     <Box sx={{ marginTop: isMediumScreen ? "50px" : "80px", marginBottom: "-30px", width: "100%", height: "80px", display: "flex", justifyContent: "center", alignItems: "center" }}>
                         <Box sx={{ width: isMediumScreen ? "94%" : "960px", height: "inherit", display: "flex", flexDirection: "row" }}>
-                            {headCards.map((cont, index) => (
-                                <Box key={index} sx={{ width: isMediumScreen ? "30%" : "300px", height: isMediumScreen ? "90px" : "inherit", backgroundColor: "primary.light", margin: isMediumScreen ? "0 5px" : "0 10px", display: "flex", flexDirection: isMediumScreen ? "column" : "row", borderRadius: "20px" }}>
-                                    <Box sx={{ width: isMediumScreen ? "100%" : "25%", height: "inherit", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                        <img src={cont.iconN} alt="enrolled" style={{ width: isMediumScreen ? "30px" : "60px", height: isMediumScreen ? "30px" : "60px", paddingTop: isMediumScreen ? "5px" : "0" }} />
-                                    </Box>
-                                    <Box sx={{ width: isMediumScreen ? "100%" : "75%", display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: isMediumScreen ? "5px" : "0" }}>
-                                        <Box>
-                                            <Typography variant={isMediumScreen ? "body2" : "subtitle1"} sx={{ width: "100%", textAlign: "center", color: "white", fontSize: isMediumScreen ? "11px" : "16px", marginTop: isMediumScreen ? "5px" : "0" }}>{cont.title}</Typography>
-                                            <Typography variant={isMediumScreen ? "h6" : "h4"} sx={{ width: "100%", textAlign: "center", color: "white", fontWeight: "bold" }}>{`${addSpace(cont.numberC)}+`}</Typography>
-                                        </Box>
+                            <Box sx={{ width: isMediumScreen ? "30%" : "300px", height: isMediumScreen ? "90px" : "inherit", backgroundColor: "primary.light", margin: isMediumScreen ? "0 5px" : "0 10px", display: "flex", flexDirection: isMediumScreen ? "column" : "row", borderRadius: "20px" }}>
+                                <Box sx={{ width: isMediumScreen ? "100%" : "25%", height: "inherit", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                    <img src={enrolledStuIcon} alt="enrolled" style={{ width: isMediumScreen ? "30px" : "60px", height: isMediumScreen ? "30px" : "60px", paddingTop: isMediumScreen ? "5px" : "0" }} />
+                                </Box>
+                                <Box sx={{ width: isMediumScreen ? "100%" : "75%", display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: isMediumScreen ? "5px" : "0" }}>
+                                    <Box>
+                                        <Typography variant={isMediumScreen ? "body2" : "subtitle1"} sx={{ width: "100%", textAlign: "center", color: "white", fontSize: isMediumScreen ? "11px" : "16px", marginTop: isMediumScreen ? "5px" : "0" }}>{"Enrolled Students"}</Typography>
+                                        <Typography variant={isMediumScreen ? "h6" : "h4"} sx={{ width: "100%", textAlign: "center", color: "white", fontWeight: "bold" }}>{`${addSpace(numberOfStudents)}`}</Typography>
                                     </Box>
                                 </Box>
-                            ))}
+                            </Box>
+                            <Box sx={{ width: isMediumScreen ? "30%" : "300px", height: isMediumScreen ? "90px" : "inherit", backgroundColor: "primary.light", margin: isMediumScreen ? "0 5px" : "0 10px", display: "flex", flexDirection: isMediumScreen ? "column" : "row", borderRadius: "20px" }}>
+                                <Box sx={{ width: isMediumScreen ? "100%" : "25%", height: "inherit", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                    <img src={onCoursesIcon} alt="enrolled" style={{ width: isMediumScreen ? "30px" : "60px", height: isMediumScreen ? "30px" : "60px", paddingTop: isMediumScreen ? "5px" : "0" }} />
+                                </Box>
+                                <Box sx={{ width: isMediumScreen ? "100%" : "75%", display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: isMediumScreen ? "5px" : "0" }}>
 
+                                    <Box>
+                                        <Typography variant={isMediumScreen ? "body2" : "subtitle1"} sx={{ width: "100%", textAlign: "center", color: "white", fontSize: isMediumScreen ? "11px" : "16px", marginTop: isMediumScreen ? "5px" : "0" }}>{"Online Courses"}</Typography>
+                                        <Typography variant={isMediumScreen ? "h6" : "h4"} sx={{ width: "100%", textAlign: "center", color: "white", fontWeight: "bold" }}>{`${addSpace(numberOfCourses)}`}</Typography>
+                                    </Box>
+                                </Box>
+                            </Box>
+                            <Box  sx={{ width: isMediumScreen ? "30%" : "300px", height: isMediumScreen ? "90px" : "inherit", backgroundColor: "primary.light", margin: isMediumScreen ? "0 5px" : "0 10px", display: "flex", flexDirection: isMediumScreen ? "column" : "row", borderRadius: "20px" }}>
+                                <Box sx={{ width: isMediumScreen ? "100%" : "25%", height: "inherit", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                    <img src={tutorsIcon} alt="enrolled" style={{ width: isMediumScreen ? "30px" : "60px", height: isMediumScreen ? "30px" : "60px", paddingTop: isMediumScreen ? "5px" : "0" }} />
+                                </Box>
+                                <Box sx={{ width: isMediumScreen ? "100%" : "75%", display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: isMediumScreen ? "5px" : "0" }}>
+                                    <Box>
+                                        <Typography variant={isMediumScreen ? "body2" : "subtitle1"} sx={{ width: "100%", textAlign: "center", color: "white", fontSize: isMediumScreen ? "11px" : "16px", marginTop: isMediumScreen ? "5px" : "0" }}>{"Expert Tutors"}</Typography>
+                                        <Typography variant={isMediumScreen ? "h6" : "h4"} sx={{ width: "100%", textAlign: "center", color: "white", fontWeight: "bold" }}>{`${addSpace(0)}`}</Typography>
+                                    </Box>
+                                </Box>
+                            </Box>
 
                         </Box>
                     </Box>
@@ -304,7 +343,7 @@ function LandingPage() {
                         <Box sx={{ display: "flex", flexDirection: "row" }}>
                             <Typography variant={isSmallScreen ? "body1" : "h6"} sx={{ padding: "0 15px", textAlign: "center", cursor: "pointer", borderBottom: `${capsBorder}` }} onClick={() => handleCategory("caps")}>CAPS</Typography>
                             <Typography variant={isSmallScreen ? "body1" : "h6"} sx={{ padding: "0 15px", textAlign: "center", cursor: "pointer", borderBottom: `${iebBorder}` }} onClick={() => handleCategory("ieb")}>IEB</Typography>
-                            <Typography variant={isSmallScreen ? "body1" : "h6"} sx={{ padding: "0 15px", textAlign: "center", cursor: "pointer", borderBottom: `${entBorder}` }} onClick={() => handleCategory("ent")}>Entrepreneur </Typography>
+                            <Typography variant={isSmallScreen ? "body1" : "h6"} sx={{ padding: "0 15px", textAlign: "center", cursor: "pointer", borderBottom: `${entBorder}` }} onClick={() => handleCategory("Entrepreneur")}>Entrepreneur </Typography>
                         </Box>
                     </Box>
 
@@ -315,7 +354,7 @@ function LandingPage() {
                                     {
                                         viewCourses.map((course, index) => (
                                             <Box key={index} sx={{ width: "47%", margin: isSmallScreen ? "10px 0" : "10px" }}>
-                                                <CourseContCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.shortDescrip} image={course.cardImage} />
+                                                <CourseContCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.courseShortDescription} image={course.cardImage} />
                                             </Box>
                                         ))
                                     }
@@ -325,7 +364,7 @@ function LandingPage() {
                                     {
                                         viewCourses.map((course, index) => (
                                             <Box key={index} sx={{ width: isSmallScreen ? "100%" : "31%", margin: isSmallScreen ? "10px 0" : "10px" }}>
-                                                <CourseContCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.shortDescrip} image={course.cardImage} />
+                                                <CourseContCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.courseShortDescription} image={course.cardImage} />
                                             </Box>
                                         ))
                                     }
@@ -345,7 +384,7 @@ function LandingPage() {
                     // backgroundColor: "black",
                 }}>
                     <Box sx={{ width: "100%", display: "flex", flexDirection: isMediumScreen ? "column" : "row" }}>
-                        <Box sx={{ width: isMediumScreen ? "94%" : "50%", height: isMediumScreen ? "400px" : "500px", display: "flex", justifyContent: "center", alignItems: "center", margin:  "3%" }}>
+                        <Box sx={{ width: isMediumScreen ? "94%" : "50%", height: isMediumScreen ? "400px" : "500px", display: "flex", justifyContent: "center", alignItems: "center", margin: "3%" }}>
                             <img src={tutorImage} alt="tutor" style={{ width: isMediumScreen ? "100%" : "400px", height: isMediumScreen ? "100%" : "400px", objectFit: "cover", boxShadow: "0px 2px 20px 2px #1C3F53" }} />
                         </Box>
                         <Box sx={{ width: isMediumScreen ? "100%" : "50%", height: "inherit", display: "flex", justifyContent: isMediumScreen ? "center" : "start", alignItems: "center", marginTop: isMediumScreen ? "30px" : "0" }}>
@@ -357,8 +396,8 @@ function LandingPage() {
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas metus nulla, et tincidunt sapien faucibus quis. Proin accumsan,
                                     tortor a luctus euismod, ex orci sodales nunc.
                                 </Typography>
-                                <Box sx={{ width: "100%", display: "flex", justifyContent:isMediumScreen? "center": "start", alignItems: "center", marginTop: "15px" }}>
-                                    <Box sx={{ width: isSmallScreen ? "70%" : "35%", marginLeft:  "0" }}>
+                                <Box sx={{ width: "100%", display: "flex", justifyContent: isMediumScreen ? "center" : "start", alignItems: "center", marginTop: "15px" }}>
+                                    <Box sx={{ width: isSmallScreen ? "70%" : "35%", marginLeft: "0" }}>
                                         <HomeButtons text={"Join"} buttonFunction={toSignUp} />
                                     </Box>
                                 </Box>
@@ -407,20 +446,20 @@ function LandingPage() {
                                 />
                             </video> */}
 
-                           <>
-                           {impactVideos.map((vid, index) => (
-                                <Box key={index} sx={{ width: isSmallScreen ? "94%" : "24%", height: "30vh", margin: isSmallScreen ? "10px 3%" : "10px 0.5%" }}>
-                                    <video
-                                        controls
-                                        style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "20px" }}>
-                                        <source
-                                            src={vid}
-                                            type="video/mp4"
-                                        />
-                                    </video>
-                                </Box>
-                            ))}
-                           </>
+                            <>
+                                {impactVideos.map((vid, index) => (
+                                    <Box key={index} sx={{ width: isSmallScreen ? "94%" : "24%", height: "30vh", margin: isSmallScreen ? "10px 3%" : "10px 0.5%" }}>
+                                        <video
+                                            controls
+                                            style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "20px" }}>
+                                            <source
+                                                src={vid}
+                                                type="video/mp4"
+                                            />
+                                        </video>
+                                    </Box>
+                                ))}
+                            </>
 
 
                             {/* <video flexWrap: "wrap"

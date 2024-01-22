@@ -226,7 +226,7 @@ function UserPage({ signInUser }) {
                             Lorem ipsum dolor sit amet
                         </Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignSelf: 'center', width: '100%', maxWidth: '200px'}}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignSelf: 'center', width: '100%', maxWidth: '300px'}}>
                         <form action="https://ezamazwe-edutech-nodejs.onrender.com/payment" method="post">
 
                             <input type="hidden" name="email_address" value={email} />
@@ -245,7 +245,7 @@ function UserPage({ signInUser }) {
                             </Box>
                         </form>
 
-                        <Box sx={{ margin: "10px 0", width: "100%", marginBottom: "40px" }}>
+                        <Box sx={{ margin: "10px 0", width: "100%", marginBottom: "20px" }}>
                             <UserButton text={"BECOME A TUTOR"} />
                         </Box>
                     </Box>
@@ -288,7 +288,7 @@ function UserPage({ signInUser }) {
                                 </Box>
 
                             </Box>
-                            <Box sx={{ marginBottom: "40px", width: "90%", alignSelf: 'center' }}>
+                            <Box sx={{ marginBottom: "20px", width: "90%", alignSelf: 'center' }}>
                                 <Box sx={{ display: 'flex', width: "100%", flexDirection: 'row', justifyContent: "space-between" }}>
                                     <SmallButton text={"UPDATE"} buttonFunction={handleUpdate} />
                                     <SignOutButton text={"Sign Out"} buttonFunction={signOut} />

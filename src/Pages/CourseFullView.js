@@ -162,24 +162,40 @@ function CourseFullView({ courseData }) {
                 </Box>
                 <Box sx={{ width: isSmallScreen ? "100%" : "25%", height: "auto" }}>
                     {course.lessons.map((lesson, index) => (
-                        <Accordion key={index} sx={{ backgroundColor: '#E3ECF1', height: 'auto' }}>
+                        <Accordion key={index} sx={{ backgroundColor: '#E3ECF1', height: 'auto' }} disableGutters>
                             <AccordionSummary
                                 expandIcon={<ArrowLeftIcon />}
                                 aria-controls="panel1a-content"
                                 id="panel1a-header"
+                                sx={{
+                                    height: "60px",
+                                    '&.Mui-expanded': {
+                                        minHeight: "60px",
+                                        maxHeight: "60px",
+                                        marginBottom: "0px",
+                                        // padding: "0px"
+                                      }
+                                }}
                             >
-                                <Typography sx={{ width: "40%", margin: "0 5%", height: "100%", display: "flex", alignItems: "center", fontWeight: "bold", color: "primary.light", fontSize: '20px', textAlign: "center", marginTop: "7px" }}>{`Lesson ${index + 1}`}</Typography>
+                                <Typography sx={{ width: "40%", margin: "0 5%", height: "60px", display: "flex", alignItems: "center", fontWeight: "bold", color: "primary.light", fontSize: '20px', textAlign: "center" }}>{`Lesson ${index + 1}`}</Typography>
 
                             </AccordionSummary>
-                            <AccordionDetails>
-                                {/* <Typography sx={{ height: '100px' }}>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                    malesuada lacus ex, sit amet blandit leo lobortis eget.
-                                </Typography> */}
-
+                            <AccordionDetails sx={{ display: "flex", flexDirection: "column",padding: "0px", gap: "5px"}}>
                                 {lesson.topics.map((topic, index) => (
-                                    <div key={index}>
-                                        <Button onClick={() => viewLesson(lesson.id, topic)} style={{marginLeft: "20px", marginTop:"-10px"}}>
+                                    <div key={index} style={{ display: "flex"}}>
+                                        <Button
+                                            onClick={() => viewLesson(lesson.id, topic)}
+                                            sx={{
+                                                "&:hover": {
+                                                    // backgroundColor: "secondary.dark"
+                                                },
+                                                justifyContent: "flex-start",
+                                                width: "100%",
+                                                paddingLeft: "20px",
+                                                borderRadius: "0px",
+                                                paddingY: "10px"
+                                            }}
+                                        >
                                             {topic.topicName}
                                         </Button>
                                     </div>

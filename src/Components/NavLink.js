@@ -21,7 +21,7 @@ export default function NavLink({ color, path, text, isSmallScreen, handleNaviga
                 // height: "50%",
                 padding: "10px 20px",
                 color: color,
-                cursor: color !== "#396781" &&  "pointer",
+                cursor: "pointer",
                 marginLeft: "0",
                 marginTop: "0",
                 fontWeight: fontWeight,

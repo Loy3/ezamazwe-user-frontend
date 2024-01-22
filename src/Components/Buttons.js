@@ -20,7 +20,7 @@ const VisuallyHiddenInput = styled('input')({
 export default function button({ text, buttonFunction }) {
     return (
         <>
-            <Button variant="contained" style={{ backgroundColor: "#1C3F53", width: "50%", borderRadius: 20 }} onClick={() => buttonFunction()}>{text}</Button>
+            <Button variant="contained" sx={{ backgroundColor: "primary.light", width: "50%", borderRadius: 20 }} onClick={() => buttonFunction()}>{text}</Button>
         </>
     )
 }
@@ -28,7 +28,7 @@ export default function button({ text, buttonFunction }) {
 export function UserButton({ text, buttonFunction, type }) {
     return (
         <>
-            <Button variant="contained" type={type} style={{ backgroundColor: "#1C3F53", width: "100%", borderRadius: 20 }} onClick={() => buttonFunction()}>{text}</Button>
+            <Button variant="contained" type={type} sx={{ backgroundColor: "primary.light", width: "100%", borderRadius: 20, height: "50px", borderRadius: "30px", fontWeight: "600", letterSpacing: "1px", fontSize: "16px" }} onClick={() => buttonFunction()}>{text}</Button>
         </>
     )
 }
@@ -68,7 +68,7 @@ export const ImageButton = ({ handleImage, imageSrc }) => {
 export const SmallButton = ({ text, buttonFunction }) => {
     return (
         <>
-            <Button variant="contained" sx={{ marginTop: "2px", backgroundColor: "primary.light", width: "150px", height: "56px", borderRadius: 50 }} onClick={() => buttonFunction()}>{text}</Button>
+            <Button variant="contained" sx={{ marginTop: "2px", backgroundColor: "primary.light", width: "150px", height: "56px", borderRadius: 50, fontWeight: "600", letterSpacing: "1px", fontSize: '18px' }} onClick={() => buttonFunction()}>{text}</Button>
         </>
     )
 }
@@ -76,7 +76,7 @@ export const SmallButton = ({ text, buttonFunction }) => {
 export const SignOutButton = ({ text, buttonFunction }) => {
     return (
         <>
-            <Button variant="outlined" sx={{ marginTop: "5px", width: "150px", height: "50px", borderRadius: 50,border:"2px solid #FF6347", color:"#FF6347" }} onClick={() => buttonFunction()}>{text}</Button>
+            <Button variant="outlined" sx={{ marginTop: "5px", width: "150px", height: "55px", borderRadius: 50,border:"2px solid #FF6347", color:"#FF6347", fontSize: "16px", fontWeight: "16px" }} onClick={() => buttonFunction()}>{text}</Button>
         </>
     )
 }
@@ -187,9 +187,10 @@ export const FilterButton = ({ text, buttonFunction }) => {
 
 export const HomeButtons = ({ text, buttonFunction }) => {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
+    // primary.light doesn't seem to work so we are replacing it with the actual color #396781
     return (
         <>
-            <Button variant="contained" style={{ backgroundColor: "primary.light", width: "100%", height: "50px", borderRadius: 15, }} onClick={() => buttonFunction()}>{text}</Button>
+            <Button variant="contained" sx={{ backgroundColor: "primary.light", width: "100%", height: "50px", borderRadius: 15, }} onClick={() => buttonFunction()}>{text}</Button>
         </>
     )
 }
@@ -198,7 +199,7 @@ export const SignOutBtn = ({ text, buttonFunction }) => {
     const isSmallScreen = useMediaQuery("(max-width:600px)");
     return (
         <>
-            <button variant="contained" style={{ backgroundColor: "primary.light", width: isSmallScreen ? "70%" : "35%", height: "50px", borderRadius: 15, marginLeft: isSmallScreen ? "15%" : "0" }} onClick={() => buttonFunction()}>{text}</button>
+            <button variant="contained" sx={{ backgroundColor: "primary.light", width: isSmallScreen ? "70%" : "35%", height: "50px", borderRadius: 15, marginLeft: isSmallScreen ? "15%" : "0" }} onClick={() => buttonFunction()}>{text}</button>
         </>
     )
 }

@@ -982,7 +982,7 @@
 
 // Imports from the firebase config file
 import { db, auth } from './firebaseConfig';
-import { collection, collectionGroup, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, collectionGroup, doc, getDoc, getDocs, orderBy, query, where } from "firebase/firestore";
 
 
 // Filter courses with subject, category, grade
@@ -1051,6 +1051,7 @@ export const FilteredDocFunction = async (category, subject, grade) => {
         const filteredDocContent = coursesSnapshot.docs
             .map((contentDoc) => ({
                 contentId: contentDoc.id,
+                id: contentDoc.id,
                 ...contentDoc.data()
             }));
 
@@ -1113,7 +1114,7 @@ export const FilterCategoryFunction = async (category) => {
 
         querySnapshot.forEach((doc) => {
             // console.log(doc.id, ' => ', doc.data());
-            items.push(doc.data());
+            items.push({ ...doc.data(), id: doc.id });
         });
 
         // console.log("View filtered category data: ", items);
@@ -1138,7 +1139,7 @@ export const FilterTopicFunction = async (topic) => {
 
         querySnapshot.forEach((doc) => {
             // console.log(doc.data());
-            items.push(doc.data());
+            items.push({ ...doc.data(), id: doc.id });
         });
 
         // console.log("View filtered data: ", items);
@@ -1163,7 +1164,7 @@ export const FilterGradeFunction = async (grade) => {
 
         querySnapshot.forEach((doc) => {
             // console.log(doc.id, ' => ', doc.data());
-            items.push(doc.data());
+            items.push({ ...doc.data(), id: doc.id });
         });
 
         // console.log("Data filtered with grade: ", items);
@@ -1189,7 +1190,7 @@ export const FilterSubscriptionFunction = async (subscription) => {
 
         querySnapshot.forEach((doc) => {
             // console.log(doc.id, ' => ', doc.data());
-            items.push(doc.data());
+            items.push({ ...doc.data(), id: doc.id });
         });
 
         // console.log("Data filtered with subscription: ", items);
@@ -1269,7 +1270,18 @@ export const getCategoryData = async () => {
         console.error("Error fetching collection", error);
     }
 }
-
+export const fetchRecentCategoryCourses = async(category, entImg1) => {
+    const collectionRef = collection(db, 'courses')
+    const qry = query(collectionRef, where('courseCategory', '==', category), orderBy("createDate", "desc"))
+    const coursesSnapshot = await getDocs(qry)
+    console.log(coursesSnapshot.size);
+    const courses = coursesSnapshot.docs.map(doc => {
+        console.log({ doc: doc.data()});
+        return { ...doc.data(), id: doc.id, cardImage: entImg1 }
+    })
+    console.log({ courses });
+    return courses
+}
 
 export const PaymentFunction = async (firstName, lastName, email, phoneNum) => {
     try {
@@ -1738,6 +1750,7 @@ export const FilteredDocFunction1 = async (subject, category, grade) => {
         const filteredDocContent = coursesSnapshot.docs
             .map((contentDoc) => ({
                 contentId: contentDoc.id,
+                id: contentDoc.id,
                 ...contentDoc.data()
             }));
 

@@ -62,7 +62,11 @@ export const FooterComp = () => {
                         </Box>
                     </Box>
                 </Box>
-                <Box sx={{ width: "100%", height: "60px", backgroundColor: "primary.light", marginTop: "50px" }} />
+                <Box sx={{ display: 'flex', width: "100%", height: "60px", backgroundColor: "primary.light", marginTop: "50px", justifyContent: 'center', alignItems: 'center' }}>
+                    <Typography sx={{ color: "rgb(230, 230, 230)", fontWeight: "600", letterSpacing: "1px" }}>
+                        Ezamazwe Edutech &copy; 2024
+                    </Typography>
+                </Box>
             </Box>
         </>
     )

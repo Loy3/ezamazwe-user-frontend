@@ -586,25 +586,27 @@ function ContactUsCard({
             </Typography>
           )}
         </Box>
-        <Box sx={{ marginTop: "20px" }}>
+        <Box sx={{ marginTop: "40px" }}>
           <button
             style={{
-              width: "170px",
-              height: "60px",
+              display: 'flex',
+              // width: "170px",
+              height: "50px",
               borderRadius: "50px",
               border: "none",
-              padding: "0px 16px 0px 16px",
-              gap: "16px",
+              padding: "0px 25px",
+              gap: "20px",
               backgroundColor: "#396781",
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
-              justifyContent: "space-between",
+              justifyContent: "center",
               color: "white",
+              cursor: "pointer"
             }}
             onClick={handleSendMessage}
           >
-            Send <SendIcon />
+            <Typography sx={{ fontSize: "18px" }}>Send</Typography> <SendIcon sx={{ height: "25px", width: "25px"}} />
           </button>
         </Box>
       </Box>
