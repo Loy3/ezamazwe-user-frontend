@@ -7,7 +7,7 @@ export const CourseCard = ({ courseName, courseType, shortDescrip, video, cardFu
 
     return (
         <>
-            <Box sx={{ width: "100%", height: isSmallScreen ? "400px" : "auto", display: "flex", flexDirection: isSmallScreen ? "column" : "row", margin: isSmallScreen? "10px 0 30px 0" : "10px 0" }}>
+            <Box sx={{ width: "100%", height: isSmallScreen ? "400px" : "auto", display: "flex", flexDirection: isSmallScreen ? "column" : "row", margin: isSmallScreen ? "10px 0 30px 0" : "10px 0" }}>
                 <Box sx={{ width: isSmallScreen ? "100%" : "25%", height: isSmallScreen ? "80%" : "inherit", backgroundColor: "primary.light", position: "relative", cursor: "pointer" }} onClick={cardFunction}>
                     <video
                         muted
@@ -25,10 +25,10 @@ export const CourseCard = ({ courseName, courseType, shortDescrip, video, cardFu
                     <Box sx={{
                         width: isSmallScreen ? "90%" : "95%", height: "90%", position: "relative"
                     }}>
-                        
+
                         <Typography variant="h5" sx={{ color: "primary.light", fontWeight: "bold" }}>{courseName}</Typography>
-                        <Box sx={{ position: isSmallScreen?"relative":"absolute", top: isSmallScreen?"unset":"0", right:  isSmallScreen?"unset": "10px" }}>
-                            <Typography variant={isSmallScreen?"h6":"h5"} sx={{ color: "primary.light", fontWeight: "bold" }}>{courseType}</Typography>
+                        <Box sx={{ position: isSmallScreen ? "relative" : "absolute", top: isSmallScreen ? "unset" : "0", right: isSmallScreen ? "unset" : "10px" }}>
+                            <Typography variant={isSmallScreen ? "h6" : "h5"} sx={{ color: "primary.light", fontWeight: "bold" }}>{courseType}</Typography>
                         </Box>
                         <Typography variant="body2" sx={{ width: isSmallScreen ? "100%" : "95%", marginTop: "20px" }} >
                             {shortDescrip}
@@ -41,15 +41,19 @@ export const CourseCard = ({ courseName, courseType, shortDescrip, video, cardFu
     )
 }
 
-export const CourseContCard = ({ courseName, courseType, shortDescrip, image, cardFunction }) => {
+export const CourseContCard = ({ courseName, courseType, shortDescrip, image, cardFunction, onClick }) => {
     return (
         <>
-            <Box sx={{
-                width: "100%",
-                height: "450px",
-                borderRadius: "20px",
-                backgroundColor: "secondary.main",
-            }}>
+            <Box
+                onClick={onClick}
+                sx={{
+                    width: "100%",
+                    height: "450px",
+                    borderRadius: "20px",
+                    backgroundColor: "secondary.main",
+                    cursor: "pointer"
+                }}
+            >
                 <img src={image} alt="my photo" style={{ width: "100%", height: "55%", objectFit: "cover", borderTopLeftRadius: "20px", borderTopRightRadius: "20px" }} />
 
                 <Box sx={{ width: "94%", height: "36%", margin: "0.5% 3%" }}>
@@ -67,7 +71,7 @@ export const ContCard = ({ lessonNumber, text, duration }) => {
     return (
         <>
             <Box sx={{ width: "100%" }}>
-                <Typography variant="subtitle1" component="h4" sx={{ fontWeight: 'bold', color: 'primary.light', marginLeft:"5px" }}>
+                <Typography variant="subtitle1" component="h4" sx={{ fontWeight: 'bold', color: 'primary.light', marginLeft: "5px" }}>
                     {`Lesson ${lessonNumber}`}
                 </Typography>
                 <Container sx={{ borderBottom: '1px solid #396781', borderTop: '1px solid #396781', paddingBottom: '0px', paddingTop: '0px' }}>

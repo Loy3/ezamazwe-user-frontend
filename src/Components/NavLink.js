@@ -14,7 +14,8 @@ export default function NavLink({ color, path, text, isSmallScreen, handleNaviga
                     backgroundColor: "secondary.light",
                     borderRadius: !isSmallScreen && "10px"
                 },
-                width: isSmallScreen ? "calc(100% - 40px)" : '80px',
+                width: isSmallScreen ? "calc(100% - 40px)" : 'fit-content',
+                minWidth: "80px",
                 display: "flex",
                 textAlign: isSmallScreen ? "right" : "left",
                 textDecoration: "none",

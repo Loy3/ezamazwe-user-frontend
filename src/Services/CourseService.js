@@ -1177,14 +1177,14 @@ export const FilterGradeFunction = async (grade) => {
 }
 
 // Filter Grades function
-export const FilterSubscriptionFunction = async (subscription) => {
+export const FilterSubscriptionFunction = async (category, grade, topic, subscription) => {
     console.log(subscription);
     try {
 
         // Reference to the collection
         const coursesCollection = collection(db, 'courses');
         // Create a query where 'mapField.nestedField' is equal to 'value2'
-        const queryData = query(coursesCollection, where('courseType', '==', subscription));
+        const queryData = query(coursesCollection, where('courseCategory', '==', category), where('subject', '==', topic), where('grade', '==', grade), where('courseType', '==', subscription));
         const querySnapshot = await getDocs(queryData);
         let items = [];
 

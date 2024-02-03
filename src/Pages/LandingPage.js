@@ -35,7 +35,7 @@ import { useEffect, useMemo, useState } from "react"
 import { CourseContCard } from "../Components/Cards"
 import { auth, db } from "../Services/firebaseConfig";
 import { collection, getCountFromServer, getDocs, orderBy, query, where } from "firebase/firestore";
-import { fetchRecentCategoryCourses } from "../Services/CourseService";
+import { fetchCourseData, fetchCourseLessons, fetchLessonTopics, fetchRecentCategoryCourses } from "../Services/CourseService";
 const short = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gestas metus nulla, et tincidunt sapien faucibus quis.";
 
 
@@ -166,7 +166,78 @@ function LandingPage() {
     const [iebBorder, setIebBorder] = useState(withNoBorder);
     const [entBorder, setEntBorder] = useState(withNoBorder);
     const [join, setJoin] = useState(false);
+    const handleViewCourse = async (event, id, name, course) => {
+        event.preventDefault();
+        // const [course_data] = courses.filter((course) => course.id === id);
+        console.log('course clicked: ', { id, name, course });
+        // return
+        const hyphenatedName = (name.trim().toLowerCase()).replaceAll(' ', '-')
+        console.log(hyphenatedName);
+        // navigate(`/course/${id}`)
+        // navigate('/course', { state: { course_data: course_data, docData: docData } });
+        // return 
+        await testTheCode(id, hyphenatedName).then((courseRes) => {
+            console.log(courseRes.lessons);
+            // const lessons = courseRes.lessons
+            // console.log(course.lessons);
+            // navigate('/course', { state: { course_data: courseRes } });
+            // console.log("course",course);
+            // if (course) {
+            //     navigate('/course', { state: { course_data: course } });
+            // } else {
+            //     alert("Click again.")
+            // }
+        })
 
+
+    }
+    const testTheCode = async (id, hyphenatedName) => {
+        let courseTest = null
+
+        try {
+            // console.log("course id", id);
+            // await fetchCourseData(id).then(async (courseResponse) => {
+
+            //     courseTest = { ...courseResponse, lessons: [] }
+            //     await fetchCourseLessons(courseResponse.id).then(lessonsResponse => {
+            //         lessonsResponse.forEach(async lesson => {
+            //             let localLesson = { ...lesson, topics: [] }
+            //             await fetchLessonTopics(courseResponse.id, lesson.id).then(topicResponse => {
+            //                 console.log("topicResponse====", topicResponse)
+            //                 localLesson.topics = [...topicResponse]
+            //             })
+            //             courseTest.lessons.push(localLesson)
+            //         })
+            //     })
+            //     console.log("testTheCode", courseTest.lessons.length);
+            //     setCourse(courseTest);
+
+            // })
+            console.log({ courseID: id });
+            await fetchCourseData(id).then(async (courseResponse) => {
+                courseTest = { ...courseResponse, lessons: [] };
+                const lessonsResponse = await fetchCourseLessons(courseResponse.id);
+                const lessonPromises = lessonsResponse.map(async (lesson) => {
+                  let localLesson = { ...lesson, topics: [] };
+                  const topicResponse = await fetchLessonTopics(courseResponse.id, lesson.id);
+                  localLesson.topics = [...topicResponse];
+                  return localLesson;
+                });
+                const lessons = await Promise.all(lessonPromises);
+                courseTest.lessons = lessons;
+                // console.log("testTheCode", courseTest.lessons.length);
+
+
+                navigate(`/course/${hyphenatedName}`, { state: { course_data: courseTest } });
+                // setCourse(courseTest);
+              });
+              
+            return courseTest
+        } catch (error) {
+            console.log("Error:", error);
+        }
+
+    }
     useEffect(() => {
         let viewArr = [];
 
@@ -354,7 +425,7 @@ function LandingPage() {
                                     {
                                         viewCourses.map((course, index) => (
                                             <Box key={index} sx={{ width: "47%", margin: isSmallScreen ? "10px 0" : "10px" }}>
-                                                <CourseContCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.courseShortDescription} image={course.cardImage} />
+                                                <CourseContCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.courseShortDescription} image={course.cardImage} onClick={(event) => handleViewCourse(event, course.id, course.courseName, course ) } />
                                             </Box>
                                         ))
                                     }
@@ -364,7 +435,7 @@ function LandingPage() {
                                     {
                                         viewCourses.map((course, index) => (
                                             <Box key={index} sx={{ width: isSmallScreen ? "100%" : "31%", margin: isSmallScreen ? "10px 0" : "10px" }}>
-                                                <CourseContCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.courseShortDescription} image={course.cardImage} />
+                                                <CourseContCard courseName={course.courseName} courseType={course.courseType} shortDescrip={course.courseShortDescription} image={course.cardImage} onClick={(event) => handleViewCourse(event, course.id, course.courseName, course )}/>
                                             </Box>
                                         ))
                                     }

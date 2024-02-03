@@ -82,9 +82,14 @@ function Courses() {
 
     useEffect(() => {
         if (topicS) {
-            setTypeStatus(true);
-            handleFilteredDoc();
-            setCoursesTitle(`${topicS} Courses`);
+            if(subscription) {
+                handleSubscriptionFilter()
+            } else {
+                setTypeStatus(true);
+                handleFilteredDoc();
+                setCoursesTitle(`${topicS} Courses`);
+            }
+
         } else {
             setTypeStatus(false)
         }
@@ -92,6 +97,7 @@ function Courses() {
 
     useEffect(() => {
         if (subscription) {
+            console.log({ subscription });
             handleSubscriptionFilter();
             setCoursesTitle(`${subscription} Courses`);
         }
@@ -368,8 +374,11 @@ function Courses() {
 
     const handleSubscriptionFilter = async () => {
         console.log(subscription);
+        console.log({ rtnCategory, subCategory, topicS, subscription });
+        // return/
         try {
-            const data = await FilterSubscriptionFunction(subscription);
+            const convertedGrade = subCategory.replace(" ", "_");
+            const data = await FilterSubscriptionFunction(rtnCategory.toLocaleLowerCase(), convertedGrade, topicS, subscription);
             // console.log("Courses data filtered with subscription:", data);
             setCourses(data);
 
