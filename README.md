@@ -1,17 +1,40 @@
 # Ezamazwe Edutech Client
 
+## Overview
+
 This is a client facing app for Ezamazwe Edutech. This web application will allow users to have access to the online platform
 where they can learn about topics under CAPS, IEB and Entrepreneurship. With this application Ezamazwe aims to reach more people 
 that they may not be able to help on a normal work day. This will give students 24/7 access to learning content and tutors who are
 well versed in topics that students need help in.
 
-## Getting started
+### Getting started
 
 Ensure you have Git, Node.js, Firebase tools and stable internet.
   1. Run `Git clone https://github.com/Loy3/ezamazwe-user-frontend` in your terminal (preferrably where you usually have your projects)
   2. cd into the project `cd ezamazwe-user-frontend` after successful cloning of the project
   3. Make sure you are inside the project by running `dir` on windows or `ls` on Linux. If you are, proceed.
   4. Run `npm install` to install all the dependencies for the project.
+
+### Dependencies
+  * @emotion/react v^11.11.1
+  * @emotion/styled v^11.11.0
+  * @mui/icons-material v^5.14.18
+  * @mui/material v5.14.18
+  * @mui/styled-engine-sc v^6.0.0-alpha.6
+  * @testing-library/jest-dom v^5.17.0
+  * @testing-library/react v^13.4.0
+  * @testing-library/user-event ^13.5.0
+  * dotenv ^16.3.1
+  * firebase v^10.6.0
+  * path-browserify v^1.0.1
+  * react v^18.2.0
+  * react-dom v^18.2.0
+  * react-dotenv v^0.1.3
+  * react-router-dom v^6.18.0
+  * react-scripts v5.0.1
+  * styled-components v^6.1.1
+  * uuid v^9.0.1
+  * web-vitals v^2.1.4
 
 ### Running the project
 
